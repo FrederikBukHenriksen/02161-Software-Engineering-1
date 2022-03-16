@@ -8,7 +8,7 @@ Feature: Create a project
         And administrator have entered <project_start_date>
         And administrator have entered <project_end_date>
         When administrator press <submit_project>
-        Then the project should be added to the "calender"
+        Then the <project> should be added to the <calender>
     # Ikke helt sikker på at det skal tilføjes til calender
 
     # Alternative Scenario:
