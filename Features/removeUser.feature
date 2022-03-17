@@ -1,5 +1,5 @@
-Feature: Add/remove employee
-    Description: Analysis employee is added/removed to/from the employee list
+Feature: Remove employee
+    Description: Analysis employee is removed from the employee list
     Actors: Administrator
 
     # Main use-case

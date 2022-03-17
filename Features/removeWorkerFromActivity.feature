@@ -23,5 +23,3 @@ Feature: Femove worker from an activity
 
 
 
-
-
