@@ -28,9 +28,15 @@ public class ExampleSteps {
 		project.add();
 	}
 
-	// Should test if the project is in the Project ArrayList. However, i'm not sure yet if this is saved in an Arraylist....
+	// Should test if the project is in the Project ArrayList. However, i'm not sure
+	// yet if this is saved in an Arraylist....
 	@Then("{String} is shown on the display.")
 	public void theIsShown(Integer number) {
-		for each Project in <ProjectList>
-	    assertEquals((int)number,calc.display());
+		for(int i = Calender.ArrayList.length; i < calender.Arraylist.length + 1; i++) {
+			if (project.getId() == Calender.ArrayList.get(i)) {
+				// assert true. 
+			}
+
+		}
+
 	}
