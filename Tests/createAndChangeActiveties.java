@@ -12,24 +12,24 @@ public class createAndChangeActiveties {
 	
 	Project project = new Project();
 	
-	@Given("an employee selects {Activety}")
-	public void selectEmployee(Activety activety) {
-		project.setSelectedActivety(activety);
+	@Given("an employee selects {Activity}")
+	public void selectEmployee(Ativity activity) {
+		project.setSelectedActivity(activity);
 	}
 	
-	@And("an employee changes the time of the activety to {int}")
-	public void newTimeisSpecified(int newTime) {
-		project.getSelectedActivety().newTime = newTime;
+	@And("an employee changes the time of the activity to {int}")
+	public void newTimeIsSpecified(int newTime) {
+		project.getSelectedActivity().newTime = newTime;
 	}
 	
 	@When("the confirmation button is pressed")
 	public void confirmationButtonIsPressed() {
-		project.getSelectedActivety().time = project.getSelectedActivety().newTime;
+		project.getSelectedActivity().time = project.getSelecteAactivity().newTime;
 	}
 	
-	@Then("the time of {Activety} is changed to {int}")
-	public void setNewActivetyTime(int newTime) {
-		assertEquals((int) project.getSelectedActivety().time, (int) newTime);
+	@Then("the time of the activity is changed to {int}")
+	public void setNewActivityTime(int newTime) {
+		assertEquals((int) project.getSelectedActivity().time, (int) newTime);
 	}
 	
 	
