@@ -1,29 +1,23 @@
-Feature: User login
+Feature: Employee login
     Description: The user can login and logout from the site
     Actor: User
-    
-Scenario: User can login
-    Given the user with IDnum "213432" is not logged in
-    And the password is "Bruun"
-    Then the user with IDnum "213432" login succeeds
-    And the user with IDnum "213432" is logged in
-    
-Scenario: User has the wrong password
-    Given the user with IDnum "213432" is not logged in
-    And the password is "wrong password"
-    Then the user with IDnum"213432" login fails
-    And the user with IDnum "213432" is not logged in
-    And the error message "Password or ID is wrong" is given
 
-Scenario: User can logout
-    Given the user with IDnum "213432" is logged in
-    And the user with IDnum "213432" will logout
-    Then the user with IDnum "213432" logout succeeds
+#Main use-case(s)
+Scenario: Employee login
+    Given the employee with id "1" is not logged in
+    And the employee's password is "Bruun12345"
+    When the employee with id "1" uses password "Bruun12345"
+    Then the employee with id "1" is logged in
     
-    
-Scenario: User has the wrong password
-    Given the user with IDnum "213432" is not logged in
-    And the password is "wrong password"
-    Then the user with IDnum"213432" login fails
-    And the user with IDnum "213432" is not logged in
-    And the error message "Password or ID is wrong" is given
+Scenario: Employee logout
+    Given the employee with id "1" is logged in
+    When the employee with id "1" logs out
+    Then the employee with id "1" is not logged in
+
+#Alternative use-case(s)
+Scenario: Employee has the wrong password
+    Given the employee with id "1" is not logged in
+    And the employee's password is "Bruun12345"
+    When the employee with id "1" uses password "54321Bruun"
+    Then the error message "Wrong id or password" is given
+    Then the employee with id "1" is not logged in

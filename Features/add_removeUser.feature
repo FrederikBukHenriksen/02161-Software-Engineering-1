@@ -1,30 +1,34 @@
-Feature: Add/remove User
-    Description: A user is added/removed to memberList
+Feature: Add/remove employee
+    Description: Analysis employee is added/removed to/from the employee list
     Actors: Administrator
 
-Scenario: Add a user successfully
-    Given that the administrator is logged in
-    And there is a user with firstName "Andreas", lastName "Bruun", and IDnum "213432"
-    And the user is not on the memberList
-    When the user is added to the memberList
-    Then the user with with firstName "Andreas", lastName "Bruun", and IDnum "213432" is contained in the memberList
-    
-Scenario: Add a user when the administrator is not logged in
-    Given that the administrator is not logged in
-    And there is a user with firstName "Andreas", lastName "Bruun", and IDnum "213432"
-    When the user is added to the memberList
-    Then the error message "Administrator login required" is given
+#Main use-case(s)
+Scenario: Add an employee
+    Given the administrator is logged in
+    And there is an employee with firstName "Andreas", lastName "Bruun"
+    And the employee is not on the employee list    
+    When the employee is added to the employee list
+    Then the employee with with firstName "Andreas", lastName "Bruun", and id "1" is contained in the employee list
 
-Scenario: Remove a user successfully
-    Given that the administrator is logged in
-    And there is a user with firstName "Andreas", lastName "Bruun", and IDnum "213432"
-    And the user is on the memberList
-    When the user is removed from the memberList
-    Then the user with firstName "Andreas", lastName "Bruun", and IDnum "213432" is removed from the memberList
+Scenario: Remove an employee
+    Given the administrator is logged in
+    And there is an employee with firstName "Andreas", lastName "Bruun"
+    And the employee is on the employee list
+    When the employee is removed from the employee list
+    Then the employee with firstName "Andreas", lastName "Bruun", and id "1" is no longer conatined in the employee list
 
+#Alternative use-case(s)
+Scenario: Add an employee when the administrator is not logged in
+    Given the administrator is not logged in
+    And there is an employee with firstName "Andreas", lastName "Bruun"
+    And the employee is not on the employee list
+    When the employee is added to the employee list
+    Then the error message "Administrator login is required" is given
 
-Scenario: Remove a user when the administrator is not logged in
-    Given that the administrator is not logged in
-    And there is a user with firstName "Andreas", lastName "Bruun", and IDnum "213432"
-    When the user is removed from the memberList
-    Then the error message "Administrator login required" is given
+Scenario: Remove an employee when the administrator is not logged in
+    Given the administrator is not logged in
+    And there is an employee with firstName "Andreas", lastName "Bruun"
+    And the employee is on the employee list
+    When the employee is removed from the employee list
+    Then the error message "Administrator login is required" is given
+
