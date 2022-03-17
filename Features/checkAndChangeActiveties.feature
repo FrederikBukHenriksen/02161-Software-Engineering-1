@@ -1,6 +1,6 @@
 Feature: Change activity time estimate
-# Description: An employee changes the time estimate of an activity
-# Actors: Employee
+Description: An employee changes the time estimate of an activity
+Actors: Employee
 
 	# Main scenario
 	Scenario: Change the time estimate of an activity

@@ -4,42 +4,40 @@ Feature: Add and remove activity to a project
 
 #Main use-case(s)
 Scenario: Add activity
-Given the project manager is logged in
-And there is a project titled "Software Development"
-And there is an activity titled "Analysis"
-And the activity is not on the activity list
-When the activity is added to the activity list
-Then the project titled "Software Development" contains an activity titled "Analysis" 
+    Given the project manager is logged in
+    And there is a project titled "Software Development"
+    And there is an activity titled "Analysis"
+    And the activity is not on the activity list
+    When the activity is added to the activity list
+    Then the project titled "Software Development" contains an activity titled "Analysis" 
 
 Scenario: Remove activity
-Given the project manager is logged in
-And there is a project titled "Software Development"
-And the project contains an activity titled "Analysis"
-When the activity is removed from the project
-Then the activity titled "Analysis" is no longer contained in the activity list
+    Given the project manager is logged in
+    And there is a project titled "Software Development"
+    And the project contains an activity titled "Analysis"
+    When the activity is removed from the project
+    Then the activity titled "Analysis" is no longer contained in the activity list
 
 #Alternative use-case(s)
 Scenario: Add activity when the project manager is not logged in
-Given the project manager is not logged in
-And there is a project titled "Software Development"
-And there is an activity titled "Analysis"
-And the activity is not on the activity list
-When the activity is added to the activity list
-Then the error message "Project manager login is required" is given
-
+    Given the project manager is not logged in
+    And there is a project titled "Software Development"
+    And there is an activity titled "Analysis"
+    And the activity is not on the activity list
+    When the activity is added to the activity list
+    Then the error message "Project manager login is required" is given
 
 Scenario: Remove activity when the project manager is not logged in
-Given the project manager is not logged in
-And there is a project titled "Software Development"
-And the project contains an activity titled "Analysis"
-When the activity is removed from the project
-Then the error message "Project manager login is required" is given
+    Given the project manager is not logged in
+    And there is a project titled "Software Development"
+    And the project contains an activity titled "Analysis"
+    When the activity is removed from the project
+    Then the error message "Project manager login is required" is given
 
 Scenario: Add activity which already exists
-Given the project manager is logged in
-And there is a project titled "Software Development"
-And there is an activity titled "Analysis"
-And the activity is on the activity list
-When the activity is added to the activity list
-Then the error message "The activity already exists" is given
-
+    Given the project manager is logged in
+    And there is a project titled "Software Development"
+    And there is an activity titled "Analysis"
+    And the activity is on the activity list
+    When the activity is added to the activity list
+    Then the error message "The activity already exists" is given
