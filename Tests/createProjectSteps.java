@@ -4,7 +4,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-public class ExampleSteps {
+public class createProjectSteps {
 
 	Project project = new Project();
 
