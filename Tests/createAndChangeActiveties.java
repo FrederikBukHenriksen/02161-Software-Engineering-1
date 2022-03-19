@@ -13,12 +13,12 @@ public class createAndChangeActiveties {
 	Project project = new Project();
 	
 	@Given("an employee selects {Activity}")
-	public void selectEmployee(Ativity activity) {
+	public void selectActivity(Ativity activity) {
 		project.setSelectedActivity(activity);
 	}
 	
-	@And("an employee changes the time of the activity to {int}")
-	public void newTimeIsSpecified(int newTime) {
+	@And("an employee changes the budgeted time of the activity to {int}")
+	public void specifyNewTime(int newTime) {
 		project.getSelectedActivity().newTime = newTime;
 	}
 	
@@ -27,7 +27,7 @@ public class createAndChangeActiveties {
 		project.getSelectedActivity().time = project.getSelecteAactivity().newTime;
 	}
 	
-	@Then("the time of the activity is changed to {int}")
+	@Then("the budgeted time of the activity is changed to {int}")
 	public void setNewActivityTime(int newTime) {
 		assertEquals((int) project.getSelectedActivity().time, (int) newTime);
 	}
@@ -38,13 +38,13 @@ public class createAndChangeActiveties {
 		project.setSelectedEmployee(employee);
 	}
 	
-	@And("{Employee} has a list of activeties of positive length")
-	public void checkEmployeeHasActiveties(Employee employee) {
+	@And("the selected employee has a list of activeties of positive length")
+	public void checkEmployeeHasActiveties() {
 		assertTrue(project.getSelectedEmployee().activeties.length() >= 1);
 	}
 	
-	@Then("the system displays the list of activeties of {Employee}")
-	public void returnEmployeeActiveties(Employee employee) {
+	@Then("the system displays the list of activeties of the selected employee")
+	public void returnEmployeeActiveties() {
 		display(project.getSelectedEmployee().activeties);
 	}
 	
@@ -54,13 +54,13 @@ public class createAndChangeActiveties {
 		project.setSelectedEmployee(employee);
 	}
 	
-	@And("{Employee} has a list of activeties of no length")
-	public void checkEmployeeHasActiveties(Employee employee) {
+	@And("the selected employee has a list of activeties of no length")
+	public void checkEmployeeHasActiveties() {
 		assertEquals(project.getSelectedEmployee().activeties.length(), 0);
 	}
 	
-	@Then("the system displays that {Employee} has no assigned activeties")
-	public void noActivetiesFoundMessage(Employee employee) {
-		display(employee.initials + " has no assigned activeties");
+	@Then("the system displays that selected employee has no assigned activeties")
+	public void noActivetiesFoundMessage() {
+		display(project.getSelectedEmployee().initials + " has no assigned activeties");
 	}
 }

@@ -5,11 +5,11 @@ Feature: Check employee activities
     # Main scenario
     Scenario: Check the activeties assigned to another employee
         Given an employee selects <other_employee>
-        And the <other_employee> has a list of activeties of positive length
-        Then the system displays the list of activeties of <other_employee>
+        And the selected employee has a list of activeties of positive length
+        Then the system displays the list of activeties of the selected employee
 
     # Alternative scenario
     Scenario: The chosen employee has no assigned activeties
         Given an employee selects <other_employee>
-        And the <other_employee> has <other_employee.activeties> of no length
-        Then the system displays that the <other_employee> has no assigned activeties
+        And the selected employee has a list of activeties of no length
+        Then the system displays that the selected employee has no assigned activeties
