@@ -1,4 +1,4 @@
-Feature: Create a project
+Feature: delete a project
     Description: An administrator deletes a project
     Actors: administrator
 
