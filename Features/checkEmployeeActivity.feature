@@ -1,15 +1,16 @@
-Feature: Check employee activities
-    Description: An employee checks the activeties of another employee
-    Actors: Employee
+Feature: Check an employees activities
+    Description: An employee checks the activities of another employee
 
     # Main scenario
-    Scenario: Check the activeties assigned to another employee
-        Given an employee selects <other_employee>
-        And the <other_employee> has a list of activeties of positive length
-        Then the system displays the list of activeties of <other_employee>
+    Scenario: Check the activities assigned to another employee
+        Given that employee with id "andr" is logged in
+        And the employee selects another employee with id "nika"
+        And the other employee has an active activity in their list of activities
+        Then the system displays the list of activities of the employee with id "nika"
 
     # Alternative scenario
-    Scenario: The chosen employee has no assigned activeties
-        Given an employee selects <other_employee>
-        And the <other_employee> has <other_employee.activeties> of no length
-        Then the system displays that the <other_employee> has no assigned activeties
+    Scenario: Check the activities assigned to another employee who has no activities
+        Given that employee with id "andr" is logged in
+        And the employee selects another employee with id "nika"
+        And the other employee has no active activity in their list of activities
+        Then the system displays that the employee with id "nika" has no active activities

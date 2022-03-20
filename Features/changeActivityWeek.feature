@@ -1,34 +1,38 @@
 Feature: Change an activity' date
-    Description: Change the start or end date of an activty
-    Actors: activity manager
+    Description: Change the start/end date of an activty
+    Actors: project leader
 
     # Main Scenario:
     Scenario: Set start date of an activity
-        Given the activity manager is logged in
-        And there is a activity titled "Software Development"
-        When the is set to start week "1" and year "2022"
-        Then the activity is set to start week "1" and year "2022"
+        Given that the project leader is logged in
+        And there is a project titled "Software Development" with id "22001"
+        And the project contains an activity titled "Analysis"
+        When the activity's start date is set to week "1" and year "2022"
+        Then the activity's start date is set to week "1" and year "2022"
 
     Scenario: Change start date of an activity
-        Given the activity manager is logged in
-        And there is a activity titled "Software Development"
-        And the activity start date is "1",  and year "2022"
-        When the is set to start week "1", and year "2022"
-        Then the activity is set to start week "1", and year "2022"
+        Given that the project leader is logged in
+        And there is a project titled "Software Development" with id "22001"
+        And the project contains an activity titled "Analysis"
+        And the start date of activity is set to week "1",  and year "2022"
+        When the activity's new start date is set to week "2", and year "2022"
+        Then the activity's start date is set to week "2", and year "2022"
 
     #Alternative use-case(s)
-    Scenario: Set start date of an activity when the activity manager is not logged in
-        Given the activity manager is not logged in
-        And there is a activity titled "Software Development"
-        When the is set to start week "1", and year "2022"
-        Then the error message "activity manager login is required" is given
+    Scenario: Set start date of an activity when the project leader is not logged in
+        Given that the project leader is not logged in
+        And there is a project titled "Software Development" with id "22001"
+        And the project contains an activity titled "Analysis"
+        When the activity's start date is set to week "1", and year "2022"
+        Then the error message "activity leader login is required" is given
 
-    Scenario: Change start date of an activity when the activity manager is not logged in
-        Given the activity manager is not logged in
-        And there is a activity titled "Software Development"
-        And the activity start date is "1", and year "2022"
-        When the is set to start week "1", and year "2022"
-        Then the error message "activity manager login is required" is given
+    Scenario: Change start date of an activity when the project leader is not logged in
+        Given that the project leader is not logged in
+        And there is a project titled "Software Development" with id "22001"
+        And the project contains an activity titled "Analysis"
+        And the activity's start date is set to week "1", and year "2022"
+        When the activity's new start date is set to week "2", and year "2022"
+        Then the error message "activity leader login is required" is given
 
 
 

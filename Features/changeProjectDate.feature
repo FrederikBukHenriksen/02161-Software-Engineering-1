@@ -1,34 +1,34 @@
-Feature: Change a project's date
-    Description: Change the start or end date of a project
-    Actors: Project manager
+Feature: Change a project's start date
+    Description: Change the start date of a project
+    Actors: Project leader
 
     # Main Scenario:
     Scenario: Set start date of a project
-        Given the project manager is logged in
-        And there is a project titled "Software Development"
-        When the is set to start day "1", month "1", and year "2022"
-        Then the project is set to start day "1", month "1", and year "2022"
+        Given that the project leader is logged in
+        And there is a project titled "Software Development" with id "22001"
+        When the project's start date is set to day "1", month "1", and year "2022"
+        Then the project's start date is set to day "1", month "1", and year "2022"
 
     Scenario: Change start date of a project
-        Given the project manager is logged in
-        And there is a project titled "Software Development"
-        And the project start date is "1", month "1", and year "2030"
-        When the is set to start day "1", month "1", and year "2022"
-        Then the project is set to start day "1", month "1", and year "2022"
+        Given that the project leader is logged in
+        And there is a project titled "Software Development" with id "22001"
+        And the project's start date is set to day "1", month "1", and year "2022"
+        When the project's start date is set to day "1", month "12", and year "2022"
+        Then the project's start date is set to day "1", month "12", and year "2022"
 
     #Alternative use-case(s)
-    Scenario: Set start date of a project when the project manager is not logged in
-        Given the project manager is not logged in
-        And there is a project titled "Software Development"
-        When the is set to start day "1", month "1", and year "2022"
-        Then the error message "Project manager login is required" is given
+    Scenario: Set start date of a project when the project leader is not logged in
+        Given that the project leader is logged in
+        And there is a project titled "Software Development" with id "22001"
+        When the project's start date is set to day "1", month "1", and year "2022"
+        Then the error message "Project leader login is required" is given
 
-    Scenario: Change start date of a project when the project manager is not logged in
-        Given the project manager is not logged in
-        And there is a project titled "Software Development"
-        And the project start date is "1", month "1", and year "2030"
-        When the is set to start day "1", month "1", and year "2022"
-        Then the error message "Project manager login is required" is given
+    Scenario: Change start date of a project when the project leader is not logged in
+        Given that the project leader is logged in
+        And there is a project titled "Software Development" with id "22001"
+        And the project's start date is set to day "1", month "1", and year "2022"
+        When the project's start date is set to day "1", month "12", and year "2022"
+        Then the error message "Project leader login is required" is given
 
 
 

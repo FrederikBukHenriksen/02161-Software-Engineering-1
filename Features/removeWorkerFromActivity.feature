@@ -1,24 +1,24 @@
-Feature: Femove worker from an activity
-    Description: An employee removed from an activitiy
-    Actors: Project manager
+Feature: remove employee from an activity
+    Description: remove an employee from an activity
+    Actors: Project leader
 
     # Main use-case(s)
-    Scenario: Remove activity employee
-        Given the project manager is logged in
-        And there is a project titled "Software Development"
+    Scenario: Remove an employee from an activity
+        Given that the project leader is logged in
+        And there is a project titled "Software Development" with id "22001"
         And the project contains an activity titled "Analysis"
-        And the activity contains an activitiy employee with firstName "Andreas", lastName "Bruun", and id "1"
-        When the activity employee is removed from the activity employee list
-        Then the activity employee with firstName "Andreas", lastName "Bruun", and id "1" is no longer conatined in the activity employee list
+        And the activity contains an employee with id "andr" in it's list of employees
+        When the employee is removed from the activity's list of employees
+        Then the employee with id "andr" is no longer in the activity's list of employees
 
     # Alternative activity
-    Scenario: Remove activity employee but the project manager is not signed in
-        Given the project manager is logged in
-        And there is a project titled "Software Development"
+    Scenario: Remove employee from the activity but the project leader is not signed in
+        Given that the project leader is not logged in
+        And there is a project titled "Software Development" with id "22001"
         And the project contains an activity titled "Analysis"
-        And the activity contains an activitiy employee with firstName "Andreas", lastName "Bruun", and id "1"
-        When the activity employee is removed from the activity employee list
-        Then the error message "Project manager login is required" is given
+        And the activity contains an employee with id "andr"
+        When the employee is removed from the activity's list of employees
+        Then the error message "Project leader login is required" is given
 
 
 
