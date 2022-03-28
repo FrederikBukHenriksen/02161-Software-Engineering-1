@@ -1,17 +1,11 @@
 package dtu.calculator;
 
-public class Employee {
-
-    String initials;
-    String password;
+public class Employee extends User {
 
     public Employee(String initials) {
-        this.initials = initials;
-        this.password = generatePassword();
+        super(initials);
     }
 
-    public String generatePassword() {
-        return "pw1234";
-    }
+
 
 }
