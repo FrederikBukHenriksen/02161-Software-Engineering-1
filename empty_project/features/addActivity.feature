@@ -1,3 +1,4 @@
+#Skrevet af Frederik Buk Henriksen
 Feature: Add an activity to a project
     Description: An activity is added to a project
     Actors: Project leader
