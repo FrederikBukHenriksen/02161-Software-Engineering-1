@@ -11,14 +11,7 @@ public class User {
     }
 
     public String generatePassword() {
-        return "pw1234";
-    }
-
-    public boolean Login(String initals, String password) {
-        if (this.initials.equals(initals) && this.password.equals(password)) {
-            return true;
-        }
-        return false;
+        return "01234";
     }
 
 }
