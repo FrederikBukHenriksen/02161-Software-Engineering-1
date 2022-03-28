@@ -1,3 +1,5 @@
+# Skrevet af Gustav Grøn Risager Clausen
+
 Feature: Create a project
     sDescription: An administrator creates a project which employees can be assigned to.
     Actors: administrator

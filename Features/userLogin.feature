@@ -1,3 +1,4 @@
+#Skrevet af Andreas Brunn
 Feature: Employee login
     Description: The user can login and logout from the site
     Actor: Employee
