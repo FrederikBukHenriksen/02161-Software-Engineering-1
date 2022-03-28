@@ -4,7 +4,7 @@ public class Controller {
 
     ProjectPlanner projectPlanner;
 
-    public Controller() throws Exception {
+    public Controller() {
         ProjectPlanner projectPlanner = new ProjectPlanner();
         // projectPlanner.addEmployee("Frederik");
         // projectPlanner.createProject("Uni");
