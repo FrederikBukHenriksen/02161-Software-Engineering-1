@@ -4,9 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProjectPlanner {
-    ArrayList<Project> projects = new ArrayList<>();
-    ArrayList<Employee> employees = new ArrayList<>();
-    ArrayList<Administrator> administrators = new ArrayList<>();
+    public ArrayList<Project> projects = new ArrayList<>();
+    public ArrayList<Employee> employees = new ArrayList<>();
+    public Administrator administrator;
+
+    public ProjectPlanner() {
+    }
+
+    User loggedIn;
 
     public void createProject(String title) {
         projects.add(new Project(title));
@@ -24,7 +29,7 @@ public class ProjectPlanner {
         }
     }
 
-    private boolean uniqueInitials(String initials) {
+    public boolean uniqueInitials(String initials) {
         for (Employee employee : employees) {
             if (employee.initials.equalsIgnoreCase(initials)) {
                 return false;

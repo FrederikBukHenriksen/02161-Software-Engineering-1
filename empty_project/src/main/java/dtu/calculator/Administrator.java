@@ -1,8 +1,11 @@
 package dtu.calculator;
 
-public class Administrator {
+public class Administrator extends User {
 
-    public Administrator() {
+    public Administrator(String initials, String password) {
+        super(initials);
+        this.password = password;
     }
+
 
 }
