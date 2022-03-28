@@ -1,3 +1,4 @@
+#skrevet af Frederik Buk Henriksen
 Feature: Add an employee to an activity
     Description: An employee is added to an activity
     Actors: Project leader

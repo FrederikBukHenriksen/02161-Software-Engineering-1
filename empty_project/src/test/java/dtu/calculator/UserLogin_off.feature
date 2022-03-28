@@ -1,3 +1,4 @@
+#Skrevet af Andreas Bruun
 Feature: Employee logout
     Description: The user can logout of the system
     Actor: Employee
