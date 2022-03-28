@@ -16,11 +16,11 @@ public class ProjectPlanner {
         projects.remove(project);
     }
 
-    public void addEmployee(String initials) throws Exception {
+    public void addEmployee(String initials) {
         if (uniqueInitials(initials)) {
             employees.add(new Employee(initials.toUpperCase()));
         } else {
-            throw new Exception("Initals are already in use by another employee.");
+            // throw new Exception("Initals are already in use by another employee.");
         }
     }
 

@@ -16,11 +16,11 @@ public class Project {
         id = getNextId();
     }
 
-    public void createActivity(String title) throws Exception {
+    public void createActivity(String title) {
         if (uniqueTitle(title)) {
             activities.add(new Activity(title));
         } else {
-            throw new Exception("Tile is already in use by another activity.");
+            // throw new Exception("Tile is already in use by another activity.");
         }
     }
 
