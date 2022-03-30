@@ -1,7 +1,6 @@
 package dtu.calculator;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Test.*;
 import java.util.ArrayList;
 
 import io.cucumber.java.en.Given;
@@ -31,8 +30,7 @@ public class addEmployeeSteps {
         assertTrue(projectPlanner.uniqueInitials(string));
     }
 
-        @When("the employee {string} is added to the list of employees")
-        @Test(expected = IllegalStateException.class)
+    @When("the employee {string} is added to the list of employees")
         public void the_employee_is_added_to_the_list_of_employees(String string) throws Exception {
             projectPlanner.addEmployee(string);
         }
