@@ -5,14 +5,14 @@ import java.util.List;
 import java.util.function.BooleanSupplier;
 
 public class ProjectPlanner {
-    public ArrayList<Project> projects = new ArrayList<>();
-    public ArrayList<Employee> employees = new ArrayList<>();
-    public Administrator administrator;
+    private ArrayList<Project> projects = new ArrayList<>();
+    private ArrayList<User> users = new ArrayList<>();
+
+    private User loggedIn;
 
     public ProjectPlanner() {
+        users.add(new Administrator("HUBE", "PW1234")); // Create the administrator profile.
     }
-
-    User loggedIn;
 
     public void login(String id, String password) {
 
@@ -26,18 +26,18 @@ public class ProjectPlanner {
         projects.remove(project);
     }
 
-    public void addEmployee(String initials) throws Exception {
+    public void addEmployee(String initials) {
         if (administratorLoggedIn()) {
             if (uniqueInitials(initials)) {
-                employees.add(new Employee(initials.toUpperCase()));
+                users.add(new Employee(initials.toUpperCase()));
             }
         } else {
-            throw new Exception("Initals are already in use by another employee.");
+            throw new IllegalStateException();
         }
     }
 
     public boolean uniqueInitials(String initials) {
-        for (Employee employee : employees) {
+        for (User employee : users) {
             if (employee.initials.equalsIgnoreCase(initials)) {
                 return false;
             }
@@ -46,17 +46,14 @@ public class ProjectPlanner {
     }
 
     public void removeEmployee(Employee employee) {
-        employees.remove(employee);
+        users.remove(employee);
     }
 
     public void logIn(String initals, String password) {
-        for (User employee : employees) {
+        for (User employee : users) {
             if (employee.initials.equals(initals) && employee.password.equals(password)) {
                 loggedIn = employee;
             }
-        }
-        if (administrator.initials.equals(initals) && administrator.password.equals(password)) {
-            loggedIn = administrator;
         }
     }
 
@@ -76,6 +73,14 @@ public class ProjectPlanner {
             return true;
         }
         return false;
+    }
+
+    public User getLoggedIn() {
+        return loggedIn;
+    }
+
+    public ArrayList<User> getUsers() {
+        return users;
     }
 
 }
