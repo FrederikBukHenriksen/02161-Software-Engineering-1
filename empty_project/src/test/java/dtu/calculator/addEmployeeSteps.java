@@ -10,11 +10,12 @@ import io.cucumber.java.en.When;
 public class addEmployeeSteps {
 
     ProjectPlanner projectPlanner;
+    ErrorMessageHolder errorMessageHolder;
 
     public addEmployeeSteps() {
         projectPlanner = new ProjectPlanner();
+        errorMessageHolder = new ErrorMessageHolder();
     }
-
 
     @Given("that the administrator is logged in")
     public void that_the_administrator_is_logged_in() {
@@ -31,9 +32,13 @@ public class addEmployeeSteps {
     }
 
     @When("the employee {string} is added to the list of employees")
-        public void the_employee_is_added_to_the_list_of_employees(String string) throws Exception {
+    public void the_employee_is_added_to_the_list_of_employees(String string) {
+        try {
             projectPlanner.addEmployee(string);
+        } catch (Exception e) {
+            errorMessageHolder.setErrorMessage(e.getMessage());
         }
+    }
 
         @Then("the employee with id {string} is added to the list of employees")
         public void the_employee_with_with_id_is_added_to_the_list_of_employees(String string) {
@@ -50,7 +55,7 @@ public class addEmployeeSteps {
 
         @Then("the error message {string} is given")
         public void the_error_message_is_given(String string) {
-            assertTrue(true); // TODO: implementering af exception
+            assertEquals(string, errorMessageHolder.getErrorMessage());
         }
 
         // Scenario: Add an employee when it already exists

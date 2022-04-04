@@ -26,13 +26,15 @@ public class ProjectPlanner {
         projects.remove(project);
     }
 
-    public void addEmployee(String initials) {
+    public void addEmployee(String initials) throws Exception {
         if (administratorLoggedIn()) {
             if (uniqueInitials(initials)) {
                 users.add(new Employee(initials.toUpperCase()));
+            } else {
+                throw new Exception("Employee is already registered");
             }
         } else {
-            throw new IllegalStateException();
+            throw new Exception("Administrator login is required");
         }
     }
 
