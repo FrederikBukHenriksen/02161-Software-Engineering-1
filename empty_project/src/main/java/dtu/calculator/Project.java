@@ -24,9 +24,21 @@ public class Project {
         }
     }
 
+    public void addActivity(String title) throws Exception {
+        if (true) { // placeholder------------------------------------------------------
+            if (uniqueTitle(title)) {
+                activities.add(new Activity(title));
+            } else {
+                throw new Exception("The activity already exists");
+            }
+        } else {
+            throw new Exception("Project leader login is required");
+        }
+    }
+
     private boolean uniqueTitle(String title) {
-        for (Activity activity : activities) {
-            if (activity.title.equalsIgnoreCase(title)) {
+        for (Activity act : activities) {
+            if (act.title.equalsIgnoreCase(title)) {
                 return false;
             }
         }
@@ -39,6 +51,10 @@ public class Project {
 
     private int getNextId() {
         return 0;
+    }
+
+    public ArrayList<Activity> getActivities() {
+        return activities;
     }
 
 }
