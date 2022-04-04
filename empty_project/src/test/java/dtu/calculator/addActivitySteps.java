@@ -53,18 +53,13 @@ public class addActivitySteps {
     }
 
     @Given("the activity is already on the list of activities")
-    public void the_activity_is_already_on_the_list_of_activities() {
-        // assertFalse(project.getActivities().stream().noneMatch(act -> act.title.equalsIgnoreCase(activity.title)));
-        try {
-            project.addActivity(activity.title);
-        } catch (Exception e) {
-            errorMessageHolder.setErrorMessage(e.getMessage());
-        }
+    public void the_activity_is_already_on_the_list_of_activities() throws Exception {
+        project.addActivity(activity.title);
     }
 
-    // this exists in addEmployeeSteps already, so it's not included here
-    // @Then("the error message {string} is given")
-    // public void the_error_message_is_given(String errorMsg) {
-    //     assertEquals(errorMsg, errorMessageHolder.getErrorMessage());
-    // }
+    // this exists in addEmployeeSteps already, so it's not included here -- Nevermind, using the pre-existing one causes issues
+    @Then("the error message {string} is returned")
+    public void the_error_message_is_returned(String errorMsg) {
+        assertEquals(errorMsg, errorMessageHolder.getErrorMessage());
+    }
 }

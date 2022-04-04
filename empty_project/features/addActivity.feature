@@ -12,14 +12,14 @@ Feature: Add an activity to a project
         When the activity is added to the list of activities
         Then the activity exists in the list of activities for the project
 
-    # # Alternative scenario:
-    # Scenario: Add activity when the project leader is not logged in
-    #     Given that the project leader is not logged in
-    #     And there is a project titled "Software Development" with id "22001"
-    #     And there is an activity titled "Analysis"
-    #     And the activity is not on the list of activities
-    #     When the activity is added to the list of activities
-    #     Then the error message "Project leader login is required" is given
+    # Alternative scenario:
+    Scenario: Add activity when the project leader is not logged in
+        Given that the project leader is not logged in
+        And there is a project titled "Software Development" with id "22001"
+        And there is an activity titled "Analysis"
+        And the activity is not on the list of activities
+        When the activity is added to the list of activities
+        Then the error message "Project leader login is required" is returned
 
     # Alternative scenario:
     Scenario: Add activity which already exists
@@ -28,4 +28,4 @@ Feature: Add an activity to a project
         And there is an activity titled "Analysis"
         And the activity is already on the list of activities
         When the activity is added to the list of activities
-        Then the error message "The activity already exists" is given
+        Then the error message "The activity already exists" is returned
