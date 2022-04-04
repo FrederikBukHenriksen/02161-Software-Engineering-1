@@ -14,12 +14,13 @@ public class ProjectPlanner {
         users.add(new Administrator("HUBE", "PW1234")); // Create the administrator profile.
     }
 
-    public void login(String id, String password) {
-
-    }
-
-    public void createProject(String title) {
-        projects.add(new Project(title));
+    public void createProject(String title) throws Exception {
+        if (administratorLoggedIn()) {
+            projects.add(new Project(title));
+        } else {
+            System.out.println("Lolcat");
+            throw new Exception("Administrator login is required");
+        }
     }
 
     public void removeProject(Project project) {
@@ -41,6 +42,15 @@ public class ProjectPlanner {
     public boolean uniqueInitials(String initials) {
         for (User employee : users) {
             if (employee.initials.equalsIgnoreCase(initials)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean uniqueProject(String title, int id) {
+        for (Project project : projects) {
+            if (project.title.equalsIgnoreCase(title) && project.id == id) {
                 return false;
             }
         }
@@ -83,6 +93,10 @@ public class ProjectPlanner {
 
     public ArrayList<User> getUsers() {
         return users;
+    }
+
+    public ArrayList<Project> getProjects() {
+        return projects;
     }
 
 }

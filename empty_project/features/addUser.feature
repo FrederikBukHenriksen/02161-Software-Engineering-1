@@ -19,7 +19,7 @@ Feature: Add/remove employee
     #Alternative use-case(s)
     Scenario: Add an employee when it already exists
         Given that the administrator is logged in
-        And the employee "andr" is on the list of employees
+        And the employee "andr" already exists on the list
         When the employee "andr" is added to the list of employees
         Then the employee "andr" only appears once
         And the error message "Employee is already registered" is given

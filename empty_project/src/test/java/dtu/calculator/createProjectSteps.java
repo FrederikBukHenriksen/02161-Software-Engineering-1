@@ -1,44 +1,78 @@
-// import static org.junit.Assert.assertEquals;
-// import io.cucumber.java.en.Given;
-// import io.cucumber.java.en.And;
-// import io.cucumber.java.en.Then;
-// import io.cucumber.java.en.When;
+package dtu.calculator;
 
-// public class createProjectSteps {
+import static org.junit.jupiter.api.Assertions.*;
+import java.util.ArrayList;
 
-// Project project = new Project();
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 
-// @Given("the first input is {String}")
-// public void theFirstInputIs(String project_name) {
-// project.setName(project_name);
-// }
+public class createProjectSteps {
 
-// @And("the second input is {String}")
-// public void theSecondInputIs(String project_start_date) {
-// project.setStartDate(project_start_date);
-// }
+    ProjectPlanner projectPlanner;
+    ErrorMessageHolder errorMessageHolder;
 
-// @And("the third input is {String}")
-// public void theThirdInputIs(String project_end_date) {
-// project.setEndDate(project_end_date);
-// }
+    public createProjectSteps() {
+        projectPlanner = new ProjectPlanner();
+        errorMessageHolder = new ErrorMessageHolder();
+    }
 
-// @When("the add button is pressed")
-// public void theAddButtonIsPressed() {
-// project.add();
-// }
+    @Given("that an administrator is logged in")
+    public void that_an_administrator_is_logged_in() {
+        projectPlanner.logIn("HUBE", "PW1234");
+        assertTrue(projectPlanner.administratorLoggedIn());
+    }
 
-// // Should test if the project is in the Project ArrayList. However, i'm not
-// sure
-// // yet if this is saved in an Arraylist....
-// @Then("{String} is shown on the display.")
-// public void theIsShown(Integer number) {
-// for(int i = Calender.ArrayList.length; i < calender.Arraylist.length + 1;
-// i++) {
-// if (project.getId() == Calender.ArrayList.get(i)) {
-// // assert true.
-// }
+    @Given("the project {string} with id {int} does not already exists on the list")
+    public void the_project_does_not_already_exist(String string, int id) {
+        assertTrue(projectPlanner.uniqueProject(string, id));
+    }
 
-// }
+    @When("create a project titled {string}")
+    public void the_administrator_creates_a_project_titled_with_id(String title) {
+        try {
+            projectPlanner.createProject(title);
+        } catch (Exception e) {
+            errorMessageHolder.setErrorMessage(e.getMessage());
+        }
 
-// }
+    }
+
+    @Then("the project titled {string} with id {int} is be added to the list of projects")
+    public void the_project_titled_with_id_is_be_added_to_the_list_of_projects(String title, Integer id) {
+        boolean found = false;
+        for (Project project : projectPlanner.getProjects()) {
+            if (project.title.equalsIgnoreCase(title) && project.id == id) {
+                found = true;
+            }
+        }
+        assertTrue(found);
+    }
+
+    // The project is already created with a new ID
+
+    @Given("a project {string} already exists on the list")
+    public void the_project_already_exists_on_the_list(String string) throws Exception {
+        projectPlanner.createProject(string);
+        assertTrue(projectPlanner.getProjects().stream().anyMatch(project -> project.title.equalsIgnoreCase(string)));
+    }
+
+    // Administrator not logged in
+
+    @Given("that an administrator not is logged in")
+    public void that_an_administrator_not_is_logged_in() {
+        projectPlanner.logOut();
+    }
+
+    @Then("the project titled {string} with id {int} is not added to the list of projects")
+    public void the_project_titled_with_id_is_not_added_to_the_list_of_projects(String title, Integer id) {
+        boolean found = false;
+        for (Project project : projectPlanner.getProjects()) {
+            if (project.title.equalsIgnoreCase(title) || project.id == id) {
+                found = true;
+            }
+        }
+        assertFalse(found);
+    }
+
+}
