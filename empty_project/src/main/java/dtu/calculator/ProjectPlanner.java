@@ -2,16 +2,21 @@ package dtu.calculator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BooleanSupplier;
 
 public class ProjectPlanner {
-    public ArrayList<Project> projects = new ArrayList<>();
-    public ArrayList<Employee> employees = new ArrayList<>();
-    public Administrator administrator;
+    private ArrayList<Project> projects = new ArrayList<>();
+    private ArrayList<User> users = new ArrayList<>();
+
+    private User loggedIn;
 
     public ProjectPlanner() {
+        users.add(new Administrator("HUBE", "PW1234")); // Create the administrator profile.
     }
 
-    User loggedIn;
+    public void login(String id, String password) {
+
+    }
 
     public void createProject(String title) {
         projects.add(new Project(title));
@@ -21,16 +26,20 @@ public class ProjectPlanner {
         projects.remove(project);
     }
 
-    public void addEmployee(String initials) {
-        if (uniqueInitials(initials)) {
-            employees.add(new Employee(initials.toUpperCase()));
+    public void addEmployee(String initials) throws Exception {
+        if (administratorLoggedIn()) {
+            if (uniqueInitials(initials)) {
+                users.add(new Employee(initials.toUpperCase()));
+            } else {
+                throw new Exception("Employee is already registered");
+            }
         } else {
-            // throw new Exception("Initals are already in use by another employee.");
+            throw new Exception("Administrator login is required");
         }
     }
 
     public boolean uniqueInitials(String initials) {
-        for (Employee employee : employees) {
+        for (User employee : users) {
             if (employee.initials.equalsIgnoreCase(initials)) {
                 return false;
             }
@@ -39,6 +48,41 @@ public class ProjectPlanner {
     }
 
     public void removeEmployee(Employee employee) {
-        employees.remove(employee);
+        users.remove(employee);
     }
+
+    public void logIn(String initals, String password) {
+        for (User employee : users) {
+            if (employee.initials.equals(initals) && employee.password.equals(password)) {
+                loggedIn = employee;
+            }
+        }
+    }
+
+    public void logOut() {
+        loggedIn = null;
+    }
+
+    public boolean administratorLoggedIn() {
+        if (loggedIn instanceof Administrator) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean employeeLoggedIn() {
+        if (loggedIn instanceof Employee) {
+            return true;
+        }
+        return false;
+    }
+
+    public User getLoggedIn() {
+        return loggedIn;
+    }
+
+    public ArrayList<User> getUsers() {
+        return users;
+    }
+
 }

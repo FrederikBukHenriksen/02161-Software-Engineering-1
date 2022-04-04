@@ -2,8 +2,8 @@ package dtu.calculator;
 
 public class User {
 
-    String initials;
-    String password;
+    protected String initials;
+    protected String password;
 
     public User(String initials) {
         this.initials = initials;
@@ -11,14 +11,11 @@ public class User {
     }
 
     public String generatePassword() {
-        return "pw1234";
+        return "01234";
     }
 
-    public boolean Login(String initals, String password) {
-        if (this.initials.equals(initals) && this.password.equals(password)) {
-            return true;
-        }
-        return false;
+    public String getInitials() {
+        return initials;
     }
 
 }
