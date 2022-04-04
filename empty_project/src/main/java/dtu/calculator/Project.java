@@ -6,6 +6,7 @@ import java.util.GregorianCalendar;
 public class Project {
 
     String title;
+    static int idIncrement = 0;
     int id;
     GregorianCalendar startTime;
     Employee projectLeader;
@@ -38,7 +39,9 @@ public class Project {
     }
 
     private int getNextId() {
-        return 0;
+        id = idIncrement;
+        idIncrement++;
+        return id;
     }
 
 }

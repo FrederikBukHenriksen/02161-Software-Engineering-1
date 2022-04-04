@@ -21,7 +21,6 @@ public class addEmployeeSteps {
     public void that_the_administrator_is_logged_in() {
 
         projectPlanner.logIn("HUBE", "PW1234");
-        assertEquals("HUBE", projectPlanner.getLoggedIn().getInitials());
         assertTrue(projectPlanner.administratorLoggedIn());
 
     }
@@ -60,7 +59,7 @@ public class addEmployeeSteps {
 
         // Scenario: Add an employee when it already exists
 
-        @Given("the employee {string} is on the list of employees")
+        @Given("the employee {string} already exists on the list")
         public void the_employee_is_on_the_list_of_employees(String string) throws Exception {
             projectPlanner.addEmployee(string);
         }
