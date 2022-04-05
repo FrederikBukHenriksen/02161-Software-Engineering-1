@@ -12,16 +12,11 @@ public class createProjectSteps {
     ProjectPlanner projectPlanner;
     ErrorMessageHolder errorMessageHolder;
 
-    public createProjectSteps() {
-        projectPlanner = new ProjectPlanner();
-        errorMessageHolder = new ErrorMessageHolder();
+    public createProjectSteps(ProjectPlanner projectplanner, ErrorMessageHolder errorMessageHolder) {
+        this.projectPlanner = projectplanner;
+        this.errorMessageHolder = errorMessageHolder;
     }
 
-    @Given("that an administrator is logged in")
-    public void that_an_administrator_is_logged_in() {
-        projectPlanner.logIn("HUBE", "PW1234");
-        assertTrue(projectPlanner.administratorLoggedIn());
-    }
 
     @Given("the project {string} with id {int} does not already exists on the list")
     public void the_project_does_not_already_exist(String string, int id) {
@@ -59,10 +54,7 @@ public class createProjectSteps {
 
     // Administrator not logged in
 
-    @Given("that an administrator not is logged in")
-    public void that_an_administrator_not_is_logged_in() {
-        projectPlanner.logOut();
-    }
+
 
     @Then("the project titled {string} with id {int} is not added to the list of projects")
     public void the_project_titled_with_id_is_not_added_to_the_list_of_projects(String title, Integer id) {

@@ -6,9 +6,10 @@ import java.util.function.BooleanSupplier;
 
 public class ProjectPlanner {
     private ArrayList<Project> projects = new ArrayList<>();
-    private ArrayList<User> users = new ArrayList<>();
+    public ArrayList<User> users = new ArrayList<>();
+    // public DateServer dateServer = new DateServer();
 
-    private User loggedIn;
+    public static User loggedIn;
 
     public ProjectPlanner() {
         users.add(new Administrator("HUBE", "PW1234")); // Create the administrator profile.
@@ -16,9 +17,8 @@ public class ProjectPlanner {
 
     public void createProject(String title) throws Exception {
         if (administratorLoggedIn()) {
-            projects.add(new Project(title));
+            projects.add(new Project(title, this));
         } else {
-            System.out.println("Lolcat");
             throw new Exception("Administrator login is required");
         }
     }
@@ -29,11 +29,23 @@ public class ProjectPlanner {
 
     public void addEmployee(String initials) throws Exception {
         if (administratorLoggedIn()) {
-            if (uniqueInitials(initials)) {
-                users.add(new Employee(initials.toUpperCase()));
+            if (initials.length() == 4) {
+                if (uniqueInitials(initials)) {
+                    users.add(new Employee(initials.toUpperCase()));
+                } else {
+                    throw new Exception("Initals are already in use");
+                }
             } else {
-                throw new Exception("Employee is already registered");
+                throw new Exception("Initials must be four letters");
             }
+        } else {
+            throw new Exception("Administrator login is required");
+        }
+    }
+
+    public void removeEmployee(User user) throws Exception {
+        if (administratorLoggedIn()) {
+            users.remove(user);
         } else {
             throw new Exception("Administrator login is required");
         }
@@ -57,9 +69,7 @@ public class ProjectPlanner {
         return true;
     }
 
-    public void removeEmployee(Employee employee) {
-        users.remove(employee);
-    }
+
 
     public void logIn(String initals, String password) {
         for (User employee : users) {
@@ -93,6 +103,18 @@ public class ProjectPlanner {
 
     public ArrayList<User> getUsers() {
         return users;
+    }
+
+    public User getUser(String initials) throws Exception {
+        User found = null;
+        for (User user : getUsers()) {
+            if (user.initials.equalsIgnoreCase(initials))
+                found = user;
+        }
+        if (found == null) {
+            throw new Exception("User does not exist");
+        }
+        return found;
     }
 
     public ArrayList<Project> getProjects() {
