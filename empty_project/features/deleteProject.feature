@@ -4,9 +4,8 @@ Feature: delete a project
 
     # Main Scenario:
     Scenario: delete a project
-        Given that an administrator is logged in
+        Given an administrator is logged in
         And has seleted project titled "Software Development" with id "22001"
-        And the project is in the list of active projects
         When administrator set the status of the project to inactive
         Then the project's status is set to inactive
 
