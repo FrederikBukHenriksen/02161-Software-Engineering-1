@@ -8,13 +8,21 @@ import io.cucumber.java.en.When;
 
 public class addActivitySteps {
 
+    ProjectPlanner pm = new ProjectPlanner();
     Project project;
     Activity activity;
     ErrorMessageHolder errorMessageHolder = new ErrorMessageHolder();
     
     @Given("that the project leader is logged in")
-    public void that_the_project_leader_is_logged_in() {
-        assertTrue(true); // placeholder-------------------------------------------------------------------------------------------------------
+    public void that_the_project_leader_is_logged_in() throws Exception{
+        pm.logIn("HUBE", "PW1234");
+        pm.addEmployee("EMPL");
+
+        project.projectLeader = (Employee) pm.getUsers().get(pm.getUsers().size()-1); // ugly way to get latest added employee
+        pm.logIn("EMPL", "01234"); // Update logIn call later-------------------------------------------------------------------------------------
+
+        assertEquals("EMPL", pm.getLoggedIn().getInitials());
+        assertTrue(pm.employeeLoggedIn() && project.projectLeader == pm.getLoggedIn());
     }
 
     @Given("there is a project titled {string} with id {string}")
@@ -48,8 +56,15 @@ public class addActivitySteps {
     }
 
     @Given("that the project leader is not logged in")
-    public void that_the_project_leader_is_not_logged_in() {
-        assertFalse(false); // placeholder-----------------------------------------------------------------------------------------------------
+    public void that_the_project_leader_is_not_logged_in() throws Exception {
+        pm.logIn("HUBE", "PW1234");
+        pm.addEmployee("EMPL");
+
+        project.projectLeader = null;
+        pm.logIn("EMPL", "01234"); // Update logIn call later-------------------------------------------------------------------------------------
+
+        assertEquals("EMPL", pm.getLoggedIn().getInitials());
+        assertFalse(pm.employeeLoggedIn() && project.projectLeader == pm.getLoggedIn());
     }
 
     @Given("the activity is already on the list of activities")

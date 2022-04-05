@@ -5,8 +5,8 @@ Feature: Add an activity to a project
 
     # Main scenario
     Scenario: Add activity
-        Given that the project leader is logged in
-        And there is a project titled "Software Development" with id "22001"
+        Given there is a project titled "Software Development" with id "22001"
+        And that the project leader is logged in
         And there is an activity titled "Analysis"
         And the activity is not on the list of activities
         When the activity is added to the list of activities
@@ -14,8 +14,8 @@ Feature: Add an activity to a project
 
     # Alternative scenario:
     Scenario: Add activity when the project leader is not logged in
-        Given that the project leader is not logged in
-        And there is a project titled "Software Development" with id "22001"
+        Given there is a project titled "Software Development" with id "22001"
+        And that the project leader is not logged in
         And there is an activity titled "Analysis"
         And the activity is not on the list of activities
         When the activity is added to the list of activities
@@ -23,8 +23,8 @@ Feature: Add an activity to a project
 
     # Alternative scenario:
     Scenario: Add activity which already exists
-        Given that the project leader is logged in
-        And there is a project titled "Software Development" with id "22001"
+        Given there is a project titled "Software Development" with id "22001"
+        And that the project leader is logged in
         And there is an activity titled "Analysis"
         And the activity is already on the list of activities
         When the activity is added to the list of activities
