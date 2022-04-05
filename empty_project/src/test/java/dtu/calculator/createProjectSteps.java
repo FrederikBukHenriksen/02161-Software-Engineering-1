@@ -2,6 +2,7 @@ package dtu.calculator;
 
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -17,9 +18,13 @@ public class createProjectSteps {
         this.errorMessageHolder = errorMessageHolder;
     }
 
+    @Given("the date is year {int} month {int} day {int}")
+    public void the_date_is_year_month_day(Integer year, Integer month, Integer day) {
+        DateServer.setDate(2022, 1, 1);
+    }
 
-    @Given("the project {string} with id {int} does not already exists on the list")
-    public void the_project_does_not_already_exist(String string, int id) {
+    @Given("the project {string} with id {string} does not already exists on the list")
+    public void the_project_does_not_already_exist(String string, String id) {
         assertTrue(projectPlanner.uniqueProject(string, id));
     }
 
@@ -33,38 +38,31 @@ public class createProjectSteps {
 
     }
 
-    @Then("the project titled {string} with id {int} is be added to the list of projects")
-    public void the_project_titled_with_id_is_be_added_to_the_list_of_projects(String title, Integer id) {
-        boolean found = false;
-        for (Project project : projectPlanner.getProjects()) {
-            if (project.title.equalsIgnoreCase(title) && project.id == id) {
-                found = true;
-            }
-        }
-        assertTrue(found);
+    @Then("the project {string} with id {string} is added to the list of projects")
+    public void the_project_titled_with_id_is_be_added_to_the_list_of_projects(String title, String id) {
+        assertTrue(projectPlanner.getProjects().stream()
+                .anyMatch(project -> project.title.equalsIgnoreCase(title) && project.id
+                        .equals(id)));
     }
 
     // The project is already created with a new ID
 
-    @Given("a project {string} already exists on the list")
-    public void the_project_already_exists_on_the_list(String string) throws Exception {
-        projectPlanner.createProject(string);
-        assertTrue(projectPlanner.getProjects().stream().anyMatch(project -> project.title.equalsIgnoreCase(string)));
+    @Given("a project {string} with id {string} already exists on the list")
+    public void the_project_already_exists_on_the_list(String title, String id) throws Exception {
+        projectPlanner.createProject(title);
+        assertTrue(projectPlanner.getProjects().stream().anyMatch(project -> project.title.equalsIgnoreCase(
+                title)));
     }
 
     // Administrator not logged in
 
 
 
-    @Then("the project titled {string} with id {int} is not added to the list of projects")
-    public void the_project_titled_with_id_is_not_added_to_the_list_of_projects(String title, Integer id) {
-        boolean found = false;
-        for (Project project : projectPlanner.getProjects()) {
-            if (project.title.equalsIgnoreCase(title) || project.id == id) {
-                found = true;
-            }
-        }
-        assertFalse(found);
+    @Then("the project {string} with id {string} is not added to the list of projects")
+    public void the_project_titled_with_id_is_not_added_to_the_list_of_projects(String title, String id) {
+        assertFalse(projectPlanner.getProjects().stream()
+                .anyMatch(project -> project.title.equalsIgnoreCase(title) && project.id
+                        .equals(id)));
     }
 
 }

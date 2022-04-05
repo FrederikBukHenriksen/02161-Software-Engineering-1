@@ -1,15 +1,15 @@
 package dtu.calculator;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.function.BooleanSupplier;
 
 public class ProjectPlanner {
     private ArrayList<Project> projects = new ArrayList<>();
-    public ArrayList<User> users = new ArrayList<>();
-    // public DateServer dateServer = new DateServer();
+    private ArrayList<User> users = new ArrayList<>();
 
-    public static User loggedIn;
+    public User loggedIn;
 
     public ProjectPlanner() {
         users.add(new Administrator("HUBE", "PW1234")); // Create the administrator profile.
@@ -60,9 +60,9 @@ public class ProjectPlanner {
         return true;
     }
 
-    public boolean uniqueProject(String title, int id) {
+    public boolean uniqueProject(String title, String id) {
         for (Project project : projects) {
-            if (project.title.equalsIgnoreCase(title) && project.id == id) {
+            if (project.title.equalsIgnoreCase(title) && project.id.equalsIgnoreCase(id)) {
                 return false;
             }
         }
@@ -97,6 +97,8 @@ public class ProjectPlanner {
         return false;
     }
 
+    // ##### GET FUNKTIONER #####
+
     public User getLoggedIn() {
         return loggedIn;
     }
@@ -119,6 +121,11 @@ public class ProjectPlanner {
 
     public ArrayList<Project> getProjects() {
         return projects;
+    }
+
+    // ##### JUNIT FUNKTIONER #####
+    public void cucumberAddEmployee(String initials) {
+        users.add(new Employee(initials));
     }
 
 }

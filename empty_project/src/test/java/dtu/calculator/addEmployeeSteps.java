@@ -65,7 +65,7 @@ public class addEmployeeSteps {
 
         @Given("the employee {string} exists on the list")
         public void the_employee_is_on_the_list_of_employees(String string) {
-            projectPlanner.users.add(new Employee(string));
+            projectPlanner.cucumberAddEmployee(string);
             assertTrue(projectPlanner.getUsers().stream().anyMatch(user -> user.initials.equalsIgnoreCase(string)));
         }
 
