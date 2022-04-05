@@ -1,22 +1,19 @@
 // package dtu.calculator;
 
+
 // import static org.mockito.Mockito.mock;
-// import static org.mockito.Mockito.when;
 
 // import java.util.Calendar;
 // import java.util.GregorianCalendar;
 
-// import dtu.library.app.DateServer;
-// import dtu.library.app.LibraryApp;
 
 // public class MockDateHolder {
 
 // DateServer dateServer = mock(DateServer.class);
 
-// public MockDateHolder(LibraryApp libraryApp) {
+// public MockDateHolder() {
 // GregorianCalendar calendar = new GregorianCalendar();
 // setDate(calendar);
-// libraryApp.setDateServer(dateServer);
 // }
 
 // public void setDate(Calendar calendar) {
