@@ -24,8 +24,8 @@ public class Project {
         }
     }
 
-    public void addActivity(String title) throws Exception {
-        if (true) { // placeholder------------------------------------------------------
+    public void addActivity(boolean projectLeaderLoggedIn, String title) throws Exception {
+        if (projectLeaderLoggedIn) { // placeholder------------------------------------------------------
             if (uniqueTitle(title)) {
                 activities.add(new Activity(title));
             } else {

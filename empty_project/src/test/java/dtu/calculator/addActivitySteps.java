@@ -12,6 +12,7 @@ public class addActivitySteps {
     Project project;
     Activity activity;
     ErrorMessageHolder errorMessageHolder = new ErrorMessageHolder();
+    boolean projectLeaderLoggedIn;
     
     @Given("that the project leader is logged in")
     public void that_the_project_leader_is_logged_in() throws Exception{
@@ -22,7 +23,8 @@ public class addActivitySteps {
         pm.logIn("EMPL", "01234"); // Update logIn call later-------------------------------------------------------------------------------------
 
         assertEquals("EMPL", pm.getLoggedIn().getInitials());
-        assertTrue(pm.employeeLoggedIn() && project.projectLeader == pm.getLoggedIn());
+        projectLeaderLoggedIn = pm.employeeLoggedIn() && project.projectLeader == pm.getLoggedIn();
+        assertTrue(projectLeaderLoggedIn);
     }
 
     @Given("there is a project titled {string} with id {string}")
@@ -44,7 +46,7 @@ public class addActivitySteps {
     @When("the activity is added to the list of activities")
     public void the_activity_is_added_to_the_list_of_activities() {
         try {
-            project.addActivity(activity.title);
+            project.addActivity(projectLeaderLoggedIn, activity.title);
         } catch (Exception e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }
@@ -69,7 +71,7 @@ public class addActivitySteps {
 
     @Given("the activity is already on the list of activities")
     public void the_activity_is_already_on_the_list_of_activities() throws Exception {
-        project.addActivity(activity.title);
+        project.addActivity(projectLeaderLoggedIn, activity.title);
     }
 
     // this exists in addEmployeeSteps already, so it's not included here -- Nevermind, using the pre-existing one causes issues
