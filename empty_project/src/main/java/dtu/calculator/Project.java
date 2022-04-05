@@ -9,12 +9,23 @@ public class Project {
     static int idIncrement = 0;
     int id;
     GregorianCalendar startTime;
-    Employee projectLeader;
+    User projectLeader;
     ArrayList<Activity> activities = new ArrayList<>();
 
-    public Project(String title) {
+    ProjectPlanner projectPlanner;
+
+    public Project(String title, ProjectPlanner projectplanner) {
         this.title = title;
         id = getNextId();
+
+        this.projectPlanner = projectplanner;
+    }
+
+    public boolean projectLeaderLoggedIn() {
+        if (ProjectPlanner.loggedIn.equals(projectLeader)) {
+            return true;
+        }
+        return false;
     }
 
     public void createActivity(String title) {

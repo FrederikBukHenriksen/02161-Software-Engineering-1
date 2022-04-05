@@ -9,7 +9,7 @@ public class ProjectPlanner {
     public ArrayList<User> users = new ArrayList<>();
     // public DateServer dateServer = new DateServer();
 
-    private User loggedIn;
+    public static User loggedIn;
 
     public ProjectPlanner() {
         users.add(new Administrator("HUBE", "PW1234")); // Create the administrator profile.
@@ -17,7 +17,7 @@ public class ProjectPlanner {
 
     public void createProject(String title) throws Exception {
         if (administratorLoggedIn()) {
-            projects.add(new Project(title));
+            projects.add(new Project(title, this));
         } else {
             throw new Exception("Administrator login is required");
         }
