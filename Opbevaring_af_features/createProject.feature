@@ -35,3 +35,9 @@ Feature: Create a project
         Then the error message "administrator login is required to create projects" i given
 
 
+    # Alternative Scenario:
+    Scenario: The administrator is not logged in.
+        Given An administrator type "project_name" into the project name input field
+        And the "project_name" is not logged in
+        Then "You are not logged in as Administartor" should promt to the screen
+
