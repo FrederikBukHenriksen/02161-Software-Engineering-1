@@ -49,7 +49,7 @@ public class createProjectSteps {
 
     @Given("a project {string} with id {string} already exists on the list")
     public void the_project_already_exists_on_the_list(String title, String id) throws Exception {
-        projectPlanner.createProject(title);
+        projectPlanner.cucumberCreateProject(title);
         assertTrue(projectPlanner.getProjects().stream().anyMatch(project -> project.title.equalsIgnoreCase(
                 title)));
     }

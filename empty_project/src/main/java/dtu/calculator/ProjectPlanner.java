@@ -24,7 +24,9 @@ public class ProjectPlanner {
     }
 
     public void removeProject(Project project) {
-        projects.remove(project);
+        if (administratorLoggedIn()) {
+            projects.remove(project);
+        }
     }
 
     public void addEmployee(String initials) throws Exception {
@@ -107,6 +109,18 @@ public class ProjectPlanner {
         return users;
     }
 
+    public Project getProject(String id) throws Exception {
+        Project found = null;
+        for (Project project : getProjects()) {
+            if (project.id.equalsIgnoreCase(id))
+                found = project;
+        }
+        if (found == null) {
+            throw new Exception("Project does not exist");
+        }
+        return found;
+    }
+
     public User getUser(String initials) throws Exception {
         User found = null;
         for (User user : getUsers()) {
@@ -126,6 +140,10 @@ public class ProjectPlanner {
     // ##### JUNIT FUNKTIONER #####
     public void cucumberAddEmployee(String initials) {
         users.add(new Employee(initials));
+    }
+
+    public void cucumberCreateProject(String title) {
+        projects.add(new Project(title, this));
     }
 
 }
