@@ -3,7 +3,7 @@ Feature: Add an employee to project
 
 
 Scenario: Add an employee to project
-Given that there exists a project titled "Software Development" with id 221
+Given that there exists a project titled "Software Development" with id 22001
 And that the project leader is logged in
 And project leader has chosen an employee with id "andr"
 And the employee isn't in the project

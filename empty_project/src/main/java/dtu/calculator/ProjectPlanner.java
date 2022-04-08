@@ -7,7 +7,7 @@ import java.util.GregorianCalendar;
 
 public class ProjectPlanner {
     private ArrayList<Project> projects = new ArrayList<>();
-    private ArrayList<User> users = new ArrayList<>();
+    ArrayList<User> users = new ArrayList<>();
     static int idIncrementer = 0;
     GregorianCalendar startTime;
 
@@ -129,7 +129,7 @@ public class ProjectPlanner {
     }
 
     
-    private int getNextId() {
+    private static int getNextId() {
         // int year = DateServer.getYear();
         idIncrementer++;
         String s = Integer.toString(idIncrementer);
