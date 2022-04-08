@@ -3,22 +3,29 @@ package dtu.calculator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BooleanSupplier;
+import java.util.GregorianCalendar;
 
 public class ProjectPlanner {
     private ArrayList<Project> projects = new ArrayList<>();
-    public ArrayList<User> users = new ArrayList<>();
-    // public DateServer dateServer = new DateServer();
+    private ArrayList<User> users = new ArrayList<>();
+    static int idIncrementer = 0;
+    GregorianCalendar startTime;
 
-    public static User loggedIn;
+    private User loggedIn;
 
     public ProjectPlanner() {
         users.add(new Administrator("HUBE", "PW1234")); // Create the administrator profile.
     }
 
+    public void login(String id, String password) {
+
+    }
+
     public void createProject(String title) throws Exception {
         if (administratorLoggedIn()) {
-            projects.add(new Project(title, this));
-        } else {
+            projects.add(new Project(title, getNextId(),this));
+        }
+        else {
             throw new Exception("Administrator login is required");
         }
     }
@@ -119,6 +126,21 @@ public class ProjectPlanner {
 
     public ArrayList<Project> getProjects() {
         return projects;
+    }
+
+    
+    private int getNextId() {
+        // int year = DateServer.getYear();
+        idIncrementer++;
+        String s = Integer.toString(idIncrementer);
+        String blanks = "";
+        if (s.length() == 1) {
+            blanks = "00";
+        }
+        if(s.length()== 2){
+            blanks = "0";
+        }
+        return Integer.valueOf(  "22" +blanks+ idIncrementer);
     }
 
 }
