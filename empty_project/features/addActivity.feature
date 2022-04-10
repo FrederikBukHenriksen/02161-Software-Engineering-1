@@ -9,7 +9,7 @@ Feature: Add an activity to a project
         And there is an activity titled "Analysis"
         And the activity is not on the list of activities
         When the activity is added to the list of activities
-        Then the activity is added to list of activities for the project
+        Then the activity exists in the list of activites for the project
 
     #Alternative use-case(s)
     Scenario: Add activity when the project leader is not logged in
@@ -19,6 +19,7 @@ Feature: Add an activity to a project
         And the activity is not on the list of activities
         When the activity is added to the list of activities
         Then the error message "Project leader login is required" is given
+        
     # Alternative:
     Scenario: Add activity which already exists
         Given that the project leader is logged in
