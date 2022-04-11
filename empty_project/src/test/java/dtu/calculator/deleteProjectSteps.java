@@ -41,6 +41,8 @@ public class deleteProjectSteps {
     
     @Then("the project {int} is on the list of projects")
     public void the_project_is_on_the_list_of_projects(Integer id) {
+        projectPlanner.logOut();
+        assertFalse(projectPlanner.administratorLoggedIn());
         assertTrue(projectPlanner.getProjects().stream().anyMatch(project -> project.getId() == id));
 
     }

@@ -31,7 +31,7 @@ public class Project {
 
     private boolean uniqueTitle(String title) {
         for (Activity activity : activities) {
-            if (activity.title.equalsIgnoreCase(title)) {
+            if (activity.getTitle().equalsIgnoreCase(title)) {
                 return false;
             }
         }
@@ -58,10 +58,13 @@ public class Project {
                     }
                 }
             }
-            throw new Exception("Employee with id " +employeeID+ " does not exist");
+            throw new Exception("Employee with id " + employeeID + " does not exist");
         }
 
-
+    }
+    
+    public ArrayList<Activity> getActivities() {
+        return activities;
     }
 
     public User getProjectleader() {

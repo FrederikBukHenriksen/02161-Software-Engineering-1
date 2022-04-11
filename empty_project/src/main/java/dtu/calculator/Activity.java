@@ -5,7 +5,7 @@ import java.util.GregorianCalendar;
 
 public class Activity {
 
-    String title;
+    private String title;
     int budgetedTime;
     GregorianCalendar startTime;
     GregorianCalendar endTime;
@@ -21,6 +21,10 @@ public class Activity {
 
     public void removeEmployee(Employee employee) {
         employees.remove(employee);
+    }
+
+    public String getTitle(){
+        return title;
     }
 
 }
