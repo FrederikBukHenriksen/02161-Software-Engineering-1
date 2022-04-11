@@ -5,19 +5,21 @@ import java.util.GregorianCalendar;
 
 public class Project {
 
-    String title;
-    int id;
+    private String title;
+    private int id;
     GregorianCalendar startTime;
     User projectLeader;
     ArrayList<Activity> activities = new ArrayList<>();
     ArrayList<User> projectEmployees = new ArrayList<>();
     ProjectPlanner projectPlanner;
 
-    public Project(String title, int id, ProjectPlanner projectPlanner) {
+    public Project(String title,int id, ProjectPlanner projectPlanner) {
         this.title = title;
         this.id = id;
         this.projectPlanner = projectPlanner;
     }
+
+
 
     public void createActivity(String title) {
         if (uniqueTitle(title)) {
@@ -71,8 +73,12 @@ public class Project {
     }
 
 
-    public int getId(){
+    public int getId() {
         return id;
+    }
+    
+    public String getTitle() {
+        return title;
     }
 
 

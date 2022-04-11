@@ -31,16 +31,30 @@ public class ProjectPlanner {
     }
 
     public void removeProject(Project project) {
-        projects.remove(project);
+        if (administratorLoggedIn()) {
+            projects.remove(project);
+        }
     }
 
     public void addEmployee(String initials) throws Exception {
         if (administratorLoggedIn()) {
-            if (uniqueInitials(initials)) {
+            if (initials.length() == 4) {
+                if (uniqueInitials(initials)) {
                     users.add(new Employee(initials.toUpperCase()));
+                } else {
+                    throw new Exception("Initals are already in use");
+                }
             } else {
-                throw new Exception("Employee is already registered");
+                throw new Exception("Initials must be four letters");
             }
+        } else {
+            throw new Exception("Administrator login is required");
+        }
+    }
+
+    public void removeEmployee(User user) throws Exception {
+        if (administratorLoggedIn()) {
+            users.remove(user);
         } else {
             throw new Exception("Administrator login is required");
         }
@@ -55,9 +69,16 @@ public class ProjectPlanner {
         return true;
     }
 
-    public void removeEmployee(Employee employee) {
-        users.remove(employee);
+    public boolean uniqueProject(String title, int id) {
+        for (Project project : projects) {
+            if (project.getTitle().equalsIgnoreCase(title) && project.getId() == id) {
+                return false;
+            }
+        }
+        return true;
     }
+
+
 
     public void logIn(String initals, String password) {
         for (User employee : users) {
@@ -85,6 +106,8 @@ public class ProjectPlanner {
         return false;
     }
 
+    // ##### GET FUNKTIONER #####
+
     public User getLoggedIn() {
         return loggedIn;
     }
@@ -93,14 +116,57 @@ public class ProjectPlanner {
         return users;
     }
 
+
+    private static int getNextId() {
+        // int year = DateServer.getYear();
+        idIncrementer++;
+        String s = Integer.toString(idIncrementer);
+        String blanks = "";
+        if (s.length() == 1) {
+            blanks = "00";
+        }
+        if(s.length()== 2){
+            blanks = "0";
+        }
+        return Integer.valueOf(  "22" +blanks+ idIncrementer);
+    }
+
+    public Project getProject(int id) throws Exception {
+        Project found = null;
+        for (Project project : getProjects()) {
+            if (project.getId() == id) {
+                found = project;
+            }
+        }
+        if (found == null) {
+            throw new Exception("Project does not exist");
+        }
+        return found;
+    }
+
+    public User getUser(String initials) throws Exception {
+        User found = null;
+        for (User user : getUsers()) {
+            if (user.initials.equalsIgnoreCase(initials))
+                found = user;
+        }
+        if (found == null) {
+            throw new Exception("User does not exist");
+        }
+        return found;
+    }
+
     public ArrayList<Project> getProjects() {
         return projects;
     }
-    
-    private int getNextId() {
-        // int year = DateServer.getYear();
-        idIncrementer++;
-        return Integer.valueOf(  "22" + idIncrementer);
+
+    // ##### JUNIT FUNKTIONER #####
+    public void cucumberAddEmployee(String initials) {
+        users.add(new Employee(initials));
+    }
+
+    public void cucumberCreateProject(String title) {
+        projects.add(new Project(title, getNextId(),this));
     }
 
 }

@@ -1,7 +1,7 @@
 package dtu.calculator;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.booleanThat;
+// import static org.mockito.ArgumentMatchers.booleanThat;
 
 import java.util.ArrayList;
 
@@ -26,7 +26,7 @@ public class addEmployeeToProjectSteps {
         projectPlanner.createProject(string);
         boolean found = false;
         for (Project project : projectPlanner.getProjects()) {
-            if (project.title.equalsIgnoreCase(string) && project.getId() == int1) {
+            if (project.getTitle().equalsIgnoreCase(string) && project.getId() == int1) {
                 this.project = project;
                 found = true;
             }
