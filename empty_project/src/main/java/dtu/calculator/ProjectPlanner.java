@@ -6,26 +6,22 @@ import java.util.List;
 import java.util.function.BooleanSupplier;
 
 public class ProjectPlanner {
-    private ArrayList<Project> projects = new ArrayList<>();
+    private static ArrayList<Project> projects = new ArrayList<>();
 
-    private ArrayList<User> users = new ArrayList<>();
+    private static ArrayList<User> users = new ArrayList<>();
     static int idIncrementer = 0;
     GregorianCalendar startTime;
 
 
-    public User loggedIn;
+    public static User loggedIn;
 
     public ProjectPlanner() {
         users.add(new Administrator("HUBE", "PW1234")); // Create the administrator profile.
     }
 
-    public void login(String id, String password) {
-
-    }
-
     public void createProject(String title) throws Exception {
         if (administratorLoggedIn()) {
-            projects.add(new Project(title, getNextId(),this));
+            projects.add(new Project(title));
         }
         else {
             throw new Exception("Administrator login is required");
@@ -100,27 +96,14 @@ public class ProjectPlanner {
         loggedIn = null;
     }
 
-    public User getUser(String initials) throws Exception{
-        User found = null;
-        for (User user : users) {
-            if(user.initials.equalsIgnoreCase(initials)){
-                found = user;
-            }
-        } if(found != null){
-        return found;
-        } else {
-            throw new Exception("User not found");
-        }
-    }
-
-    public boolean administratorLoggedIn() {
+    public static boolean administratorLoggedIn() {
         if (loggedIn instanceof Administrator) {
             return true;
         }
         return false;
     }
 
-    public boolean employeeLoggedIn() {
+    public static boolean employeeLoggedIn() {
         if (loggedIn instanceof Employee) {
             return true;
         }
@@ -129,15 +112,15 @@ public class ProjectPlanner {
 
     // ##### GET FUNKTIONER #####
 
-    public User getLoggedIn() {
+    public static User getLoggedIn() {
         return loggedIn;
     }
 
-    public ArrayList<User> getUsers() {
+    public static ArrayList<User> getUsers() {
         return users;
     }
 
-    public Project getProject(int id) throws Exception {
+    public static Project getProject(int id) throws Exception {
         Project found = null;
         for (Project project : getProjects()) {
             if (project.getId() == id) {
@@ -150,7 +133,7 @@ public class ProjectPlanner {
         return found;
     }
 
-    public User getUser(String initials) throws Exception {
+    public static User getUser(String initials) throws Exception {
         User found = null;
         for (User user : getUsers()) {
             if (user.initials.equalsIgnoreCase(initials))
@@ -162,7 +145,7 @@ public class ProjectPlanner {
         return found;
     }
 
-    public ArrayList<Project> getProjects() {
+    public static ArrayList<Project> getProjects() {
         return projects;
     }
 
@@ -172,23 +155,9 @@ public class ProjectPlanner {
     }
 
     public void cucumberCreateProject(String title) {
-        projects.add(new Project(title,getNextId(), this));
+        projects.add(new Project(title));
     }
 
-      private static int getNextId() {
-        // // int year = DateServer.getYear();
-        // idIncrementer++;
-        // String s = Integer.toString(idIncrementer);
-        // String blanks = "";
-        // if (s.length() == 1) {
-        //     blanks = "00";
-        // }
-        // if(s.length()== 2){
-        //     blanks = "0";
-        // }
-        // return Integer.valueOf(  "22" +blanks+ idIncrementer);
-        return 22001;
-        //TODO: "Implement this method";
-    }
+
 
 }

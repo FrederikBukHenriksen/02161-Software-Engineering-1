@@ -11,12 +11,26 @@ public class Project {
     User projectLeader;
     ArrayList<Activity> activities = new ArrayList<>();
     ArrayList<User> projectEmployees = new ArrayList<>();
-    ProjectPlanner projectPlanner;
 
-    public Project(String title, int id, ProjectPlanner projectPlanner) {
+    public Project(String title) {
         this.title = title;
-        this.id = id;
-        this.projectPlanner = projectPlanner;
+        this.id = getNextId();
+    }
+
+    private int getNextId() {
+        // // int year = DateServer.getYear();
+        // idIncrementer++;
+        // String s = Integer.toString(idIncrementer);
+        // String blanks = "";
+        // if (s.length() == 1) {
+        // blanks = "00";
+        // }
+        // if(s.length()== 2){
+        // blanks = "0";
+        // }
+        // return Integer.valueOf( "22" +blanks+ idIncrementer);
+        return 22001;
+        // TODO: "Implement this method";
     }
 
     public void createActivity(String title) {
@@ -46,7 +60,7 @@ public class Project {
 
     public void addEmployeeToProject(String employeeID) throws Exception {
         if (projectLeaderLoggedIn()) {
-            for (User employee : projectPlanner.getUsers()) {
+            for (User employee : ProjectPlanner.getUsers()) {
                 if (employeeID == employee.getInitials()) {
                     if (!projectEmployees.contains(employee)) {
                         projectEmployees.add(employee);
@@ -67,7 +81,7 @@ public class Project {
     }
 
     public boolean projectLeaderLoggedIn(){
-        return projectLeader == projectPlanner.getLoggedIn();
+        return projectLeader == ProjectPlanner.getLoggedIn();
     }
 
 
