@@ -10,14 +10,14 @@ Feature: delete a project
         When delete the project with id "2022-1"
         Then the project "2022-1" is not on the list of projects
 
-    # Alternative Scenario
-    Scenario: delete a project when the administrator is not logged in
-        Given an administrator is not logged in
-        And the date is year 2022 month 1 day 1
-        And a project "Software Development" with id "2022-1" already exists on the list
-        When delete the project with id "2022-1"
-        Then the project "2022-1" is on the list of projects
-        And the error message "activity leader login is required" is given
+    # # Alternative Scenario
+    # Scenario: delete a project when the administrator is not logged in
+    #     Given an administrator is not logged in
+    #     And the date is year 2022 month 1 day 1
+    #     And a project "Software Development" with id "2022-1" already exists on the list
+    #     When delete the project with id "2022-1"
+    #     Then the project "2022-1" is on the list of projects
+    #     And the error message "activity leader login is required" is given
 
     # Scenario: delete a project which doesn't exist or is inactive
     #     Given that an administrator is not logged in
