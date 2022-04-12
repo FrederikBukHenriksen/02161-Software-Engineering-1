@@ -6,22 +6,26 @@ import java.util.List;
 import java.util.function.BooleanSupplier;
 
 public class ProjectPlanner {
-    private static ArrayList<Project> projects = new ArrayList<>();
+    private ArrayList<Project> projects = new ArrayList<>();
 
-    private static ArrayList<User> users = new ArrayList<>();
+    private ArrayList<User> users = new ArrayList<>();
     static int idIncrementer = 0;
     GregorianCalendar startTime;
 
 
-    public static User loggedIn;
+    public User loggedIn;
 
     public ProjectPlanner() {
         users.add(new Administrator("HUBE", "PW1234")); // Create the administrator profile.
     }
 
+    public void login(String id, String password) {
+
+    }
+
     public void createProject(String title) throws Exception {
         if (administratorLoggedIn()) {
-            projects.add(new Project(title));
+            projects.add(new Project(title, getNextId(),this));
         }
         else {
             throw new Exception("Administrator login is required");
@@ -105,7 +109,7 @@ public class ProjectPlanner {
         return false;
     }
 
-    public static boolean employeeLoggedIn() {
+    public boolean employeeLoggedIn() {
         if (loggedIn instanceof Employee) {
             return true;
         }
@@ -114,15 +118,15 @@ public class ProjectPlanner {
 
     // ##### GET FUNKTIONER #####
 
-    public static User getLoggedIn() {
+    public User getLoggedIn() {
         return loggedIn;
     }
 
-    public static ArrayList<User> getUsers() {
+    public ArrayList<User> getUsers() {
         return users;
     }
 
-    public static Project getProject(int id) throws Exception {
+    public Project getProject(int id) throws Exception {
         Project found = null;
         for (Project project : getProjects()) {
             if (project.getId() == id) {
@@ -135,7 +139,7 @@ public class ProjectPlanner {
         return found;
     }
 
-    public static User getUser(String initials) throws Exception {
+    public User getUser(String initials) throws Exception {
         User found = null;
         for (User user : getUsers()) {
             if (user.initials.equalsIgnoreCase(initials))
@@ -147,7 +151,7 @@ public class ProjectPlanner {
         return found;
     }
 
-    public static ArrayList<Project> getProjects() {
+    public ArrayList<Project> getProjects() {
         return projects;
     }
 
@@ -157,9 +161,23 @@ public class ProjectPlanner {
     }
 
     public void cucumberCreateProject(String title) {
-        projects.add(new Project(title));
+        projects.add(new Project(title,getNextId(), this));
     }
 
-
+      private static int getNextId() {
+        // // int year = DateServer.getYear();
+        // idIncrementer++;
+        // String s = Integer.toString(idIncrementer);
+        // String blanks = "";
+        // if (s.length() == 1) {
+        //     blanks = "00";
+        // }
+        // if(s.length()== 2){
+        //     blanks = "0";
+        // }
+        // return Integer.valueOf(  "22" +blanks+ idIncrementer);
+        return 22001;
+        //TODO: "Implement this method";
+    }
 
 }
