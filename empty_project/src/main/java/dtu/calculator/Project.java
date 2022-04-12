@@ -6,7 +6,7 @@ import java.util.GregorianCalendar;
 public class Project {
 
     String title;
-    int id;
+    String id;
     GregorianCalendar startTime;
     User projectLeader;
     ArrayList<Activity> activities = new ArrayList<>();
@@ -17,20 +17,20 @@ public class Project {
         this.id = getNextId();
     }
 
-    private int getNextId() {
-        // // int year = DateServer.getYear();
-        // idIncrementer++;
-        // String s = Integer.toString(idIncrementer);
-        // String blanks = "";
-        // if (s.length() == 1) {
-        // blanks = "00";
-        // }
-        // if(s.length()== 2){
-        // blanks = "0";
-        // }
-        // return Integer.valueOf( "22" +blanks+ idIncrementer);
-        return 22001;
-        // TODO: "Implement this method";
+    private String getNextId() {
+        int maxId = 0;
+
+        for (Project project : ProjectPlanner.getProjects()) {
+            int idToCompare = Integer.parseInt(project.id.split("-")[1]);
+            if (idToCompare > maxId) {
+                maxId = idToCompare;
+            }
+        }
+        maxId++;
+
+        int year = DateServer.getYear();
+        return String.valueOf(year) + "-" + String.valueOf(maxId);
+
     }
 
     public void createActivity(String title) {
@@ -85,7 +85,7 @@ public class Project {
     }
 
 
-    public int getId(){
+    public String getId() {
         return id;
     }
 
