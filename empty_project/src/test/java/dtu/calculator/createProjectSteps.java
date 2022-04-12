@@ -46,11 +46,7 @@ public class createProjectSteps {
         try {
             projectPlanner.createProject(title);
         } catch (Exception e) {
-<<<<<<< Updated upstream
             ErrorMessageHolder.setErrorMessage(e.getMessage());
-=======
-            setErrorMessage(e.getMessage());
->>>>>>> Stashed changes
         }
 
     }
@@ -81,14 +77,11 @@ public class createProjectSteps {
 
     // Administrator not logged in
 
-<<<<<<< Updated upstream
-=======
     @Given("that an administrator not is logged in")
     public void that_an_administrator_not_is_logged_in() {
         projectPlanner.logOut();
         assertFalse(projectPlanner.administratorLoggedIn());
     }
->>>>>>> Stashed changes
 
 
     @Then("the project {string} with id {string} is not added to the list of projects")
