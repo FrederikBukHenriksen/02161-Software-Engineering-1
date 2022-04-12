@@ -19,7 +19,11 @@ Feature: Create a project
         And the date is year 2022 month 1 day 1
         And a project "Software Development" with id "2022-1" already exists on the list
         When create a project titled "Software Development"
+<<<<<<< Updated upstream
         Then the project "Software Development" with id "2022-2" is added to the list of projects
+=======
+        Then the project titled "Software Development" with id 1 is be added to the list of projects
+>>>>>>> Stashed changes
 
     Scenario: Create a new project when the administrator is not logged in
         Given an administrator is not logged in
