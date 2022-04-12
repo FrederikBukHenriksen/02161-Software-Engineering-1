@@ -20,7 +20,7 @@ Feature: delete a project
     #     And the error message "activity leader login is required" is given
 
     # Scenario: delete a project which doesn't exist or is inactive
-    #     Given that an administrator is not logged in
+    #     Given an administrator is not logged in
     #     And has seleted project titled "Software Development" with id "22001"
     #     And the project is not in the list of active projects
     #     When administrator set the status of the project to inactive

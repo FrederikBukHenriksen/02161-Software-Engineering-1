@@ -21,8 +21,8 @@ public class addEmployeeSteps {
         this.errorMessageHolder = errorMessageHolder;
     }
 
-    @Given("that the administrator is logged in")
-    public void that_the_administrator_is_logged_in() throws Exception {
+    @Given("an administrator is logged in")
+    public void an_administrator_is_logged_in() throws Exception {
 
 
         projectPlanner.logIn("HUBE", "PW1234");
@@ -53,7 +53,7 @@ public class addEmployeeSteps {
         // Scenario: Add an employee when the administrator is not logged in
 
         @Given("an administrator is not logged in")
-        public void that_the_administrator_is_not_logged_in() {
+        public void an_administrator_is_not_logged_in() {
             assertFalse(projectPlanner.administratorLoggedIn());
         }
 

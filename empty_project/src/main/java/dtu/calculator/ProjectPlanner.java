@@ -100,18 +100,7 @@ public class ProjectPlanner {
         loggedIn = null;
     }
 
-    public User getUser(String initials) throws Exception{
-        User found = null;
-        for (User user : users) {
-            if(user.initials.equalsIgnoreCase(initials)){
-                found = user;
-            }
-        } if(found != null){
-        return found;
-        } else {
-            throw new Exception("User not found");
-        }
-    }
+
 
     public boolean administratorLoggedIn() {
         if (loggedIn instanceof Administrator) {
