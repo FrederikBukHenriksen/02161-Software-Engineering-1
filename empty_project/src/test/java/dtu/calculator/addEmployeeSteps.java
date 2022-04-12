@@ -14,9 +14,11 @@ import dtu.calculator.ProjectPlanner;
 public class addEmployeeSteps {
 
     ProjectPlanner projectPlanner;
+    ErrorMessageHolder errorMessageHolder;
 
-    public addEmployeeSteps(ProjectPlanner projectplanner) {
+    public addEmployeeSteps(ProjectPlanner projectplanner, ErrorMessageHolder errorMessageHolder) {
         this.projectPlanner = projectplanner;
+        this.errorMessageHolder = errorMessageHolder;
     }
 
     @Given("that the administrator is logged in")

@@ -23,8 +23,8 @@ public class createProjectSteps {
         DateServer.setDate(2022, 1, 1);
     }
 
-    @Given("the project {string} with id {string} does not already exists on the list")
-    public void the_project_does_not_already_exist(String string, String id) {
+    @Given("the project {string} with id {int} does not already exists on the list")
+    public void the_project_does_not_already_exist(String string, Integer id) {
         assertTrue(projectPlanner.uniqueProject(string, id));
     }
 
@@ -38,17 +38,16 @@ public class createProjectSteps {
 
     }
 
-    @Then("the project {string} with id {string} is added to the list of projects")
-    public void the_project_titled_with_id_is_be_added_to_the_list_of_projects(String title, String id) {
+    @Then("the project {string} with id {int} is added to the list of projects")
+    public void the_project_titled_with_id_is_be_added_to_the_list_of_projects(String title, Integer id) {
         assertTrue(projectPlanner.getProjects().stream()
-                .anyMatch(project -> project.title.equalsIgnoreCase(title) && project.id
-                        .equals(id)));
+                .anyMatch(project -> project.title.equalsIgnoreCase(title) && project.getId() == id));
     }
 
     // The project is already created with a new ID
 
-    @Given("a project {string} with id {string} already exists on the list")
-    public void the_project_already_exists_on_the_list(String title, String id) throws Exception {
+    @Given("a project {string} with id {int} already exists on the list")
+    public void the_project_already_exists_on_the_list(String title, Integer id) throws Exception {
         projectPlanner.cucumberCreateProject(title);
         assertTrue(projectPlanner.getProjects().stream().anyMatch(project -> project.title.equalsIgnoreCase(
                 title)));
@@ -58,11 +57,10 @@ public class createProjectSteps {
 
 
 
-    @Then("the project {string} with id {string} is not added to the list of projects")
-    public void the_project_titled_with_id_is_not_added_to_the_list_of_projects(String title, String id) {
+    @Then("the project {string} with id {int} is not added to the list of projects")
+    public void the_project_titled_with_id_is_not_added_to_the_list_of_projects(String title, Integer id) {
         assertFalse(projectPlanner.getProjects().stream()
-                .anyMatch(project -> project.title.equalsIgnoreCase(title) && project.id
-                        .equals(id)));
+                .anyMatch(project -> project.title.equalsIgnoreCase(title) && project.getId() == id));
     }
 
 }

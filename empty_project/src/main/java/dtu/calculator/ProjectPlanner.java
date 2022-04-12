@@ -7,7 +7,11 @@ import java.util.function.BooleanSupplier;
 
 public class ProjectPlanner {
     private ArrayList<Project> projects = new ArrayList<>();
-    public ArrayList<User> users = new ArrayList<>();
+
+    private ArrayList<User> users = new ArrayList<>();
+    static int idIncrementer = 0;
+    GregorianCalendar startTime;
+
 
     public User loggedIn;
 
@@ -15,10 +19,15 @@ public class ProjectPlanner {
         users.add(new Administrator("HUBE", "PW1234")); // Create the administrator profile.
     }
 
+    public void login(String id, String password) {
+
+    }
+
     public void createProject(String title) throws Exception {
         if (administratorLoggedIn()) {
-            projects.add(new Project(title, this));
-        } else {
+            projects.add(new Project(title, getNextId(),this));
+        }
+        else {
             throw new Exception("Administrator login is required");
         }
     }
@@ -62,9 +71,9 @@ public class ProjectPlanner {
         return true;
     }
 
-    public boolean uniqueProject(String title, String id) {
+    public boolean uniqueProject(String title, Integer id) {
         for (Project project : projects) {
-            if (project.title.equalsIgnoreCase(title) && project.id.equalsIgnoreCase(id)) {
+            if (project.title.equalsIgnoreCase(title) && project.getId() == id) {
                 return false;
             }
         }
@@ -128,11 +137,12 @@ public class ProjectPlanner {
         return users;
     }
 
-    public Project getProject(String id) throws Exception {
+    public Project getProject(int id) throws Exception {
         Project found = null;
         for (Project project : getProjects()) {
-            if (project.id.equalsIgnoreCase(id))
+            if (project.getId() == id) {
                 found = project;
+            }
         }
         if (found == null) {
             throw new Exception("Project does not exist");
@@ -162,7 +172,23 @@ public class ProjectPlanner {
     }
 
     public void cucumberCreateProject(String title) {
-        projects.add(new Project(title, this));
+        projects.add(new Project(title,getNextId(), this));
+    }
+
+      private static int getNextId() {
+        // // int year = DateServer.getYear();
+        // idIncrementer++;
+        // String s = Integer.toString(idIncrementer);
+        // String blanks = "";
+        // if (s.length() == 1) {
+        //     blanks = "00";
+        // }
+        // if(s.length()== 2){
+        //     blanks = "0";
+        // }
+        // return Integer.valueOf(  "22" +blanks+ idIncrementer);
+        return 22001;
+        //TODO: "Implement this method";
     }
 
 }
