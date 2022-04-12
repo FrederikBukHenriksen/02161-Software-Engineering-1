@@ -3,7 +3,7 @@ package dtu.calculator;
 public class ErrorMessageHolder {
 	private static String errorMessage = "";
 
-	public String getErrorMessage() {
+	public static String getErrorMessage() {
 		return errorMessage;
 	}
 
