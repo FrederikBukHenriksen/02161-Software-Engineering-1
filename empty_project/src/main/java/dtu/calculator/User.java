@@ -10,6 +10,10 @@ public class User {
         this.password = generatePassword();
     }
 
+    public void setPassword(String passW){
+        password = passW;
+    }
+
     public String generatePassword() {
         return "01234";
     }
