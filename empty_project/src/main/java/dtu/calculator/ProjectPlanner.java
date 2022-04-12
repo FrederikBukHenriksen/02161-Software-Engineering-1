@@ -7,9 +7,11 @@ import java.util.function.BooleanSupplier;
 
 public class ProjectPlanner {
     private ArrayList<Project> projects = new ArrayList<>();
+
     private ArrayList<User> users = new ArrayList<>();
     static int idIncrementer = 0;
     GregorianCalendar startTime;
+
 
     public User loggedIn;
 
@@ -78,18 +80,37 @@ public class ProjectPlanner {
         return true;
     }
 
+    public void logIn(String initals, String password) throws Exception {
+        boolean checker = false;
 
-
-    public void logIn(String initals, String password) {
         for (User employee : users) {
-            if (employee.initials.equals(initals) && employee.password.equals(password)) {
+            if (employee.initials.equalsIgnoreCase(initals) && employee.password.equals(password)) {
                 loggedIn = employee;
+                checker = true;
             }
+        
+        }
+        if (!checker){
+            throw new Exception("Wrong id or password");
+            
         }
     }
 
     public void logOut() {
         loggedIn = null;
+    }
+
+    public User getUser(String initials) throws Exception{
+        User found = null;
+        for (User user : users) {
+            if(user.initials.equalsIgnoreCase(initials)){
+                found = user;
+            }
+        } if(found != null){
+        return found;
+        } else {
+            throw new Exception("User not found");
+        }
     }
 
     public boolean administratorLoggedIn() {
