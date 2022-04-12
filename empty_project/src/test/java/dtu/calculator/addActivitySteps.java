@@ -13,19 +13,19 @@ public class addActivitySteps {
     Activity activity;
     boolean projectLeaderLoggedIn;
     
-    @Given("that the project leader is logged in")
-    public void that_the_project_leader_is_logged_in() throws Exception{
-        pp.logIn("HUBE", "PW1234");
-        pp.addEmployee("EMPL");
+    // @Given("that the project leader is logged in")
+    // public void that_the_project_leader_is_logged_in() throws Exception{
+    //     pp.logIn("HUBE", "PW1234");
+    //     pp.addEmployee("EMPL");
 
-        project.projectLeader = (Employee) ProjectPlanner.getUsers().get(ProjectPlanner.getUsers().size()-1); // ugly way to get latest added employee
-        pp.logIn("EMPL", "01234");
-        // TODO: Check if logIn() method works after login has been fixed
+    //     project.projectLeader = (Employee) ProjectPlanner.getUsers().get(ProjectPlanner.getUsers().size()-1); // ugly way to get latest added employee
+    //     pp.logIn("EMPL", "01234");
+    //     // TODO: Check if logIn() method works after login has been fixed
 
-        assertEquals("EMPL", ProjectPlanner.getLoggedIn().getInitials());
-        projectLeaderLoggedIn = ProjectPlanner.employeeLoggedIn() && project.projectLeader == ProjectPlanner.getLoggedIn();
-        assertTrue(projectLeaderLoggedIn);
-    }
+    //     assertEquals("EMPL", ProjectPlanner.getLoggedIn().getInitials());
+    //     projectLeaderLoggedIn = ProjectPlanner.employeeLoggedIn() && project.projectLeader == ProjectPlanner.getLoggedIn();
+    //     assertTrue(projectLeaderLoggedIn);
+    // }
 
     @Given("there is a project titled {string} with id {string}")
     public void there_is_a_project_titled_with_id(String projectTitle, String projectID) {
