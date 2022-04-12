@@ -6,10 +6,9 @@ import java.util.List;
 import java.util.function.BooleanSupplier;
 
 public class ProjectPlanner {
-    private static ArrayList<Project> projects = new ArrayList<>();
+    public static ArrayList<Project> projects = new ArrayList<>();
 
-    private static ArrayList<User> users = new ArrayList<>();
-    static int idIncrementer = 0;
+    public static ArrayList<User> users = new ArrayList<>();
     GregorianCalendar startTime;
 
 
@@ -67,7 +66,7 @@ public class ProjectPlanner {
         return true;
     }
 
-    public boolean uniqueProject(String title, Integer id) {
+    public boolean uniqueProject(String title, String id) {
         for (Project project : projects) {
             if (project.title.equalsIgnoreCase(title) && project.getId() == id) {
                 return false;
@@ -123,7 +122,7 @@ public class ProjectPlanner {
     public static Project getProject(int id) throws Exception {
         Project found = null;
         for (Project project : getProjects()) {
-            if (project.getId() == id) {
+            if (project.getId().equals(id)) {
                 found = project;
             }
         }
@@ -158,6 +157,18 @@ public class ProjectPlanner {
         projects.add(new Project(title));
     }
 
+    public void resetStatic() {
+        loggedIn = null;
+        projects = null;
+        users = null;
+    }
 
+    public static void lolcat() {
+        System.out.println("CLEAR VIRKER");
+    }
+
+    public static void addAdministrator() {
+        users.add(new Administrator("HUBE", "PW1234"));
+    }
 
 }

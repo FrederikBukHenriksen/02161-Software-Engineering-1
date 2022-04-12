@@ -19,13 +19,13 @@ public class addEmployeeToProjectSteps {
         projectPlanner = new ProjectPlanner();
     }
 
-    @Given("that there exists a project titled {string} with id {int}")
-    public void that_there_exists_a_project_titled_with_id(String string, Integer int1) throws Exception {
+    @Given("that there exists a project titled {string} with id {string}")
+    public void that_there_exists_a_project_titled_with_id(String string, String id) throws Exception {
         projectPlanner.logIn("HUBE", "PW1234");
         projectPlanner.createProject(string);
         boolean found = false;
         for (Project project : projectPlanner.getProjects()) {
-            if (project.title.equalsIgnoreCase(string) && project.getId() == int1) {
+            if (project.title.equalsIgnoreCase(string) && project.getId().equals(id)) {
                 this.project = project;
                 found = true;
             }
