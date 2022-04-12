@@ -3,11 +3,11 @@ package dtu.calculator;
 public class ErrorMessageHolder {
 	private static String errorMessage = "";
 
-	public String getErrorMessage() {
+	public static String getErrorMessage() {
 		return errorMessage;
 	}
 
-	public void setErrorMessage(String errorMessage) {
-		this.errorMessage = errorMessage;
+	public static void setErrorMessage(String input) {
+		errorMessage = input;
 	}
 }

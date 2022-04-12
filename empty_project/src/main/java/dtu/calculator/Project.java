@@ -6,14 +6,27 @@ import java.util.GregorianCalendar;
 public class Project {
 
     String title;
-    int id;
+    static int idIncrementer = 1;
+    String id;
     GregorianCalendar startTime;
-    Employee projectLeader;
+    User projectLeader;
     ArrayList<Activity> activities = new ArrayList<>();
 
-    public Project(String title) {
+    ProjectPlanner projectPlanner;
+
+    public Project(String title, ProjectPlanner projectplanner) {
         this.title = title;
         id = getNextId();
+        idIncrementer++;
+
+        this.projectPlanner = projectplanner;
+    }
+
+    public boolean projectLeaderLoggedIn() {
+        if (projectPlanner.getLoggedIn().equals(projectLeader)) {
+            return true;
+        }
+        return false;
     }
 
     public void createActivity(String title) {
@@ -37,8 +50,10 @@ public class Project {
         activities.remove(activity);
     }
 
-    private int getNextId() {
-        return 0;
+    private String getNextId() {
+
+        int year = DateServer.getYear();
+        return Integer.toString(year) + "-" + Integer.toString(idIncrementer);
     }
 
 }

@@ -26,7 +26,7 @@ Feature: Change an activity' date
         And the project contains an activity titled "Analysis"
         When the activity's start date is set to week "1", and year "2022"
         Then the error message "activity leader login is required" is given
-
+    
     Scenario: Change start date of an activity when the project leader is not logged in
         Given that the project leader is not logged in
         And there is a project titled "Software Development" with id "22001"
