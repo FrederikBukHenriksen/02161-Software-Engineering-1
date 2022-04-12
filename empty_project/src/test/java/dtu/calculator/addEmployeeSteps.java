@@ -10,7 +10,7 @@ import io.cucumber.java.en.When;
 public class addEmployeeSteps {
 
     ProjectPlanner projectPlanner;
-    ErrorMessageHolder errorMessageHolder;
+    static ErrorMessageHolder errorMessageHolder;
 
     public addEmployeeSteps() {
         projectPlanner = new ProjectPlanner();
@@ -18,7 +18,7 @@ public class addEmployeeSteps {
     }
 
     @Given("that the administrator is logged in")
-    public void that_the_administrator_is_logged_in() {
+    public void that_the_administrator_is_logged_in() throws Exception {
 
         projectPlanner.logIn("HUBE", "PW1234");
         assertEquals("HUBE", projectPlanner.getLoggedIn().getInitials());
