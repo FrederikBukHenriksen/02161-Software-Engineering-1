@@ -73,7 +73,21 @@ public class Project {
             throw new Exception("Employee with id " +employeeID+ " does not exist");
         }
 
+        throw new Exception("Only a project leader can add an employee to the project");
+    }
 
+    public void addActivity(String title) throws Exception {
+        if (projectLeaderLoggedIn()) {
+            for (Activity act : activities) {
+                if (title.equals(act.getTitle())) {
+                    throw new Exception("Activity is already in project");
+                }
+            }
+            activities.add(new Activity(title));
+        }
+        else {
+            throw new Exception("Project leader login is required");
+        }
     }
 
     public User getProjectleader() {
@@ -87,6 +101,10 @@ public class Project {
 
     public int getId(){
         return id;
+    }
+
+    public ArrayList<Activity> getActivities() {
+        return activities;
     }
 
 

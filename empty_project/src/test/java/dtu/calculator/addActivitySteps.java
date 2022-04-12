@@ -8,22 +8,22 @@ import io.cucumber.java.en.When;
 
 public class addActivitySteps {
 
-    ProjectPlanner pm = new ProjectPlanner();
+    ProjectPlanner pp = new ProjectPlanner();
     Project project;
     Activity activity;
-    ErrorMessageHolder errorMessageHolder = new ErrorMessageHolder();
     boolean projectLeaderLoggedIn;
     
     @Given("that the project leader is logged in")
     public void that_the_project_leader_is_logged_in() throws Exception{
-        pm.logIn("HUBE", "PW1234");
-        pm.addEmployee("EMPL");
+        pp.logIn("HUBE", "PW1234");
+        pp.addEmployee("EMPL");
 
-        project.projectLeader = (Employee) pm.getUsers().get(pm.getUsers().size()-1); // ugly way to get latest added employee
-        pm.logIn("EMPL", "01234"); // Update logIn call later-------------------------------------------------------------------------------------
+        project.projectLeader = (Employee) ProjectPlanner.getUsers().get(ProjectPlanner.getUsers().size()-1); // ugly way to get latest added employee
+        pp.logIn("EMPL", "01234");
+        // TODO: Check if logIn() method works after login has been fixed
 
-        assertEquals("EMPL", pm.getLoggedIn().getInitials());
-        projectLeaderLoggedIn = pm.employeeLoggedIn() && project.projectLeader == pm.getLoggedIn();
+        assertEquals("EMPL", ProjectPlanner.getLoggedIn().getInitials());
+        projectLeaderLoggedIn = ProjectPlanner.employeeLoggedIn() && project.projectLeader == ProjectPlanner.getLoggedIn();
         assertTrue(projectLeaderLoggedIn);
     }
 
@@ -46,9 +46,9 @@ public class addActivitySteps {
     @When("the activity is added to the list of activities")
     public void the_activity_is_added_to_the_list_of_activities() {
         try {
-            project.addActivity(projectLeaderLoggedIn, activity.title);
+            project.addActivity(activity.title);
         } catch (Exception e) {
-            errorMessageHolder.setErrorMessage(e.getMessage());
+            ErrorMessageHolder.setErrorMessage(e.getMessage());
         }
     }
 
@@ -59,24 +59,25 @@ public class addActivitySteps {
 
     @Given("that the project leader is not logged in")
     public void that_the_project_leader_is_not_logged_in() throws Exception {
-        pm.logIn("HUBE", "PW1234");
-        pm.addEmployee("EMPL");
+        pp.logIn("HUBE", "PW1234");
+        pp.addEmployee("EMPL");
 
         project.projectLeader = null;
-        pm.logIn("EMPL", "01234"); // Update logIn call later-------------------------------------------------------------------------------------
+        pp.logIn("EMPL", "01234");
+        // TODO: Check if logIn() method works after login has been fixed
 
-        assertEquals("EMPL", pm.getLoggedIn().getInitials());
-        assertFalse(pm.employeeLoggedIn() && project.projectLeader == pm.getLoggedIn());
+        assertEquals("EMPL", ProjectPlanner.getLoggedIn().getInitials());
+        assertFalse(ProjectPlanner.employeeLoggedIn() && project.projectLeader == ProjectPlanner.getLoggedIn());
     }
 
     @Given("the activity is already on the list of activities")
     public void the_activity_is_already_on_the_list_of_activities() throws Exception {
-        project.addActivity(projectLeaderLoggedIn, activity.title);
+        project.addActivity(activity.title);
     }
 
-    // this exists in addEmployeeSteps already, so it's not included here -- Nevermind, using the pre-existing one causes issues
-    @Then("the error message {string} is returned")
-    public void the_error_message_is_returned(String errorMsg) {
-        assertEquals(errorMsg, errorMessageHolder.getErrorMessage());
-    }
+    // // this exists in addEmployeeSteps already, so it's not included here -- Nevermind, using the pre-existing one causes issues
+    // @Then("the error message {string} is returned")
+    // public void the_error_message_is_returned(String errorMsg) {
+    //     assertEquals(errorMsg, errorMessageHolder.getErrorMessage());
+    // }
 }
