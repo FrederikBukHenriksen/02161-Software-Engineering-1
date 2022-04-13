@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 import io.cucumber.java.Before;
-import io.cucumber.java.BeforeStep;
+import io.cucumber.java.BeforeAll;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -33,7 +33,7 @@ public class createProjectSteps {
 
     @Given("the date is year {int} month {int} day {int}")
     public void the_date_is_year_month_day(Integer year, Integer month, Integer day) {
-        DateServer.setDate(2022, 1, 1);
+        DateServer.setDate(year, month, day);
     }
 
     @Given("the project {string} with id {string} does not already exists on the list")
