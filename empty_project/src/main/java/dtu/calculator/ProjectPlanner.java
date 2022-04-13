@@ -116,6 +116,13 @@ public class ProjectPlanner {
         return false;
     }
 
+    public boolean UserloggedIn() {
+        if (loggedIn instanceof User) {
+            return true;
+        }
+        return false;
+    }
+
     // ##### GET FUNKTIONER #####
 
     public User getLoggedIn() {

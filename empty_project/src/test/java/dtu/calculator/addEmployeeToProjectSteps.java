@@ -38,17 +38,17 @@ public class addEmployeeToProjectSteps {
     public void that_the_project_leader_is_logged_in() throws Exception {
         
         projectPlanner.addEmployee("fred");
-        User employee = null;
-        for (User employee_ : projectPlanner.getUsers()) {
-            if (employee_.getInitials().equalsIgnoreCase("fred")){
-                employee = employee_;
+        User projectLeader = null;
+        for (User projectLeader_ : projectPlanner.getUsers()) {
+            if (projectLeader_.getInitials().equalsIgnoreCase("fred")){
+                projectLeader = projectLeader_;
             }
         }
-        project.projectLeader = employee;
+        project.projectLeader = projectLeader;
         projectPlanner.logOut();
         projectPlanner.logIn("fred", "01234");
         boolean found = false;
-        if (project.getProjectleader() == employee) {
+        if (project.getProjectleader() == projectLeader) {
             found = true;
         }
         assertTrue(found);
@@ -84,4 +84,11 @@ public class addEmployeeToProjectSteps {
     public void the_employee_is_added_to_the_project() {
         assertTrue(project.projectEmployees.contains(employee));
     }
+
+    @Given("that the project leader isn't logged in")
+    public void that_the_project_leader_isn_t_logged_in() {
+        projectPlanner.logOut();
+        assertFalse(project.projectLeaderLoggedIn());
+    }
+
 }

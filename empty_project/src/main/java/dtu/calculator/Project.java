@@ -66,8 +66,8 @@ public class Project {
         return projectLeader;
     }
 
-    public boolean projectLeaderLoggedIn(){
-        return projectLeader == projectPlanner.getLoggedIn();
+    public boolean projectLeaderLoggedIn() {
+        return  projectPlanner.UserloggedIn() && projectLeader == projectPlanner.getLoggedIn();
     }
 
 
