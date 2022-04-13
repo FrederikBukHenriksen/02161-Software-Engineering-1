@@ -4,7 +4,6 @@ Feature: Create a project
     Description: An administrator creates a project which employees can be assigned to.
     Actors: administrator
 
-
     # Main Scenario:
     Scenario: Create a new project
         Given an administrator is logged in

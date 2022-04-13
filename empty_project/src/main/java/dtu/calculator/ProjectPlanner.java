@@ -75,7 +75,7 @@ public class ProjectPlanner {
         return true;
     }
 
-    public void logIn(String initals, String password) throws Exception {
+    public static void logIn(String initals, String password) throws Exception {
         boolean checker = false;
 
         for (User employee : users) {
@@ -91,7 +91,7 @@ public class ProjectPlanner {
         }
     }
 
-    public void logOut() {
+    public static void logOut() {
         loggedIn = null;
     }
 
@@ -119,7 +119,7 @@ public class ProjectPlanner {
         return users;
     }
 
-    public static Project getProject(int id) throws Exception {
+    public static Project getProject(String id) throws Exception {
         Project found = null;
         for (Project project : getProjects()) {
             if (project.getId().equals(id)) {
