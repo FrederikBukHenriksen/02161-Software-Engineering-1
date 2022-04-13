@@ -21,14 +21,14 @@ public class addEmployeeSteps {
         this.errorMessageHolder = errorMessageHolder;
     }
 
-    @Given("an administrator is logged in")
-    public void an_administrator_is_logged_in() throws Exception {
+    // @Given("an administrator is logged in")
+    // public void an_administrator_is_logged_in() throws Exception {
 
 
-        projectPlanner.logIn("HUBE", "PW1234");
-        assertTrue(projectPlanner.administratorLoggedIn());
+    // projectPlanner.logIn("HUBE", "PW1234");
+    // assertTrue(projectPlanner.administratorLoggedIn());
 
-    }
+    // }
 
     @Given("the employee {string} is not on the list of employees")
     public void the_employee_is_not_on_the_list_of_employees(String string) {
@@ -52,15 +52,15 @@ public class addEmployeeSteps {
 
         // Scenario: Add an employee when the administrator is not logged in
 
-        @Given("an administrator is not logged in")
-        public void an_administrator_is_not_logged_in() {
-            assertFalse(projectPlanner.administratorLoggedIn());
-        }
+        // @Given("an administrator is not logged in")
+        // public void an_administrator_is_not_logged_in() {
+        // assertFalse(projectPlanner.administratorLoggedIn());
+        // }
 
-        @Then("the error message {string} is given")
-        public void the_error_message_is_given(String string) {
-            assertEquals(string, errorMessageHolder.getErrorMessage());
-        }
+        // @Then("the error message {string} is given")
+        // public void the_error_message_is_given(String string) {
+        // assertEquals(string, errorMessageHolder.getErrorMessage());
+        // }
 
         // Scenario: Add an employee when it already exists
 
