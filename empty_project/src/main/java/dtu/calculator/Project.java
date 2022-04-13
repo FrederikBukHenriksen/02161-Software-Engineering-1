@@ -6,27 +6,31 @@ import java.util.GregorianCalendar;
 public class Project {
 
     String title;
-    static int idIncrementer = 1;
     String id;
     GregorianCalendar startTime;
     User projectLeader;
     ArrayList<Activity> activities = new ArrayList<>();
+    ArrayList<User> projectEmployees = new ArrayList<>();
 
-    ProjectPlanner projectPlanner;
-
-    public Project(String title, ProjectPlanner projectplanner) {
+    public Project(String title) {
         this.title = title;
-        id = getNextId();
-        idIncrementer++;
-
-        this.projectPlanner = projectplanner;
+        this.id = getNextId();
     }
 
-    public boolean projectLeaderLoggedIn() {
-        if (projectPlanner.getLoggedIn().equals(projectLeader)) {
-            return true;
+    private String getNextId() {
+        int maxId = 0;
+
+        for (Project project : ProjectPlanner.getProjects()) {
+            int idToCompare = Integer.parseInt(project.id.split("-")[1]);
+            if (idToCompare > maxId) {
+                maxId = idToCompare;
+            }
         }
-        return false;
+        maxId++;
+
+        int year = DateServer.getYear();
+        return String.valueOf(year) + "-" + String.valueOf(maxId);
+
     }
 
     public void createActivity(String title) {
@@ -50,10 +54,40 @@ public class Project {
         activities.remove(activity);
     }
 
-    private String getNextId() {
-
-        int year = DateServer.getYear();
-        return Integer.toString(year) + "-" + Integer.toString(idIncrementer);
+    public void setProjectLeader(Employee employee) {
+        projectLeader = employee;
     }
+
+    public void addEmployeeToProject(String employeeID) throws Exception {
+        if (projectLeaderLoggedIn()) {
+            for (User employee : ProjectPlanner.getUsers()) {
+                if (employeeID == employee.getInitials()) {
+                    if (!projectEmployees.contains(employee)) {
+                        projectEmployees.add(employee);
+                        return;
+                    } else {
+                        throw new Exception("Employee is already in project");
+                    }
+                }
+            }
+            throw new Exception("Employee with id " +employeeID+ " does not exist");
+        }
+
+
+    }
+
+    public User getProjectleader() {
+        return projectLeader;
+    }
+
+    public boolean projectLeaderLoggedIn(){
+        return projectLeader == ProjectPlanner.getLoggedIn();
+    }
+
+
+    public String getId() {
+        return id;
+    }
+
 
 }

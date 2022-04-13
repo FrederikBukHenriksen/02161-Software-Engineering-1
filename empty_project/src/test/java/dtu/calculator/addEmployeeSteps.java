@@ -14,13 +14,16 @@ import dtu.calculator.ProjectPlanner;
 public class addEmployeeSteps {
 
     ProjectPlanner projectPlanner;
+    ErrorMessageHolder errorMessageHolder;
 
-    public addEmployeeSteps(ProjectPlanner projectplanner) {
+    public addEmployeeSteps(ProjectPlanner projectplanner, ErrorMessageHolder errorMessageHolder) {
         this.projectPlanner = projectplanner;
+        this.errorMessageHolder = errorMessageHolder;
     }
 
     @Given("an administrator is logged in")
-    public void that_the_administrator_is_logged_in() {
+    public void an_administrator_is_logged_in() throws Exception {
+
 
         projectPlanner.logIn("HUBE", "PW1234");
         assertTrue(projectPlanner.administratorLoggedIn());
@@ -50,7 +53,7 @@ public class addEmployeeSteps {
         // Scenario: Add an employee when the administrator is not logged in
 
         @Given("an administrator is not logged in")
-        public void that_the_administrator_is_not_logged_in() {
+        public void an_administrator_is_not_logged_in() {
             assertFalse(projectPlanner.administratorLoggedIn());
         }
 
