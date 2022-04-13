@@ -1,7 +1,11 @@
 package dtu.calculator;
 import io.cucumber.java.BeforeAll;
+import io.cucumber.java.Before;
 
-@BeforeAll
-public static void beforeAll() {
+
+@Before
+public static void before() {
     Memory.reset()
+    		System.out.println("Before All init() method called");
+
 }
