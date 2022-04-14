@@ -1,6 +1,7 @@
 package dtu.calculator;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.GregorianCalendar;
 
 public class Project {
@@ -89,5 +90,17 @@ public class Project {
         return id;
     }
 
+    public ArrayList<Activity> getActivities() {
+        return activities;
+    }
 
+    public Activity getActivity(String activity_id) {
+        for (Activity activity : activities) {
+            if (activity.getId().equals(activity_id)) {
+                return activity;
+            }
+        }
+
+        return null;
+    }
 }
