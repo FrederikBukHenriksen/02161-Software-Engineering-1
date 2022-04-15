@@ -23,4 +23,8 @@ public class Activity {
         employees.remove(employee);
     }
 
+    public String getTitle() {
+        return title;
+    }
+
 }

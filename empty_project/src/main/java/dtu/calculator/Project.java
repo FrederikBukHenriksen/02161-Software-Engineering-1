@@ -76,6 +76,20 @@ public class Project {
 
     }
 
+    public void addActivity(String title) throws Exception {
+        if (projectLeaderLoggedIn()) {
+            for (Activity act : activities) {
+                if (title.equals(act.getTitle())) {
+                    throw new Exception("Activity is already in project");
+                }
+            }
+            activities.add(new Activity(title));
+        }
+        else {
+            throw new Exception("Project leader login is required");
+        }
+    }
+
     public User getProjectleader() {
         return projectLeader;
     }
@@ -89,5 +103,8 @@ public class Project {
         return id;
     }
 
+    public ArrayList<Activity> getActivities() {
+        return activities;
+    }
 
 }
