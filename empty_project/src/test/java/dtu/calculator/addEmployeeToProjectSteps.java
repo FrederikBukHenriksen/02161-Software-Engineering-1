@@ -17,14 +17,15 @@ public class addEmployeeToProjectSteps {
 
     public addEmployeeToProjectSteps() {
         projectPlanner = new ProjectPlanner();
+        DateServer.setDate(2022, 4, 16);
     }
 
     @Given("that there exists a project titled {string} with id {string}")
     public void that_there_exists_a_project_titled_with_id(String string, String id) throws Exception {
-        projectPlanner.logIn("HUBE", "PW1234");
+        ProjectPlanner.logIn("HUBE", "PW1234");
         projectPlanner.createProject(string);
         boolean found = false;
-        for (Project project : projectPlanner.getProjects()) {
+        for (Project project : ProjectPlanner.getProjects()) {
             if (project.title.equalsIgnoreCase(string) && project.getId().equals(id)) {
                 this.project = project;
                 found = true;
@@ -38,17 +39,17 @@ public class addEmployeeToProjectSteps {
     public void that_the_project_leader_is_logged_in() throws Exception {
         
         projectPlanner.addEmployee("fred");
-        User employee = null;
-        for (User employee_ : projectPlanner.getUsers()) {
-            if (employee_.getInitials().equalsIgnoreCase("fred")){
-                employee = employee_;
+        User projectLeader = null;
+        for (User projectLeader_ : ProjectPlanner.getUsers()) {
+            if (projectLeader_.getInitials().equalsIgnoreCase("fred")){
+                projectLeader = projectLeader_;
             }
         }
-        project.projectLeader = employee;
-        projectPlanner.logOut();
-        projectPlanner.logIn("fred", "01234");
+        project.projectLeader = projectLeader;
+        ProjectPlanner.logOut();
+        ProjectPlanner.logIn("fred", "01234");
         boolean found = false;
-        if (project.getProjectleader() == employee) {
+        if (project.getProjectleader() == projectLeader) {
             found = true;
         }
         assertTrue(found);
@@ -57,7 +58,8 @@ public class addEmployeeToProjectSteps {
 
     @Given("project leader has chosen an employee with id {string}")
     public void project_leader_has_chosen_an_employee_with_id(String string) throws Exception {
-        for (User employee : projectPlanner.getUsers()) {
+        projectPlanner.cucumberAddEmployee(string);
+        for (User employee : ProjectPlanner.getUsers()) {
             if (employee.getInitials().equalsIgnoreCase(string)) {
                 this.employee = employee;
             }
@@ -76,12 +78,28 @@ public class addEmployeeToProjectSteps {
     }
 
     @When("the project leader adds the employee to the project")
-    public void the_project_leader_adds_the_employee_to_the_project() {
-       project.projectEmployees.add(employee);
+    public void the_project_leader_adds_the_employee_to_the_project() throws Exception {
+
+        project.addEmployeeToProject(employee.getInitials());
     }
+    
+    
 
     @Then("the employee is added to the project")
     public void the_employee_is_added_to_the_project() {
         assertTrue(project.projectEmployees.contains(employee));
+    }
+
+
+
+    @Given("that the project leader isn't logged in")
+    public void that_the_project_leader_isn_t_logged_in() {
+        ProjectPlanner.logOut();
+        assertFalse(project.projectLeaderLoggedIn());
+    }
+
+    @Then("the employee is not added to the project")
+    public void the_employee_is_not_added_to_the_project() {
+        assertFalse(project.projectEmployees.contains(employee));
     }
 }

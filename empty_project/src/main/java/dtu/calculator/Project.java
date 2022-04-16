@@ -3,6 +3,8 @@ package dtu.calculator;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
+
+
 public class Project {
 
     String title;
@@ -29,6 +31,7 @@ public class Project {
         maxId++;
 
         int year = DateServer.getYear();
+
         return String.valueOf(year) + "-" + String.valueOf(maxId);
 
     }
@@ -71,6 +74,9 @@ public class Project {
                 }
             }
             throw new Exception("Employee with id " +employeeID+ " does not exist");
+        } else {
+            ErrorMessageHolder.setErrorMessage("Only a project leader can add an employee to the project");
+            // throw new Exception("Only a project leader can add an employee to the project");
         }
 
 
@@ -81,7 +87,7 @@ public class Project {
     }
 
     public boolean projectLeaderLoggedIn(){
-        return projectLeader == ProjectPlanner.getLoggedIn();
+        return projectLeader == ProjectPlanner.getLoggedIn() && projectLeader != null;
     }
 
 
