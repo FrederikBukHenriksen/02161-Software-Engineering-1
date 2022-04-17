@@ -38,21 +38,18 @@ public class addEmployeeToProjectSteps {
     @Given("that the project leader is logged in")
     public void that_the_project_leader_is_logged_in() throws Exception {
         
-        projectPlanner.addEmployee("fred");
+        projectPlanner.cucumberAddEmployee("fred");
         User projectLeader = null;
         for (User projectLeader_ : ProjectPlanner.getUsers()) {
-            if (projectLeader_.getInitials().equalsIgnoreCase("fred")){
+            if (projectLeader_.getInitials().equalsIgnoreCase("fred")) {
                 projectLeader = projectLeader_;
             }
         }
-        project.projectLeader = projectLeader;
-        ProjectPlanner.logOut();
+        project.setProjectLeader(projectLeader);
+
         ProjectPlanner.logIn("fred", "01234");
-        boolean found = false;
-        if (project.getProjectleader() == projectLeader) {
-            found = true;
-        }
-        assertTrue(found);
+        assertTrue(project.projectLeaderLoggedIn());
+        
         
     }
 
