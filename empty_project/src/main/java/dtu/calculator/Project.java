@@ -37,16 +37,24 @@ public class Project {
     }
 
     public void createActivity(String title) {
-        if (uniqueTitle(title)) {
-            activities.add(new Activity(title));
+        if (projectLeaderLoggedIn()) {
+            
+            if (uniqueTitle(title)) {
+                activities.add(new Activity(title));
+            } else {
+                // throw new Exception("Tile is already in use by another activity.");
+                ErrorMessageHolder.setErrorMessage("The activity already exists");
+            }
         } else {
-            // throw new Exception("Tile is already in use by another activity.");
+            // throw new Exception("Only project leader can create activities.");
+            ErrorMessageHolder.setErrorMessage("Project leader login is required");
         }
+
     }
 
     private boolean uniqueTitle(String title) {
         for (Activity activity : activities) {
-            if (activity.title.equalsIgnoreCase(title)) {
+            if (activity.getTitle().equalsIgnoreCase(title)) {
                 return false;
             }
         }
@@ -57,7 +65,7 @@ public class Project {
         activities.remove(activity);
     }
 
-    public void setProjectLeader(Employee employee) {
+    public void setProjectLeader(User employee) {
         projectLeader = employee;
     }
 
@@ -94,6 +102,8 @@ public class Project {
     public String getId() {
         return id;
     }
-
+    public String getTitle() {
+        return title;
+    }
 
 }
