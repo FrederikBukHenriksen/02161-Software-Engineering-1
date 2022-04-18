@@ -52,7 +52,7 @@ public class addActivity {
 }
 
     
-
+    // Er dette ikke altid sandt? Vi burde vel streame activities, og tjekke om activityTitle findes i streamen
     @Given("there is an activity titled {string}")
     public void there_is_an_activity_titled(String activityTitle) {
         activity = new Activity(activityTitle);

@@ -105,5 +105,8 @@ public class Project {
     public String getTitle() {
         return title;
     }
+    public ArrayList<Activity> getActivities() {
+        return activities;
+    }
 
 }
