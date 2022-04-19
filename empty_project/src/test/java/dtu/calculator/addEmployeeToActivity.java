@@ -46,7 +46,7 @@ public class addEmployeeToActivity {
     @Given("the project contains an activity titled {string}")
     public void the_project_contains_an_activity_titled(String string) {
         project.createActivity(string);
-        assertTrue(project.activities.stream().anyMatch(act -> act.getTitle().equals(string)));
+        assertTrue(project.getActivities().stream().anyMatch(act -> act.getTitle().equals(string)));
     }
 
     @Given("there is an employee with id {string}")

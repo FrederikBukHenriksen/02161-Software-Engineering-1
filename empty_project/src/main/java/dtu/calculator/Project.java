@@ -11,8 +11,8 @@ public class Project {
     String id;
     GregorianCalendar startTime;
     User projectLeader;
-    ArrayList<Activity> activities = new ArrayList<>();
-    ArrayList<User> projectEmployees = new ArrayList<>();
+    private ArrayList<Activity> activities = new ArrayList<>();
+    private ArrayList<User> projectEmployees = new ArrayList<>();
 
     public Project(String title) {
         this.title = title;
@@ -116,8 +116,13 @@ public class Project {
     public String getId() {
         return id;
     }
+
     public String getTitle() {
         return title;
+    }
+    
+    public ArrayList<User> getProjectEmployees() {
+        return projectEmployees;
     }
 
 }
