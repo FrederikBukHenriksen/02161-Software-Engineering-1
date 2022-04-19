@@ -69,6 +69,20 @@ public class Project {
         projectLeader = employee;
     }
 
+    public Activity getActivity(String title) {
+        for (Activity activity : activities) {
+            if (activity.getTitle().equalsIgnoreCase(title)) {
+                return activity;
+            }
+        }
+        return null;
+    }
+
+    public ArrayList<Activity> getActivities() {
+        return activities;
+    }
+
+
     public void addEmployeeToProject(String employeeID) throws Exception {
         if (projectLeaderLoggedIn()) {
             for (User employee : ProjectPlanner.getUsers()) {

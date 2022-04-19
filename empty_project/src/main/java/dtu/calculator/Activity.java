@@ -9,22 +9,26 @@ public class Activity {
     int budgetedTime;
     GregorianCalendar startTime;
     GregorianCalendar endTime;
-    ArrayList<Employee> employees = new ArrayList<>();
+    ArrayList<User> employees = new ArrayList<>();
 
     public Activity(String title) {
         this.title = title;
     }
 
-    public void addEmployee(Employee employee) {
+    public void addEmployee(User employee) {
         employees.add(employee);
     }
 
-    public void removeEmployee(Employee employee) {
+    public void removeEmployee(User employee) {
         employees.remove(employee);
     }
 
     public String getTitle() {
         return title;
+    }
+
+    public ArrayList<User> getEmployees() {
+        return employees;
     }
 
 }

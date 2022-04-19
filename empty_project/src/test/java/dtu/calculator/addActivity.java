@@ -3,6 +3,7 @@ package dtu.calculator;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -12,6 +13,11 @@ public class addActivity {
     Project project;
     Activity activity;
     ProjectPlanner projectPlanner;
+
+    @Before
+    public void Before() {
+        Memory.reset();
+    }
 
     public addActivity() {
         projectPlanner = new ProjectPlanner();
@@ -36,7 +42,7 @@ public class addActivity {
 
     }
     
-    @Given("that the Project leader is logged in")  //findes et andet sted, har bare ændret p til P
+    @Given("that the Project leader is logged in")  //findes et andet sted, har bare ændret p til P TODO Løs det her
     public void that_the_project_leader_is_logged_in() throws Exception {
         projectPlanner.cucumberAddEmployee("fred");
         User projectLeader = null;
