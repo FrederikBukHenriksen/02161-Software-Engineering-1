@@ -11,8 +11,8 @@ public class Project {
     String id;
     GregorianCalendar startTime;
     User projectLeader;
-    ArrayList<Activity> activities = new ArrayList<>();
-    ArrayList<User> projectEmployees = new ArrayList<>();
+    private ArrayList<Activity> activities = new ArrayList<>();
+    private ArrayList<User> projectEmployees = new ArrayList<>();
 
     public Project(String title) {
         this.title = title;
@@ -38,9 +38,9 @@ public class Project {
 
     public void createActivity(String title) {
         if (projectLeaderLoggedIn()) {
-            
+
             if (uniqueTitle(title)) {
-                activities.add(new Activity(title));
+                activities.add(new Activity(title,this));
             } else {
                 // throw new Exception("Tile is already in use by another activity.");
                 ErrorMessageHolder.setErrorMessage("The activity already exists");
@@ -50,6 +50,10 @@ public class Project {
             ErrorMessageHolder.setErrorMessage("Project leader login is required");
         }
 
+    }
+    
+    public void CucumbercreateActivity(String title) {
+        activities.add(new Activity(title, this));
     }
 
     private boolean uniqueTitle(String title) {
@@ -68,6 +72,20 @@ public class Project {
     public void setProjectLeader(User employee) {
         projectLeader = employee;
     }
+
+    public Activity getActivity(String title) {
+        for (Activity activity : activities) {
+            if (activity.getTitle().equalsIgnoreCase(title)) {
+                return activity;
+            }
+        }
+        return null;
+    }
+
+    public ArrayList<Activity> getActivities() {
+        return activities;
+    }
+
 
     public void addEmployeeToProject(String employeeID) throws Exception {
         if (projectLeaderLoggedIn()) {
@@ -102,8 +120,13 @@ public class Project {
     public String getId() {
         return id;
     }
+
     public String getTitle() {
         return title;
+    }
+    
+    public ArrayList<User> getProjectEmployees() {
+        return projectEmployees;
     }
 
 }
