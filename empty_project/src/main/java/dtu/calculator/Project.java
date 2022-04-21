@@ -38,9 +38,9 @@ public class Project {
 
     public void createActivity(String title) {
         if (projectLeaderLoggedIn()) {
-            
+
             if (uniqueTitle(title)) {
-                activities.add(new Activity(title));
+                activities.add(new Activity(title,this));
             } else {
                 // throw new Exception("Tile is already in use by another activity.");
                 ErrorMessageHolder.setErrorMessage("The activity already exists");
@@ -50,6 +50,10 @@ public class Project {
             ErrorMessageHolder.setErrorMessage("Project leader login is required");
         }
 
+    }
+    
+    public void CucumbercreateActivity(String title) {
+        activities.add(new Activity(title, this));
     }
 
     private boolean uniqueTitle(String title) {

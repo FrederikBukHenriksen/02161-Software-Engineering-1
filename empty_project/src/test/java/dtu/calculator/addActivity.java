@@ -34,7 +34,7 @@ public class addActivity {
 
     @Given("there is an activity titled {string}")
     public void there_is_an_activity_titled(String activityTitle) {
-        Activity activity = new Activity(activityTitle);
+        Activity activity = new Activity(activityTitle,null);
         assertTrue(activity.getTitle().equalsIgnoreCase(activityTitle));
     }
 
@@ -42,7 +42,7 @@ public class addActivity {
     public void the_activity_titled_is_not_on_the_list_of_activities_for_the_project_with_id(String activityTitle,
             String projectID) throws Exception {
         Project project = ProjectPlanner.getProject(projectID);
-        Activity activity = new Activity(activityTitle);
+        Activity activity = new Activity(activityTitle,null);
         assertTrue(project.getActivities().stream().noneMatch(act -> act.getTitle().equals(activity.getTitle())));
     }
 
