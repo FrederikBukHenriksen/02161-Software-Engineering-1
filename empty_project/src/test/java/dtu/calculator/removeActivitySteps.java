@@ -59,18 +59,18 @@ public class removeActivitySteps {
 
     @Given("an activity titled {string} is part of the project")
     public void an_activity_titled_is_part_of_the_project(String activityTitle) {
-        activity = new Activity(activityTitle);
+        activity = new Activity(activityTitle,project);
         project.createActivity(activityTitle);
 
         if (project.projectLeaderLoggedIn()) {
-            assertTrue(project.activities.stream().anyMatch(act -> act.getTitle().equals(activityTitle)));
+            assertTrue(project.getActivities().stream().anyMatch(act -> act.getTitle().equals(activityTitle)));
         }
     }
 
     @When("the activity is removed from the project")
     public void the_activity_is_removed_from_the_project() {
         if (project.projectLeaderLoggedIn()) { // don't like having to do this, but it's too important not to
-            Activity temp = new Activity("temp");
+            Activity temp = new Activity("temp",null);
             boolean activityFound = false;
             for (Activity act : project.getActivities()) {
                 if (act.getTitle().equals(activity.getTitle())) {
@@ -88,7 +88,7 @@ public class removeActivitySteps {
 
     @Then("the activity is no longer in the list of activities")
     public void the_activity_titled_is_no_longer_in_the_list_of_activities() {
-        assertTrue(project.activities.stream().noneMatch(act -> act.getTitle().equals(activity.getTitle())));
+        assertTrue(project.getActivities().stream().noneMatch(act -> act.getTitle().equals(activity.getTitle())));
     }
 
     @Given("that the Project Leader is not logged in")
@@ -99,6 +99,6 @@ public class removeActivitySteps {
 
     @Given("an activity titled {string} is not part of the project")
     public void an_activity_titled_is_not_part_of_the_project(String activityTitle) {
-        assertTrue(project.activities.stream().noneMatch(act -> act.getTitle().equals(activityTitle)));
+        assertTrue(project.getActivities().stream().noneMatch(act -> act.getTitle().equals(activityTitle)));
     }    
 }
