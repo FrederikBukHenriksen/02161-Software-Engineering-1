@@ -90,7 +90,7 @@ public class Project {
     public void addEmployeeToProject(String employeeID) throws Exception {
         if (projectLeaderLoggedIn()) {
             for (User employee : ProjectPlanner.getUsers()) {
-                if (employeeID == employee.getInitials()) {
+                if (employeeID.equals(employee.getInitials())) {
                     if (!projectEmployees.contains(employee)) {
                         projectEmployees.add(employee);
                         return;
@@ -124,9 +124,11 @@ public class Project {
     public String getTitle() {
         return title;
     }
+
     
     public ArrayList<User> getProjectEmployees() {
         return projectEmployees;
+
     }
 
 }
