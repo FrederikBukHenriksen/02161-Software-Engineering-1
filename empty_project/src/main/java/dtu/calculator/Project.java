@@ -9,7 +9,7 @@ public class Project {
 
     String title;
     String id;
-    GregorianCalendar startTime;
+    String startDate;
     User projectLeader;
     private ArrayList<Activity> activities = new ArrayList<>();
     private ArrayList<User> projectEmployees = new ArrayList<>();
@@ -129,6 +129,18 @@ public class Project {
     public ArrayList<User> getProjectEmployees() {
         return projectEmployees;
 
+    }
+
+	public void setStartDate(String day, String month, String year) {
+        if (projectLeaderLoggedIn()) {
+            startDate = day + "/" + month + "/" + year;
+        } else {
+            ErrorMessageHolder.setErrorMessage("Project leader login is required");
+        }
+	}
+
+    public String getStartDate() {
+        return startDate;
     }
 
 }
