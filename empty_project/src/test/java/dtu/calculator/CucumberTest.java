@@ -12,7 +12,10 @@ For example, the class name CucumberTests (Test with an s) will be ignored by
 Maven.
 */
 
+
 @RunWith(Cucumber.class)
+
 @CucumberOptions(plugin = "summary", features = { "features" }, publish = false)
 public class CucumberTest {
 }
+

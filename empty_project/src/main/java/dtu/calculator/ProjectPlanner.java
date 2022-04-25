@@ -6,10 +6,13 @@ import java.util.List;
 import java.util.function.BooleanSupplier;
 
 public class ProjectPlanner {
-    private ArrayList<Project> projects = new ArrayList<>();
-    public ArrayList<User> users = new ArrayList<>();
+    public static ArrayList<Project> projects = new ArrayList<>();
 
-    public User loggedIn;
+    public static ArrayList<User> users = new ArrayList<>();
+    GregorianCalendar startTime;
+
+
+    public static User loggedIn;
 
     public ProjectPlanner() {
         users.add(new Administrator("HUBE", "PW1234")); // Create the administrator profile.
@@ -17,8 +20,9 @@ public class ProjectPlanner {
 
     public void createProject(String title) throws Exception {
         if (administratorLoggedIn()) {
-            projects.add(new Project(title, this));
-        } else {
+            projects.add(new Project(title));
+        }
+        else {
             throw new Exception("Administrator login is required");
         }
     }
@@ -64,14 +68,14 @@ public class ProjectPlanner {
 
     public boolean uniqueProject(String title, String id) {
         for (Project project : projects) {
-            if (project.title.equalsIgnoreCase(title) && project.id.equalsIgnoreCase(id)) {
+            if (project.title.equalsIgnoreCase(title) && project.getId().equals(id)) {
                 return false;
             }
         }
         return true;
     }
 
-    public void logIn(String initals, String password) throws Exception {
+    public static void logIn(String initals, String password) throws Exception {
         boolean checker = false;
 
         for (User employee : users) {
@@ -87,31 +91,18 @@ public class ProjectPlanner {
         }
     }
 
-    public void logOut() {
+    public static void logOut() {
         loggedIn = null;
     }
 
-    public User getUser(String initials) throws Exception{
-        User found = null;
-        for (User user : users) {
-            if(user.initials.equalsIgnoreCase(initials)){
-                found = user;
-            }
-        } if(found != null){
-        return found;
-        } else {
-            throw new Exception("User not found");
-        }
-    }
-
-    public boolean administratorLoggedIn() {
+    public static boolean administratorLoggedIn() {
         if (loggedIn instanceof Administrator) {
             return true;
         }
         return false;
     }
 
-    public boolean employeeLoggedIn() {
+    public static boolean employeeLoggedIn() {
         if (loggedIn instanceof Employee) {
             return true;
         }
@@ -120,19 +111,20 @@ public class ProjectPlanner {
 
     // ##### GET FUNKTIONER #####
 
-    public User getLoggedIn() {
+    public static User getLoggedIn() {
         return loggedIn;
     }
 
-    public ArrayList<User> getUsers() {
+    public static ArrayList<User> getUsers() {
         return users;
     }
 
-    public Project getProject(String id) throws Exception {
+    public static Project getProject(String id) throws Exception {
         Project found = null;
         for (Project project : getProjects()) {
-            if (project.id.equalsIgnoreCase(id))
+            if (project.getId().equals(id)) {
                 found = project;
+            }
         }
         if (found == null) {
             throw new Exception("Project does not exist");
@@ -140,7 +132,7 @@ public class ProjectPlanner {
         return found;
     }
 
-    public User getUser(String initials) throws Exception {
+    public static User getUser(String initials) throws Exception {
         User found = null;
         for (User user : getUsers()) {
             if (user.initials.equalsIgnoreCase(initials))
@@ -152,17 +144,25 @@ public class ProjectPlanner {
         return found;
     }
 
-    public ArrayList<Project> getProjects() {
+    public static ArrayList<Project> getProjects() {
         return projects;
     }
 
     // ##### JUNIT FUNKTIONER #####
-    public void cucumberAddEmployee(String initials) {
+    public static void cucumberAddEmployee(String initials) {
         users.add(new Employee(initials));
     }
 
     public void cucumberCreateProject(String title) {
-        projects.add(new Project(title, this));
+        projects.add(new Project(title));
+    }
+
+    public static void lolcat() {
+        System.out.println("CLEAR VIRKER");
+    }
+
+    public static void addAdministrator() {
+        users.add(new Administrator("HUBE", "PW1234"));
     }
 
 }

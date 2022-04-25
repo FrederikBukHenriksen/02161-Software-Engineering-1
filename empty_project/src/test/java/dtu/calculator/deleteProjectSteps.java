@@ -17,22 +17,22 @@ public class deleteProjectSteps {
     }
 
     @When("delete the project with id {string}")
-    public void delete_the_project_with_id(String string) {
+    public void delete_the_project_with_id(String id) {
         try {
-            projectPlanner.removeProject(projectPlanner.getProject(string));
+            projectPlanner.removeProject(projectPlanner.getProject(id));
         } catch (Exception e) {
             ErrorMessageHolder.setErrorMessage(e.getMessage());
         }
     }
 
     @Then("the project {string} is not on the list of projects")
-    public void the_project_is_not_on_the_list_of_projects(String string) {
-        assertFalse(projectPlanner.getProjects().stream().anyMatch(project -> project.id.equals(string)));
+    public void the_project_is_not_on_the_list_of_projects(String id) {
+        assertFalse(projectPlanner.getProjects().stream().anyMatch(project -> project.getId().equals(id)));
     }
 
     @Then("the project {string} is on the list of projects")
-    public void the_project_is_on_the_list_of_projects(String string) {
-        assertTrue(projectPlanner.getProjects().stream().anyMatch(project -> project.id.equals(string)));
+    public void the_project_is_on_the_list_of_projects(String id) {
+        assertTrue(projectPlanner.getProjects().stream().anyMatch(project -> project.getId().equals(id)));
 
     }
 

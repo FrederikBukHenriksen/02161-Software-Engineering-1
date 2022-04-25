@@ -1,7 +1,6 @@
 package dtu.calculator;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.notNull;
 
 import java.util.ArrayList;
 import io.cucumber.java.en.Given;
@@ -14,7 +13,7 @@ public class userLoginSteps {
     ProjectPlanner projectPlanner;
     ErrorMessageHolder errorMessageHolder;
     String nameID;
-
+    
     public userLoginSteps() throws Exception {
         projectPlanner = new ProjectPlanner();
         errorMessageHolder = new ErrorMessageHolder();
