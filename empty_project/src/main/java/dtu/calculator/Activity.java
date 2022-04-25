@@ -48,7 +48,11 @@ public class Activity {
     }
 
     public void setStartDate(Integer Year, Integer Week) {
-        startTime = Year + "-" + Week;
+        if (project.projectLeaderLoggedIn()) {
+            startTime = Year + "-" + Week;
+        } else {
+            ErrorMessageHolder.setErrorMessage("Project leader login is required");
+        }
     }
 
     public String getStartDate() {

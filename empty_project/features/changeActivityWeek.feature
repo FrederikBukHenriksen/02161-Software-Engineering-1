@@ -5,11 +5,11 @@ Feature: Change an activity' date
 
     # Main Scenario:
     Scenario: Set start date of an activity
-        Given that the project leader is logged in
-        And there is a project titled "Software Development" with id "2022-1"
+        Given that there exists a project titled "Software Development" with id "2022-1"
+        And that the project leader with id "fred" for the project "2022-1" is logged in
         And the project with id "2022-1" contains an activity titled "Analysis"
-        When the activity's start date is set to week 1 and year 2022
-        Then the activity's date is set to week 1 and year 2022
+        When the project "2022-1" activity's with title "Analysis" start date is set to week 1 and year 2022
+        Then the project "2022-1" activity's with title "Analysis" date is set to week 1 and year 2022
 
     # Scenario: Change start date of an activity
     #     Given that the project leader is logged in
@@ -19,21 +19,21 @@ Feature: Change an activity' date
     #     When the activity's new start date is set to week 2, and year 2022
     #     Then the activity's start date is set to week 2, and year 2022
 
-    # #Alternative use-case(s)
-    # Scenario: Set start date of an activity when the project leader is not logged in
-    #     Given that the project leader is not logged in
-    #     And there is a project titled "Software Development" with id "2022-1"
-    #     And the project contains an activity titled "Analysis"
-    #     When the activity's start date is set to week 1, and year 2022
-    #     Then the error message "activity leader login is required" is given
-    
-    # Scenario: Change start date of an activity when the project leader is not logged in
-    #     Given that the project leader is not logged in
-    #     And there is a project titled "Software Development" with id "2022-1"
-    #     And the project contains an activity titled "Analysis"
-    #     And the activity's start date is set to week 1, and year 2022
-    #     When the activity's new start date is set to week 2, and year 2022
-    #     Then the error message "activity leader login is required" is given
+    # Alternative use-case(s)
+    Scenario: Set start date of an activity when the project leader is not logged in
+        Given that there exists a project titled "Software Development" with id "2022-1"
+        And that the project leader for the project "2022-1" isn't logged in
+        And the project with id "2022-1" contains an activity titled "Analysis"
+        When the project "2022-1" activity's with title "Analysis" start date is set to week 1 and year 2022
+        Then the error message "Project leader login is required" is given
+
+# Scenario: Change start date of an activity when the project leader is not logged in
+#     Given that the project leader is not logged in
+#     And there is a project titled "Software Development" with id "2022-1"
+#     And the project contains an activity titled "Analysis"
+#     And the activity's start date is set to week 1, and year 2022
+#     When the activity's new start date is set to week 2, and year 2022
+#     Then the error message "activity leader login is required" is given
 
 
 

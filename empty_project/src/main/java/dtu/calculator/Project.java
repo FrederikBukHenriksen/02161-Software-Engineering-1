@@ -157,6 +157,4 @@ public class Project {
         return startDate;
 
     }
-
-    return null;
-}}
+}

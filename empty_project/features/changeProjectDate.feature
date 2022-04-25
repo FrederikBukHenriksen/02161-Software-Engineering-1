@@ -9,7 +9,7 @@ Feature: Change a project's start date
         When the projectleader  set start date to day "1", month "1", and year "2022"
         Then the project's start date is set to day "1", month "1", and year "2022"
 
-    # tænker ikke dette behøves: 
+    # tænker ikke dette behøves:
 
     # Scenario: Change start date of a project
     #     Given that the project leader is logged in
@@ -25,14 +25,14 @@ Feature: Change a project's start date
         When the sets start date is set to day "1", month "1", and year "2022"
         Then the error message "Project leader login is required" is given to user
 
-    # tænker ikke dette behøves: 
+# tænker ikke dette behøves:
 
-    # Scenario: Change start date of a project when the project leader is not logged in
-    #     Given that the project leader is logged in
-    #     And there is a project titled "Software Development" with id "2022-1"
-    #     And the project's start date is set to day "1", month "1", and year "2022"
-    #     When the project's start date is set to day "1", month "12", and year "2022"
-    #     Then the error message "Project leader login is required" is given
+# Scenario: Change start date of a project when the project leader is not logged in
+#     Given that the project leader is logged in
+#     And there is a project titled "Software Development" with id "2022-1"
+#     And the project's start date is set to day "1", month "1", and year "2022"
+#     When the project's start date is set to day "1", month "12", and year "2022"
+#     Then the error message "Project leader login is required" is given
 
 
 
