@@ -19,6 +19,7 @@ public class Controller {
     final String mainMenu = "Main menu";
     final String createProject = "Create project";
     final String deleteProject = "Delete project";
+    final String selectProject = "Select project";
 
     final String addEmployee = "Add employee";
     final String removeEmployee = "Remove employee";
@@ -52,7 +53,8 @@ public class Controller {
             case addEmployee:
                 addEmployee();
                 break;
-
+            case selectProject:
+                selectProject();
             default:
                 break;
         }
@@ -122,10 +124,10 @@ public class Controller {
         view.clearScreen();
 
         if (ProjectPlanner.administratorLoggedIn()) {
-            ArrayList<String> menu = new ArrayList<>(Arrays.asList(createProject, deleteProject, addEmployee, logOut));
+            ArrayList<String> menu = new ArrayList<>(
+                    Arrays.asList(createProject, deleteProject, addEmployee, selectProject, logOut));
             view.menuEnumerate(mainMenu, menu);
             String choice = consoleInput();
-            System.out.println(menu.get(Integer.parseInt(choice) - 1));
             menuStackPush(menu.get(Integer.parseInt(choice) - 1));
         }
         if (ProjectPlanner.employeeLoggedIn()) {
@@ -198,11 +200,22 @@ public class Controller {
         }
     }
 
+    public void selectProject() {
+        ArrayList<String> selectProjectMenu = new ArrayList<>(Arrays.asList(deleteProject, addEmployee, logOut));
+        view.menuEnumerate(selectProject, selectProjectMenu);
+        try {
+            String choice = consoleInputWithBack();
+            menuStackPush(selectProjectMenu.get(Integer.parseInt(choice) - 1));
+
+        } catch (BackException e) {
+        }
+
+    }
+
     public void logOut() {
         projectPlanner.logOut();
         menuStackClear();
         menuStackPush(logIn);
     }
-
 
 }
