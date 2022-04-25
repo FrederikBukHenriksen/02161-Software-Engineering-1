@@ -9,7 +9,7 @@ public class Project {
 
     String title;
     String id;
-    GregorianCalendar startTime;
+    String startDate;
     User projectLeader;
     private ArrayList<Activity> activities = new ArrayList<>();
     private ArrayList<User> projectEmployees = new ArrayList<>();
@@ -131,6 +131,7 @@ public class Project {
 
     }
 
+
     public void cucumberAddEmployeeToProject(String employeeID) throws Exception {
         projectEmployees.add(ProjectPlanner.getUser(employeeID));
     }
@@ -148,6 +149,18 @@ public class Project {
         else {
             ErrorMessageHolder.setErrorMessage("Only a project leader can remove an employee to the project");
         }
+
+	public void setStartDate(String day, String month, String year) {
+        if (projectLeaderLoggedIn()) {
+            startDate = day + "/" + month + "/" + year;
+        } else {
+            ErrorMessageHolder.setErrorMessage("Project leader login is required");
+        }
+	}
+
+    public String getStartDate() {
+        return startDate;
+
     }
 
 }
