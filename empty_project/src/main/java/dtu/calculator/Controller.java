@@ -61,6 +61,7 @@ public class Controller {
             case removeEmployee:
                 removeEmployee();
                 break;
+
             default:
                 break;
         }
@@ -210,11 +211,22 @@ public class Controller {
         }
     }
 
+    public void selectProject() {
+        ArrayList<String> selectProjectMenu = new ArrayList<>(Arrays.asList(deleteProject, addEmployee, logOut));
+        view.menuEnumerate(selectProject, selectProjectMenu);
+        try {
+            String choice = consoleInputWithBack();
+            menuStackPush(selectProjectMenu.get(Integer.parseInt(choice) - 1));
+
+        } catch (BackException e) {
+        }
+
+    }
+
     public void logOut() {
         projectPlanner.logOut();
         menuStackClear();
         menuStackPush(logIn);
     }
-
 
 }
