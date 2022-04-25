@@ -7,7 +7,6 @@ Feature: Add/remove an activity to/from a project
         Given there is a Project titled "Software Development" with id "2022-1"
         And that the Project Leader is logged in
         And an activity titled "Analysis" is part of the project
-        And the project leader has chosen the activity
         When the activity is removed from the project
         Then the activity is no longer in the list of activities
 
@@ -16,7 +15,6 @@ Feature: Add/remove an activity to/from a project
         Given there is a Project titled "Software Development" with id "2022-1"
         And that the Project Leader is not logged in
         And an activity titled "Analysis" is part of the project
-        And the project leader has chosen the activity
         When the activity is removed from the project
         Then the error message "Project leader login is required" is given
     
@@ -25,7 +23,6 @@ Feature: Add/remove an activity to/from a project
         Given there is a Project titled "Software Development" with id "2022-1"
         And that the Project Leader is logged in
         And an activity titled "Analysis" is not part of the project
-        And the project leader has chosen the activity
         When the activity is removed from the project
         Then the error message "The activity doesn't exist in the activity list" is given
 
