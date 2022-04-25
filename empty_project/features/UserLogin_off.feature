@@ -7,7 +7,7 @@ Feature: Employee logout
         Given the employee with id "andr" 
         And the employee is not logged in
         And the employee's password is "01234"
-        When the employee with id "andr" uses password "Bruun12345"
+        When the employee with id "andr" uses password "01234"
         Then the employee with id "andr" is logged in
 
     Scenario: Employee logout

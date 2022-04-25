@@ -1,9 +1,19 @@
 package dtu.calculator;
 
+import java.util.ArrayList;
+
 public class User {
 
     protected String initials;
     protected String password;
+
+    ArrayList<Activity> activities = new ArrayList<>();
+
+
+    public User(String initials, String password) {
+        this.initials = initials;
+        this.password = password;
+    }
 
     public User(String initials) {
         this.initials = initials;
@@ -20,6 +30,22 @@ public class User {
 
     public String getInitials() {
         return initials;
+    }
+
+    public void createActivity(String title) {
+        activities.add(new Activity(this, title));
+    }
+
+    public ArrayList<Activity> getActivities() {
+        return activities;
+    }
+    
+    public ArrayList<String> getActivitiesFromOtherEmployee(String otherUserInitials) throws Exception {
+        ArrayList<String> activitiesTitle = new ArrayList<>();
+        for (Activity activity : ProjectPlanner.getUser(otherUserInitials).getActivities()) {
+            activitiesTitle.add(activity.getTitle());
+        }
+        return activitiesTitle;
     }
 
 }
