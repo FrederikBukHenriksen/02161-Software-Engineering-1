@@ -131,6 +131,25 @@ public class Project {
 
     }
 
+
+    public void cucumberAddEmployeeToProject(String employeeID) throws Exception {
+        projectEmployees.add(ProjectPlanner.getUser(employeeID));
+    }
+
+    public void removeEmployeeFromProject(User Employee) {
+        if (projectLeaderLoggedIn()) {
+            for (User employee : projectEmployees) {
+                if (employee == Employee) {
+                    projectEmployees.remove(employee);
+                    return;
+                }
+            }
+            ErrorMessageHolder.setErrorMessage("employee isn't in the project");
+        }
+        else {
+            ErrorMessageHolder.setErrorMessage("Only a project leader can remove an employee to the project");
+        }
+
 	public void setStartDate(String day, String month, String year) {
         if (projectLeaderLoggedIn()) {
             startDate = day + "/" + month + "/" + year;
@@ -141,6 +160,7 @@ public class Project {
 
     public String getStartDate() {
         return startDate;
+
     }
 
 }
