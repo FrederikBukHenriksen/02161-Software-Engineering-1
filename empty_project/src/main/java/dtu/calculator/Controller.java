@@ -175,9 +175,6 @@ public class Controller {
         }
     }
 
-    public void selectProject() {
-
-    }
 
     public void addEmployee() {
         view.menu(addEmployee, new ArrayList<>(Arrays.asList("Employee initials: ")));
