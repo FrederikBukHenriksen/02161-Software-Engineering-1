@@ -2,9 +2,6 @@
 Feature: Employee login
     Description: The user can login and logout from the site
     Actor: Employee
-
-    # Background: add User
-    #     Given the employee "andr" is added to the list of employees
     
     #Main use-case(s)
     Scenario: Employee login
