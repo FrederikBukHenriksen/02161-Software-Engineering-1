@@ -63,5 +63,11 @@ public class userLoginSteps {
         }
     }
 
+    @When("the employee with id {string} logs out")
+    public void the_employee_with_id_logs_out(String string) {
+        projectPlanner.logOut();
+        
+    }
+
  
 }
