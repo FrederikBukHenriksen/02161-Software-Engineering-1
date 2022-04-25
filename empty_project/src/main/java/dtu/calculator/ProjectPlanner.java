@@ -68,7 +68,7 @@ public class ProjectPlanner {
 
     public boolean uniqueProject(String title, String id) {
         for (Project project : projects) {
-            if (project.title.equalsIgnoreCase(title) && project.getId() == id) {
+            if (project.title.equalsIgnoreCase(title) && project.getId().equals(id)) {
                 return false;
             }
         }
@@ -149,18 +149,12 @@ public class ProjectPlanner {
     }
 
     // ##### JUNIT FUNKTIONER #####
-    public void cucumberAddEmployee(String initials) {
+    public static void cucumberAddEmployee(String initials) {
         users.add(new Employee(initials));
     }
 
     public void cucumberCreateProject(String title) {
         projects.add(new Project(title));
-    }
-
-    public void resetStatic() {
-        loggedIn = null;
-        projects = null;
-        users = null;
     }
 
     public static void lolcat() {
