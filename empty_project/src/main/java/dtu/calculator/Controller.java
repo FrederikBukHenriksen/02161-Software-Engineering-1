@@ -2,118 +2,206 @@ package dtu.calculator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Scanner;
+import java.util.Stack;
 
 public class Controller {
 
     ProjectPlanner projectPlanner = new ProjectPlanner();
-    View view = new View();
+    View view = new View(this);
+
+    Scanner scanner = new Scanner(System.in);
+    Stack menuStack = new Stack();
+
+    final String logIn = "Log in";
+    final String logOut = "Log Out";
+
+    final String mainMenu = "Main menu";
+    final String createProject = "Create project";
+    final String deleteProject = "Delete project";
+
+    final String addEmployee = "Add employee";
+    final String removeEmployee = "Remove employee";
 
     public Controller() {
         DateServer.setDate(2022, 1, 1);
-        logIn();
-        mainMenu();
+        menuStackPush(logIn);
+        while (!menuStack.empty()) { // Essentially runs as long as the program.
+            menuStackDecode(menuStackPeek());
+        }
+    }
+
+    public void menuStackDecode(String menu) {
+        view.clearScreen();
+        switch (menu) {
+            case logIn:
+                logIn();
+                break;
+            case logOut:
+                logOut();
+                break;
+            case mainMenu:
+                mainMenu();
+                break;
+            case createProject:
+                createProject();
+                break;
+            case deleteProject:
+                deleteProject();
+                break;
+            case addEmployee:
+                addEmployee();
+                break;
+
+            default:
+                break;
+        }
 
     }
 
-    public void logIn() {
-        // ArrayList login = view.logIn();
-        ArrayList login = view.insertMenu("Login", new ArrayList<>(Arrays.asList("Initials: ", "Password: ")), false);
+    public String consoleInput() {
+        String input = scanner.next();
+        return input;
+    }
 
+    public String consoleInputWithBack() throws BackException {
+        String input = "";
+        input = scanner.next();
+        if (input.equals("back")) {
+            menuStackPop();
+            menuStackDecode(menuStackPeek());
+            throw new BackException();
+        }
+        return input;
+    }
+
+    public void enterToContinue() {
+        boolean flag = false;
+        while (flag == false) {
+            String input = scanner.nextLine();
+            System.out.println(input);
+            if (input.equals("")) {
+                flag = true;
+            }
+        }
+    }
+
+    public void menuStackPush(String menu) {
+        menuStack.push(menu);
+    }
+
+    public String menuStackPop() {
+        return menuStack.pop().toString();
+    }
+
+    public String menuStackPeek() {
+        return menuStack.peek().toString();
+    }
+
+    public void menuStackClear() {
+        menuStack.clear();
+    }
+
+    public void logIn() {
+        view.menu(logIn, new ArrayList<>(Arrays.asList("Initials: ")));
+        String initials = consoleInput();
+        view.menu(logIn, new ArrayList<>(Arrays.asList("Initials: " + initials, "Password: ")));
+        String password = consoleInput();
         try {
-            ProjectPlanner.logIn((String) login.get(0), (String) login.get(1));
-            view.clearScreen();
-            view.announcement("Login", view.ANSI_GREEN, new ArrayList<>(
-                    Arrays.asList("Login succeeded", "You are logged in as: " + ProjectPlanner.loggedIn.initials)));
-            view.enterToContinue();
-            view.clearScreen();
-            System.out.println("LOLCAT");
+            ProjectPlanner.logIn(initials, password);
+            menuStackPush(mainMenu);
         } catch (Exception e) {
             view.error(e);
-            view.enterToContinue();
-            view.clearScreen();
-            logIn();
+            enterToContinue();
+            menuStackPush(logIn);
         }
     }
 
     public void mainMenu() {
+
         view.clearScreen();
 
         if (ProjectPlanner.administratorLoggedIn()) {
-            int choice = view.choiceMenu("Main menu",
-                    new ArrayList<>(Arrays.asList("Create project", "Delete project", "Edit project", "Add employee",
-                            "Edit employee")),
-                    false);
-            switch (choice) {
-                case 1:
-                    createProject();
-                    break;
-                case 2:
-                    deleteProject();
-                    break;
-                case 4:
-                    addEmployee();
-
-                default:
-                    mainMenu();
-
-            }
+            ArrayList<String> menu = new ArrayList<>(Arrays.asList(createProject, deleteProject, addEmployee, logOut));
+            view.menuEnumerate(mainMenu, menu);
+            String choice = consoleInput();
+            System.out.println(menu.get(Integer.parseInt(choice) - 1));
+            menuStackPush(menu.get(Integer.parseInt(choice) - 1));
+        }
+        if (ProjectPlanner.employeeLoggedIn()) {
         }
     }
 
     public void createProject() {
-        String input = view.insertMenu("Create project", new ArrayList<>(Arrays.asList("Project title: ")), true)
-                .get(0);
-        if (!input.equals("0")) {
-            try {
-                projectPlanner.createProject(input);
-                view.announcement("Create project", view.ANSI_GREEN,
-                        new ArrayList<>(Arrays.asList("Project is created")));
-            } catch (Exception e) {
-                view.error(e);
-                view.enterToContinue();
-            }
+        view.menu(createProject, new ArrayList<>(Arrays.asList("Project title: ")));
+        try {
+            String input = consoleInputWithBack();
+
+            projectPlanner.createProject(input);
+            menuStackPush(mainMenu);
+        } catch (BackException e) {
+
+        } catch (Exception e) {
+            view.error(e);
+            enterToContinue();
         }
-        mainMenu();
     }
 
     public void deleteProject() {
-        ArrayList<String> list = new ArrayList<>();
+
+        ArrayList<String> UIListOfProjects = new ArrayList<>();
         for (Project project : ProjectPlanner.getProjects()) {
-            list.add(project.title + ", " + project.id);
+            UIListOfProjects.add(project.title + ", " + project.id);
         }
 
-        int choice = view.choiceMenu("Delete project", list, true);
+        view.menuEnumerate(deleteProject, UIListOfProjects);
+        try {
+            int choice = Integer.parseInt(consoleInputWithBack());
 
-        if (choice == 0) {
-            mainMenu();
+            Project chosenProject = ProjectPlanner.getProjects().get(choice - 1);
+            projectPlanner.removeProject(chosenProject);
+
+            menuStackPush(mainMenu);
+        } catch (BackException e) {
         }
-
-        if (view.choiceCheckRange(choice, 0, list.size())) {
-            deleteProject();
-        }
-
-        if (view.choiceCheckRange(choice, 0, list.size())) {
-            deleteProject();
-        }
-
-        Project chosenProject = ProjectPlanner.getProjects().get(choice - 1);
-        projectPlanner.removeProject(chosenProject);
-        mainMenu();
     }
 
     public void addEmployee() {
-        String initals = view.insertMenu("Add employee", new ArrayList<>(Arrays.asList("Employee initals: ")), true)
-                .get(0);
-        if (!initals.equals("0")) {
-            try {
-                projectPlanner.addEmployee(initals);
-            } catch (Exception e) {
-                view.error(e);
-                view.enterToContinue();
+        view.menu(addEmployee, new ArrayList<>(Arrays.asList("Employee initials: ")));
+        try {
+            String input = consoleInputWithBack();
+            projectPlanner.addEmployee(input);
+            menuStackPush(mainMenu);
+        } catch (BackException e) {
+        } catch (Exception e) {
+            view.error(e);
+        }
+    }
+
+    public void removeEmployee() {
+
+        ArrayList<String> UIListOfUsers = new ArrayList<>();
+        for (User user : ProjectPlanner.getUsers()) {
+            if (user instanceof Employee) {
+                UIListOfUsers.add(user.getInitials());
             }
         }
-        mainMenu();
+        view.menuEnumerate(removeEmployee, UIListOfUsers);
+        try {
+            int choice = Integer.parseInt(consoleInputWithBack());
 
+            Project chosenProject = ProjectPlanner.getProjects().get(choice - 1);
+            projectPlanner.removeProject(chosenProject);
+
+            menuStackPush(mainMenu);
+        } catch (BackException e) {
+        }
+    }
+
+    public void logOut() {
+        projectPlanner.logOut();
+        menuStackClear();
+        menuStackPush(logIn);
     }
 
 
