@@ -19,9 +19,29 @@ public class Controller {
     final String logOut = "Log Out";
 
     final String mainMenu = "Main menu";
+
     final String createProject = "Create project";
-    final String deleteProject = "Delete project";
+
+    // Projektmenu
     final String selectProject = "Select project";
+
+    final String deleteProject = "Delete project";
+
+    final String changeProjectDate = "Change project date";
+
+    final String addActivity = "Create Activity";
+
+    final String addEmployeeToProject = "Add employee to project";
+    final String removeEmployeeToProject = "Remove employee from project";
+
+    // Activitymenu
+    final String removeActivity = "Remove Activity";
+
+    final String addEmployeeToActivity = "Add employee to activity";
+    final String removeEmployeeToActivity = "Remove employee from activity";
+
+    final String setActivityEstimate = "Set activity estimate";
+    final String changeActivityWeek = "Change activity week";
 
     final String addEmployee = "Add employee";
     final String removeEmployee = "Remove employee";
@@ -60,6 +80,9 @@ public class Controller {
                 break;
             case removeEmployee:
                 removeEmployee();
+                break;
+            case changeProjectDate:
+                changeProjectDate();
                 break;
 
             default:
@@ -129,16 +152,18 @@ public class Controller {
     public void mainMenu() {
 
         view.clearScreen();
-
+        ArrayList<String> menu = new ArrayList<>();
         if (ProjectPlanner.administratorLoggedIn()) {
-            ArrayList<String> menu = new ArrayList<>(
+            menu = new ArrayList<>(
                     Arrays.asList(createProject, deleteProject, selectProject, addEmployee, removeEmployee, logOut));
+        } else if (ProjectPlanner.employeeLoggedIn()) {
+
+        }
+
             view.menuEnumerate(mainMenu, menu);
             String choice = consoleInput();
             menuStackPush(menu.get(Integer.parseInt(choice) - 1));
-        }
-        if (ProjectPlanner.employeeLoggedIn()) {
-        }
+
     }
 
     public void createProject() {
@@ -209,15 +234,44 @@ public class Controller {
     }
 
     public void selectProject() {
-        ArrayList<String> selectProjectMenu = new ArrayList<>(Arrays.asList(deleteProject, addEmployee, logOut));
-        view.menuEnumerate(selectProject, selectProjectMenu);
+        selectedProject = null;
+
+        ArrayList<String> UIListOfProjects = new ArrayList<>();
+        for (Project project : ProjectPlanner.getProjects()) {
+            UIListOfProjects.add(project.title + ", " + project.id);
+        }
+
+        view.menuEnumerate(selectProject, UIListOfProjects);
         try {
-            String choice = consoleInputWithBack();
-            menuStackPush(selectProjectMenu.get(Integer.parseInt(choice) - 1));
+            int choice = Integer.parseInt(consoleInputWithBack());
+
+            this.selectedProject = ProjectPlanner.getProjects().get(choice - 1);
+
+            ArrayList<String> menu = new ArrayList<>(
+                    Arrays.asList(changeProjectDate, addActivity, addEmployeeToProject,
+                            removeEmployeeToProject, deleteProject));
+            view.menuEnumerate(mainMenu, menu);
+            choice = Integer.parseInt(consoleInputWithBack());
+            menuStackPush(menu.get(choice - 1));
 
         } catch (BackException e) {
         }
 
+    }
+
+    public void changeProjectDate() {
+        try {
+            view.menu(changeProjectDate, new ArrayList<>(Arrays.asList("Type day: ")));
+            int day = Integer.parseInt(consoleInputWithBack());
+            view.menu(changeProjectDate, new ArrayList<>(Arrays.asList("Type month: ")));
+            int month = Integer.parseInt(consoleInputWithBack());
+            view.menu(changeProjectDate, new ArrayList<>(Arrays.asList("Type year: ")));
+            int year = Integer.parseInt(consoleInputWithBack());
+            selectedProject.setStartDate(day, month, year);
+        } catch (BackException e) {
+        }
+
+        menuStackPush(mainMenu);
     }
 
     public void logOut() {

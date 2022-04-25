@@ -131,9 +131,9 @@ public class Project {
 
     }
 
-	public void setStartDate(String day, String month, String year) {
-        if (projectLeaderLoggedIn()) {
-            startDate = day + "/" + month + "/" + year;
+    public void setStartDate(int day, int month, int year) {
+        if (projectLeaderLoggedIn() || ProjectPlanner.administratorLoggedIn()) {
+            this.startDate = "" + day + "/" + month + "/" + year;
         } else {
             ErrorMessageHolder.setErrorMessage("Project leader login is required");
         }

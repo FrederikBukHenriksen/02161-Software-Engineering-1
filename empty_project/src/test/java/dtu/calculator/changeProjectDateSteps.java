@@ -55,12 +55,14 @@ public class changeProjectDateSteps {
         assertTrue(project.projectLeaderLoggedIn());
     }
 
-    @When("the projectleader  set start date to day {string}, month {string}, and year {string}")
-        public void the_projectleader_set_start_date_to_day_month_and_year(String string, String string2, String string3) {
-        project.setStartDate(string, string2, string3);
+    // @When("the projectleader set start date to day {string}, month {string}, and
+    // year {string}")
+    // public void the_projectleader_set_start_date_to_day_month_and_year(String
+    // string, String string2, String string3) {
+    // project.setStartDate(string, string2, string3);
        
 
-    }
+    // }
 
     @Then("the project's start date is set to day {string}, month {string}, and year {string}")
       public void the_project_s_start_date_is_set_to_day_month_and_year(String string, String string2, String string3) throws Exception {
@@ -102,9 +104,9 @@ public class changeProjectDateSteps {
 
     }
 
-    @Then("the error message {string} is given to user")
-    public void the_error_message_is_given_to_user(String string) {
-        project.setStartDate("1" , "1" , "1");
-        assertTrue(ErrorMessageHolder.getErrorMessage().equals(string)); 
-    }
+    // @Then("the error message {string} is given to user")
+    // public void the_error_message_is_given_to_user(String string) {
+    // project.setStartDate("1" , "1" , "1");
+    // assertTrue(ErrorMessageHolder.getErrorMessage().equals(string));
+    // }
 }
