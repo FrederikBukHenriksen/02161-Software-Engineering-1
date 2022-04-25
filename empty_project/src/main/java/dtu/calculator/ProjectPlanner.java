@@ -49,6 +49,16 @@ public class ProjectPlanner {
         }
     }
 
+    public static ArrayList<User> getEmployees() {
+        ArrayList<User> list = new ArrayList<>();
+        for (User user : users) {
+            if (user instanceof Employee) {
+                list.add(user);
+            }
+        }
+        return list;
+    }
+
     public void removeEmployee(User user) throws Exception {
         if (administratorLoggedIn()) {
             users.remove(user);

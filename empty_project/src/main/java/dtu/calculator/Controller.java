@@ -13,12 +13,15 @@ public class Controller {
     Scanner scanner = new Scanner(System.in);
     Stack menuStack = new Stack();
 
+    Project selectedProject;
+
     final String logIn = "Log in";
     final String logOut = "Log Out";
 
     final String mainMenu = "Main menu";
     final String createProject = "Create project";
     final String deleteProject = "Delete project";
+    final String selectProject = "Select project";
 
     final String addEmployee = "Add employee";
     final String removeEmployee = "Remove employee";
@@ -49,10 +52,15 @@ public class Controller {
             case deleteProject:
                 deleteProject();
                 break;
+            case selectProject:
+                selectProject();
+                break;
             case addEmployee:
                 addEmployee();
                 break;
-
+            case removeEmployee:
+                removeEmployee();
+                break;
             default:
                 break;
         }
@@ -122,10 +130,10 @@ public class Controller {
         view.clearScreen();
 
         if (ProjectPlanner.administratorLoggedIn()) {
-            ArrayList<String> menu = new ArrayList<>(Arrays.asList(createProject, deleteProject, addEmployee, logOut));
+            ArrayList<String> menu = new ArrayList<>(
+                    Arrays.asList(createProject, deleteProject, selectProject, addEmployee, removeEmployee, logOut));
             view.menuEnumerate(mainMenu, menu);
             String choice = consoleInput();
-            System.out.println(menu.get(Integer.parseInt(choice) - 1));
             menuStackPush(menu.get(Integer.parseInt(choice) - 1));
         }
         if (ProjectPlanner.employeeLoggedIn()) {
@@ -166,6 +174,10 @@ public class Controller {
         }
     }
 
+    public void selectProject() {
+
+    }
+
     public void addEmployee() {
         view.menu(addEmployee, new ArrayList<>(Arrays.asList("Employee initials: ")));
         try {
@@ -180,21 +192,21 @@ public class Controller {
 
     public void removeEmployee() {
 
-        ArrayList<String> UIListOfUsers = new ArrayList<>();
-        for (User user : ProjectPlanner.getUsers()) {
-            if (user instanceof Employee) {
-                UIListOfUsers.add(user.getInitials());
-            }
+        ArrayList<String> UIListOfEmployees = new ArrayList<>();
+        for (User user : ProjectPlanner.getEmployees()) {
+            UIListOfEmployees.add(user.initials);
         }
-        view.menuEnumerate(removeEmployee, UIListOfUsers);
+        view.menuEnumerate(removeEmployee, UIListOfEmployees);
         try {
             int choice = Integer.parseInt(consoleInputWithBack());
 
-            Project chosenProject = ProjectPlanner.getProjects().get(choice - 1);
-            projectPlanner.removeProject(chosenProject);
+            User chosenEmployee = ProjectPlanner.getEmployees().get(choice - 1);
+            projectPlanner.removeEmployee(chosenEmployee);
 
             menuStackPush(mainMenu);
         } catch (BackException e) {
+        } catch (Exception e) {
+            view.error(e);
         }
     }
 
