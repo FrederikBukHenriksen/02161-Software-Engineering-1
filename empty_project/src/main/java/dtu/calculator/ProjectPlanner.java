@@ -149,7 +149,7 @@ public class ProjectPlanner {
     }
 
     // ##### JUNIT FUNKTIONER #####
-    public void cucumberAddEmployee(String initials) {
+    public static void cucumberAddEmployee(String initials) {
         users.add(new Employee(initials));
     }
 
