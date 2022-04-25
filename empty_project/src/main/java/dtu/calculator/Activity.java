@@ -18,11 +18,17 @@ public class Activity {
         this.project = project;
     }
 
+    public Activity(User employee,String title) {
+        this.title = title;
+        activityEmployees.add(employee);
+    }
+
     public void addEmployeeToActivity(User employee) {
         boolean found = false;
         for (User user : activityEmployees) {
             if (user.getInitials().equalsIgnoreCase(employee.getInitials())) {
                 found = true;
+                user.activities.add(this);
                 ErrorMessageHolder.setErrorMessage("The employee is already assigned to the activity");
             }
         }
