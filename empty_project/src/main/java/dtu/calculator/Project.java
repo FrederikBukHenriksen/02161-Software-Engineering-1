@@ -145,10 +145,10 @@ public class Project {
                 }
             }
             ErrorMessageHolder.setErrorMessage("employee isn't in the project");
-        }
-        else {
+        } else {
             ErrorMessageHolder.setErrorMessage("Only a project leader can remove an employee to the project");
         }
+    }
 
 	public void setStartDate(String day, String month, String year) {
         if (projectLeaderLoggedIn()) {
