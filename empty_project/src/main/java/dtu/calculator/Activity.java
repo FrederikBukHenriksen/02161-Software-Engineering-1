@@ -7,8 +7,8 @@ public class Activity {
 
     private String title;
     int budgetedTime;
-    GregorianCalendar startTime;
-    GregorianCalendar endTime;
+    String startTime;
+    String endTime;
     double activityEstimate;
     private Project project;
     ArrayList<User> activityEmployees = new ArrayList<>();
@@ -34,7 +34,7 @@ public class Activity {
             ErrorMessageHolder.setErrorMessage("Project leader login is required");
         }
     }
-    
+
     public void cucumberAddEmployeeToActivity(User employee) {
         activityEmployees.add(employee);
     }
@@ -47,6 +47,19 @@ public class Activity {
         return title;
     }
 
+    public void setStartDate(Integer Year, Integer Week) {
+        if (project.projectLeaderLoggedIn()) {
+            startTime = Year + "-" + Week;
+        } else {
+            ErrorMessageHolder.setErrorMessage("Project leader login is required");
+        }
+    }
+
+    public String getStartDate() {
+        return startTime;
+
+    }
+
     public ArrayList<User> getEmployees() {
         return activityEmployees;
     }
@@ -55,10 +68,8 @@ public class Activity {
         activityEstimate = time;
     }
 
-    public double getActivityEstimate(){
+    public double getActivityEstimate() {
         return activityEstimate;
     }
-
-
 
 }
