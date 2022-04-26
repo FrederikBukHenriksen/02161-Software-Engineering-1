@@ -137,7 +137,8 @@ public class Project {
         } else {
             ErrorMessageHolder.setErrorMessage("Project leader login is required");
         }
-	}
+    }
+
 
     public String getStartDate() {
         return startDate;

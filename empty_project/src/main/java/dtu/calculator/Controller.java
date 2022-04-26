@@ -13,7 +13,7 @@ public class Controller {
     Scanner scanner = new Scanner(System.in);
     Stack menuStack = new Stack();
 
-    Project selectedProject;
+    Project selectedProject = null;
 
     final String logIn = "Log in";
     final String logOut = "Log Out";
@@ -29,10 +29,10 @@ public class Controller {
 
     final String changeProjectDate = "Change project date";
 
-    final String addActivity = "Create Activity";
+    final String createActivity = "Create Activity";
 
     final String addEmployeeToProject = "Add employee to project";
-    final String removeEmployeeToProject = "Remove employee from project";
+    final String removeEmployeeFromProject = "Remove employee from project";
 
     // Activitymenu
     final String removeActivity = "Remove Activity";
@@ -48,7 +48,14 @@ public class Controller {
 
     public Controller() {
         DateServer.setDate(2022, 1, 1);
-        menuStackPush(logIn);
+        // menuStackPush(logIn);
+        try {
+            ProjectPlanner.logIn("HUBE", "PW1234");
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        menuStackPush(mainMenu);
         while (!menuStack.empty()) { // Essentially runs as long as the program.
             menuStackDecode(menuStackPeek());
         }
@@ -162,7 +169,13 @@ public class Controller {
 
             view.menuEnumerate(mainMenu, menu);
             String choice = consoleInput();
-            menuStackPush(menu.get(Integer.parseInt(choice) - 1));
+            String menuSelect = menu.get(Integer.parseInt(choice) - 1);
+            menuStackPush(menuSelect);
+
+            // Idét select project, restet valgt projekt.
+            if (menuSelect.equals(selectProject)) {
+                selectedProject = null;
+            }
 
     }
 
@@ -234,8 +247,6 @@ public class Controller {
     }
 
     public void selectProject() {
-        selectedProject = null;
-
         ArrayList<String> UIListOfProjects = new ArrayList<>();
         for (Project project : ProjectPlanner.getProjects()) {
             UIListOfProjects.add(project.title + ", " + project.id);
@@ -248,8 +259,9 @@ public class Controller {
             this.selectedProject = ProjectPlanner.getProjects().get(choice - 1);
 
             ArrayList<String> menu = new ArrayList<>(
-                    Arrays.asList(changeProjectDate, addActivity, addEmployeeToProject,
-                            removeEmployeeToProject, deleteProject));
+                    Arrays.asList(changeProjectDate,
+                            createActivity, addEmployeeToProject,
+                            removeEmployeeFromProject, deleteProject));
             view.menuEnumerate(mainMenu, menu);
             choice = Integer.parseInt(consoleInputWithBack());
             menuStackPush(menu.get(choice - 1));
@@ -263,15 +275,47 @@ public class Controller {
         try {
             view.menu(changeProjectDate, new ArrayList<>(Arrays.asList("Type day: ")));
             int day = Integer.parseInt(consoleInputWithBack());
-            view.menu(changeProjectDate, new ArrayList<>(Arrays.asList("Type month: ")));
+            view.menu(changeProjectDate, new ArrayList<>(Arrays.asList("Type day: " + day, "Type month: ")));
             int month = Integer.parseInt(consoleInputWithBack());
-            view.menu(changeProjectDate, new ArrayList<>(Arrays.asList("Type year: ")));
+            view.menu(changeProjectDate,
+                    new ArrayList<>(Arrays.asList("Type day: " + day, "Type month: " + month, "Type year: ")));
             int year = Integer.parseInt(consoleInputWithBack());
             selectedProject.setStartDate(day, month, year);
         } catch (BackException e) {
         }
 
         menuStackPush(mainMenu);
+    }
+
+    public void createActivity() {
+        view.menu(createActivity, new ArrayList<>(Arrays.asList("Type activity title: ")));
+        try {
+            String title = consoleInputWithBack();
+            this.selectedProject.createActivity(title);
+            menuStackPush(selectProject); // Go to the project menu.
+        } catch (BackException e) {
+        }
+    }
+
+    public void addEmployeeToProject() {
+        ArrayList<String> UIListOfEmployees = new ArrayList<>();
+        for (User user : ProjectPlanner.getEmployees()) {
+            UIListOfEmployees.add(user.initials);
+        }
+
+        view.menuEnumerate(addEmployeeToProject, UIListOfEmployees);
+        try {
+            int choice = Integer.parseInt(consoleInputWithBack());
+            User employee = ProjectPlanner.getEmployees().get(choice - 1);
+            selectedProject.addEmployeeToProject(employee.initials);
+        } catch (BackException e) {
+        } catch (Exception e) {
+            view.error(e);
+        }
+    }
+
+    public void removeEmployeeFromProject() {
+
     }
 
     public void logOut() {
