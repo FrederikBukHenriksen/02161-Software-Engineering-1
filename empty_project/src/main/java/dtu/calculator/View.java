@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class View {
 
-    public View(Controller controller) {
+    public View() {
     }
 
     public void menu(String title, ArrayList<String> options) {

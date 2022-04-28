@@ -10,8 +10,8 @@ public class User {
         this.password = generatePassword();
     }
 
-    public void setPassword(String passW){
-        password = passW;
+    public void setPassword(String password) {
+        password = password;
     }
 
     public String generatePassword() {

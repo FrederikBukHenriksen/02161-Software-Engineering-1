@@ -37,7 +37,7 @@ public class Project {
     }
 
     public void createActivity(String title) {
-        if (projectLeaderLoggedIn()) {
+        if (projectLeaderLoggedIn() || ProjectPlanner.administratorLoggedIn()) {
 
             if (uniqueTitle(title)) {
                 activities.add(new Activity(title,this));
