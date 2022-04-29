@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.GregorianCalendar;
 import java.util.Scanner;
 import java.util.Stack;
 
@@ -114,6 +115,9 @@ public class Controller {
             case activityCalendar:
                 activityCalendar();
                 break;
+            case registerTime:
+                registerTime();
+                break;
             default:
                 break;
         }
@@ -187,7 +191,7 @@ public class Controller {
                     Arrays.asList(createProject, selectProject, addEmployee, removeEmployee, logOut));
         } else if (ProjectPlanner.employeeLoggedIn()) {
             menu = new ArrayList<>(
-                    Arrays.asList(activityCalendar, logOut));
+                    Arrays.asList(registerTime, activityCalendar, logOut));
 
         }
 
@@ -459,24 +463,8 @@ public class Controller {
     // Employee-menu
 
     public void activityCalendar() {
-        ArrayList<Activity> employeeActivities = new ArrayList<>();
-        for (Project project : ProjectPlanner.getProjects()) {
-            for (Activity activity : project.getActivities()) {
-                for (User employee : activity.getEmployees()) {
-                    if (ProjectPlanner.getLoggedIn().equals(employee)) {
-                        employeeActivities.add(activity);
+        ArrayList<Activity> employeeActivities = ((Employee) ProjectPlanner.getLoggedIn()).getEmployeeActivities();
 
-                    }
-                }
-            }
-        }
-        Collections.sort(employeeActivities, new Comparator<Activity>() {
-
-            @Override
-            public int compare(Activity a1, Activity a2) {
-                return a1.getTitle().compareTo(a2.getTitle());
-            }
-        });
         ArrayList<String> UIlistOfActivities = new ArrayList<>();
         for (Activity activity : employeeActivities) {
             UIlistOfActivities.add(activity.getTitle());
@@ -487,9 +475,98 @@ public class Controller {
         menuStackPush(mainMenu);
     }
 
+    public void registerTime() {
+        ArrayList menu = new ArrayList<>(
+                Arrays.asList("Activities you are assigned to", "Projects you are a part of", "All projects"));
+        view.menuEnumerate(registerTime, menu);
+        try {
+            int choice = Integer.parseInt(consoleInputWithBack());
+
+            // Find the selectable activities according to the choice.
+            ArrayList<Activity> listOfActivities = new ArrayList<>();
+            switch (choice) {
+                case 1:
+                    listOfActivities = ((Employee) ProjectPlanner.getLoggedIn()).getEmployeeActivities();
+
+                    break;
+                case 2:
+                    for (Project project : ProjectPlanner.getProjects()) {
+                        if (project.getProjectEmployees().contains(ProjectPlanner.loggedIn)) {
+                            for (Activity activity : project.getActivities()) {
+                                listOfActivities.add(activity);
+                            }
+                        }
+                    }
+                    break;
+                case 3:
+                    for (Project project : ProjectPlanner.getProjects()) {
+                        for (Activity activity : project.getActivities()) {
+                            listOfActivities.add(activity);
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            // Let the user select an activity
+            ArrayList<String> listOfActivitiesString = new ArrayList<>();
+            for (Activity activity : listOfActivities) {
+                listOfActivitiesString.add(activity.getTitle());
+            }
+            view.menuEnumerate(registerTime, listOfActivitiesString);
+            choice = Integer.parseInt(consoleInputWithBack());
+            Activity chosenActivity = listOfActivities.get(choice - 1);
+
+            ArrayList<Integer> startCal = setDateWithTime(registerTime + " start time");
+            GregorianCalendar startTime = new GregorianCalendar(startCal.get(4),
+                    startCal.get(
+                            3),
+                    startCal.get(2), startCal.get(1), startCal.get(0));
+            ArrayList<Integer> endCal = setDateWithTime(registerTime + " end time");
+            GregorianCalendar endTime = new GregorianCalendar(startCal.get(4),
+                    startCal.get(
+                            3),
+                    startCal.get(2), startCal.get(1), startCal.get(0));
+
+            ((Employee) ProjectPlanner.getLoggedIn()).registerWork(startTime, endTime, chosenActivity);
+        } catch (BackException e) {
+        } catch (Exception e) {
+            view.error(e);
+        }
+
+    }
+
     public void logOut() {
         projectPlanner.logOut();
         menuStackClear();
         menuStackPush(logIn);
     }
+
+    // Help-functions
+    public ArrayList<Integer> setDateWithTime(String title) {
+        ArrayList<Integer> list = new ArrayList<>();
+
+        view.menu(title, new ArrayList<>(Arrays.asList("Time (Ex. 8:30 or 13:00): ")));
+        String hour = consoleInput();
+        String[] timeSplit = hour.split(":");
+        list.add(Integer.valueOf(timeSplit[1]));
+        list.add(Integer.valueOf(timeSplit[0]));
+        view.menu(title, new ArrayList<>(Arrays.asList("Time: " + hour, "Type day: ")));
+        list.add(Integer.parseInt(consoleInput()));
+
+        view.menu(
+                title,
+                new ArrayList<>(Arrays.asList("Time day: " + hour, "Type day: " + list.get(2), "Type month: ")));
+        list.add(Integer.parseInt(consoleInput()));
+
+        view.menu(
+                title,
+                new ArrayList<>(
+                        Arrays.asList("Time day: " + hour, "Type day: " + list.get(2), "Type month: " + list.get(3),
+                                "Type year: ")));
+        list.add(Integer.parseInt(consoleInput()));
+        return list;
+    }
+
 }

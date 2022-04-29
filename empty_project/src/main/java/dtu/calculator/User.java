@@ -1,9 +1,13 @@
 package dtu.calculator;
 
+import java.util.ArrayList;
+
 public class User {
 
     protected String initials;
     protected String password;
+
+    protected ArrayList<Registration> registration = new ArrayList<>();
 
     public User(String initials) {
         this.initials = initials;
@@ -21,5 +25,6 @@ public class User {
     public String getInitials() {
         return initials;
     }
+
 
 }

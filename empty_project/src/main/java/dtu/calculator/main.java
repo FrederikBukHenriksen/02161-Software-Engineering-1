@@ -1,6 +1,7 @@
 package dtu.calculator;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 public class main {
 
@@ -19,10 +20,18 @@ public class main {
             project.setProjectLeader(ProjectPlanner.getUser("FRED"));
             ProjectPlanner.logIn("FRED", "01234");
 
+            project.createActivity("PisMigIØret");
             project.createActivity("Analyse");
+            project.createActivity("lolcat");
+
+            project.getActivity("Analyse").startTime = new GregorianCalendar(2022, 7, 1);
+            project.getActivity("Analyse").endTime = new GregorianCalendar(2022, 9, 1);
+
+            project.getActivity("PisMigIØret").startTime = new GregorianCalendar(2022, 6, 1);
+            project.getActivity("PisMigIØret").endTime = new GregorianCalendar(2022, 10, 1);
+
             project.getActivity("Analyse")
                     .addEmployeeToActivity(ProjectPlanner.getUser("FRED"));
-            project.createActivity("PisMigIØret");
             project.getActivity("PisMigIØret")
                     .addEmployeeToActivity(ProjectPlanner.getUser("FRED"));
         } catch (Exception e) {
