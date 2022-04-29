@@ -61,6 +61,14 @@ public class Activity {
         }
     }
 
+    public void setEndDate(Integer Year, Integer Week) { // TODO: Mangler code coverage.  
+        if (project.projectLeaderLoggedIn()) {
+            endTime = Year + "-" + Week;
+        } else {
+            ErrorMessageHolder.setErrorMessage("Project leader login is required");
+        }
+    }
+
     public String getStartDate() {
         return startTime;
 

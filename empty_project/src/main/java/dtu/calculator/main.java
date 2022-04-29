@@ -3,12 +3,14 @@ package dtu.calculator;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
+import dtu.calculator.controller.MainController;
+
 public class main {
 
     public static void main(String[] args) {
         DateServer.setDate(2022, 1, 1);
 
-        Controller controller = new Controller();
+        MainController controller = new MainController();
         try {
             ProjectPlanner.logIn("HUBE", "PW1234");
             controller.projectPlanner.addEmployee("FRED");
@@ -24,11 +26,10 @@ public class main {
             project.createActivity("Analyse");
             project.createActivity("lolcat");
 
-            project.getActivity("Analyse").startTime = new GregorianCalendar(2022, 7, 1);
-            project.getActivity("Analyse").endTime = new GregorianCalendar(2022, 9, 1);
-
-            project.getActivity("PisMigIØret").startTime = new GregorianCalendar(2022, 6, 1);
-            project.getActivity("PisMigIØret").endTime = new GregorianCalendar(2022, 10, 1);
+            project.getActivity("Analyse").setStartDate(2022, 7);
+            project.getActivity("Analyse").setEndDate(2022, 8);
+            project.getActivity("PisMigIØret").setStartDate(2021,1);
+            project.getActivity("PisMigIØret").setEndDate(2022, 8);
 
             project.getActivity("Analyse")
                     .addEmployeeToActivity(ProjectPlanner.getUser("FRED"));

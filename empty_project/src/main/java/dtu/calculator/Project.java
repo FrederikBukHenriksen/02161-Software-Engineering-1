@@ -129,7 +129,8 @@ public class Project {
 
     public void setStartDate(int day, int month, int year) {
         if (projectLeaderLoggedIn() || ProjectPlanner.administratorLoggedIn()) {
-            this.startDate = "" + day + "/" + month + "/" + year;
+            this.startDate = ("" + day + "/" + month + "/" + year);}
+        };
 
     public void cucumberAddEmployeeToProject(String employeeID) throws Exception {
         projectEmployees.add(ProjectPlanner.getUser(employeeID));

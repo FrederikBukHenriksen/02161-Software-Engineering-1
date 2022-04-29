@@ -1,5 +1,6 @@
-package dtu.calculator;
+package dtu.calculator.controller;
 
+import dtu.calculator.controller.projectMenu;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -8,58 +9,66 @@ import java.util.GregorianCalendar;
 import java.util.Scanner;
 import java.util.Stack;
 
-public class Controller {
+import dtu.calculator.Activity;
+import dtu.calculator.BackException;
+import dtu.calculator.Employee;
+import dtu.calculator.Project;
+import dtu.calculator.ProjectPlanner;
+import dtu.calculator.User;
+import dtu.calculator.View;
 
-    ProjectPlanner projectPlanner = new ProjectPlanner();
-    View view = new View();
+public class MainController {
 
-    Scanner scanner = new Scanner(System.in);
-    Stack menuStack = new Stack();
+    public static ProjectPlanner projectPlanner = new ProjectPlanner();
+    static View view = new View();
 
-    Project selectedProject = null;
-    Activity selectedActivity = null;
+    static Scanner scanner = new Scanner(System.in);
+    static Stack menuStack = new Stack();
 
-    final String logIn = "Log in";
-    final String logOut = "Log Out";
+    public static Project selectedProject = null;
+    static Activity selectedActivity = null;
 
-    final String mainMenu = "Main menu";
+    final static String logIn = "Log in";
+    final static String logOut = "Log Out";
 
-    final String createProject = "Create project";
+    final static String mainMenu = "Main menu";
 
-    final String addEmployee = "Add employee";
-    final String removeEmployee = "Remove employee";
+    final static String createProject = "Create project";
 
-    final String registerTime = "Register time";
-    final String activityCalendar = "Calendar";
+    final static String addEmployee = "Add employee";
+    final static String removeEmployee = "Remove employee";
+
+    final static String registerTime = "Register time";
+    final static String activityCalendar = "Calendar";
 
     // Projektmenu
-    final String selectProject = "Select project";
+    final static String selectProject = "Select project";
 
-    final String deleteProject = "Delete project";
+    final static String deleteProject = "Delete project";
 
-    final String setProjectLeader = "Set project leader";
+    final static String setProjectLeader = "Set project leader";
 
-    final String changeProjectDate = "Change project date";
+    final static String changeProjectDate = "Change project date";
 
-    final String createActivity = "Create Activity";
+    final static String createActivity = "Create Activity";
 
-    final String addEmployeeToProject = "Add employee to project";
-    final String removeEmployeeFromProject = "Remove employee from project";
+    final static String addEmployeeToProject = "Add employee to project";
+    final static String removeEmployeeFromProject = "Remove employee from project";
 
     // Activitymenu
-    final String selectActivity = "Select activity";
+    final static String selectActivity = "Select activity";
 
-    final String removeActivity = "Remove Activity";
+    final static String removeActivity = "Remove Activity";
 
-    final String addEmployeeToActivity = "Add employee to activity";
-    final String removeEmployeeFromActivity = "Remove employee from activity";
+    final static String addEmployeeToActivity = "Add employee to activity";
+    final static String removeEmployeeFromActivity = "Remove employee from activity";
 
-    final String setActivityEstimate = "Set activity estimate";
-    final String changeActivityStart = "Change activity start";
-    final String changeActivityEnd = "Change activity end";
+    final static String setActivityEstimate = "Set activity estimate";
+    final static String changeActivityStart = "Change activity start";
+    final static String changeActivityEnd = "Change activity end";
 
 
-    public Controller() {
+    public MainController() {
         menuStackPush(logIn);
     }
 
@@ -69,7 +78,7 @@ public class Controller {
         }
     }
 
-    public void menuStackDecode(String menu) {
+    public static void menuStackDecode(String menu) {
         view.clearScreen();
         switch (menu) {
             case logIn:
@@ -88,7 +97,7 @@ public class Controller {
                 deleteProject();
                 break;
             case selectProject:
-                selectProject();
+                projectMenu.selectProject();
                 break;
             case addEmployee:
                 addEmployee();
@@ -97,21 +106,23 @@ public class Controller {
                 removeEmployee();
                 break;
             case changeProjectDate:
-                changeProjectDate();
+            projectMenu.changeProjectDate();
                 break;
 
             case createActivity:
-                createActivity();
+            projectMenu.createActivity();
                 break;
             case addEmployeeToProject:
-                addEmployeeToProject();
+            projectMenu.addEmployeeToProject();
                 break;
             case removeEmployeeFromProject:
-                removeEmployeeFromProject();
+            projectMenu.removeEmployeeFromProject();
                 break;
             case selectActivity:
                 selectActivity();
                 break;
+            case setActivityEstimate:
+                setActivityEstimate();
             case activityCalendar:
                 activityCalendar();
                 break;
@@ -124,12 +135,12 @@ public class Controller {
 
     }
 
-    public String consoleInput() {
+    public static String consoleInput() {
         String input = scanner.next();
         return input;
     }
 
-    public String consoleInputWithBack() throws BackException {
+    public static String consoleInputWithBack() throws BackException {
         String input = "";
         input = scanner.next();
         if (input.equals("back")) {
@@ -140,7 +151,7 @@ public class Controller {
         return input;
     }
 
-    public void enterToContinue() {
+    public static void enterToContinue() {
         boolean flag = false;
         while (flag == false) {
             String input = scanner.nextLine();
@@ -151,23 +162,23 @@ public class Controller {
         }
     }
 
-    public void menuStackPush(String menu) {
+    public static void menuStackPush(String menu) {
         menuStack.push(menu);
     }
 
-    public String menuStackPop() {
+    public static String menuStackPop() {
         return menuStack.pop().toString();
     }
 
-    public String menuStackPeek() {
+    public static String menuStackPeek() {
         return menuStack.peek().toString();
     }
 
-    public void menuStackClear() {
+    public static void menuStackClear() {
         menuStack.clear();
     }
 
-    public void logIn() {
+    public static void logIn() {
         view.menu(logIn, new ArrayList<>(Arrays.asList("Initials: ")));
         String initials = consoleInput();
         view.menu(logIn, new ArrayList<>(Arrays.asList("Initials: " + initials, "Password: ")));
@@ -182,7 +193,7 @@ public class Controller {
         }
     }
 
-    public void mainMenu() {
+    public static void mainMenu() {
 
         view.clearScreen();
         ArrayList<String> menu = new ArrayList<>();
@@ -202,7 +213,7 @@ public class Controller {
 
     }
 
-    public void createProject() {
+    public static void createProject() {
         view.menu(createProject, new ArrayList<>(Arrays.asList("Project title: ")));
         try {
             String input = consoleInputWithBack();
@@ -217,11 +228,11 @@ public class Controller {
         }
     }
 
-    public void deleteProject() {
+    public static void deleteProject() {
 
         ArrayList<String> UIListOfProjects = new ArrayList<>();
         for (Project project : ProjectPlanner.getProjects()) {
-            UIListOfProjects.add(project.title + ", " + project.id);
+            UIListOfProjects.add(project.getTitle() + ", " + project.getId());
         }
 
         view.menuEnumerate(deleteProject, UIListOfProjects);
@@ -237,7 +248,7 @@ public class Controller {
     }
 
 
-    public void addEmployee() {
+    public static void addEmployee() {
         view.menu(addEmployee, new ArrayList<>(Arrays.asList("Employee initials: ")));
         try {
             String input = consoleInputWithBack();
@@ -249,11 +260,11 @@ public class Controller {
         }
     }
 
-    public void removeEmployee() {
+    public static void removeEmployee() {
 
         ArrayList<String> UIListOfEmployees = new ArrayList<>();
         for (User user : ProjectPlanner.getEmployees()) {
-            UIListOfEmployees.add(user.initials);
+            UIListOfEmployees.add(user.getInitials());
         }
         view.menuEnumerate(removeEmployee, UIListOfEmployees);
         try {
@@ -269,107 +280,10 @@ public class Controller {
         }
     }
 
-    public void selectProject() {
-        ArrayList<String> UIListOfProjects = new ArrayList<>();
-        for (Project project : ProjectPlanner.getProjects()) {
-            UIListOfProjects.add(project.title + ", " + project.id);
-        }
+    // project start: 
 
-        view.menuEnumerate(selectProject, UIListOfProjects);
-        try {
-            int choice = Integer.parseInt(consoleInputWithBack());
-
-            this.selectedProject = ProjectPlanner.getProjects().get(choice - 1);
-
-            ArrayList<String> menu = new ArrayList<>(
-                    Arrays.asList(changeProjectDate,
-                            createActivity, selectActivity, addEmployeeToProject,
-                            removeEmployeeFromProject, deleteProject));
-            view.menuEnumerate(selectProject, menu);
-            choice = Integer.parseInt(consoleInputWithBack());
-            menuStackPush(menu.get(choice - 1));
-
-        } catch (BackException e) {
-        } catch (Exception e) {
-            view.error(e);
-        }
-    }
-
-    public void setProjectLeader() {
-        ArrayList<String> UIListOfProjectEmployees = new ArrayList<>();
-        for (User employee : selectedProject.getProjectEmployees()) {
-            UIListOfProjectEmployees.add(employee.getInitials());
-        }
-
-        try {
-            view.menuEnumerate(addEmployeeToActivity, UIListOfProjectEmployees);
-            int choice = Integer.parseInt(consoleInputWithBack());
-            User chosenEmployee = selectedProject.getProjectEmployees().get(choice - 1);
-            selectedProject.setProjectLeader(chosenEmployee);
-            menuStackPush(selectProject);
-
-        } catch (BackException e) {
-        } catch (Exception e) {
-            view.error(e);
-        }
-
-    }
-
-    public void changeProjectDate() {
-        try {
-            view.menu(changeProjectDate, new ArrayList<>(Arrays.asList("Type day: ")));
-            int day = Integer.parseInt(consoleInputWithBack());
-            view.menu(changeProjectDate, new ArrayList<>(Arrays.asList("Type day: " + day, "Type month: ")));
-            int month = Integer.parseInt(consoleInputWithBack());
-            view.menu(changeProjectDate,
-                    new ArrayList<>(Arrays.asList("Type day: " + day, "Type month: " + month, "Type year: ")));
-            int year = Integer.parseInt(consoleInputWithBack());
-            selectedProject.setStartDate(day, month, year);
-            menuStackPush(mainMenu);
-        } catch (BackException e) {
-        } catch (Exception e) {
-            view.error(e);
-        }
-    }
-
-    public void createActivity() {
-        view.menu(createActivity, new ArrayList<>(Arrays.asList("Type activity title: ")));
-        try {
-            String title = consoleInputWithBack();
-            // this.selectedProject.createActivity(title);
-            selectedProject.CucumbercreateActivity(title);
-            menuStackPush(selectProject); // Go to the project menu.
-        } catch (BackException e) {
-        } catch (Exception e) {
-            view.error(e);
-        }
-    }
-
-    public void addEmployeeToProject() {
-        ArrayList<String> UIListOfEmployees = new ArrayList<>();
-        for (User user : ProjectPlanner.getEmployees()) {
-            UIListOfEmployees.add(user.initials);
-        }
-
-        view.menuEnumerate(addEmployeeToProject, UIListOfEmployees);
-        try {
-            int choice = Integer.parseInt(consoleInputWithBack());
-            User employee = ProjectPlanner.getEmployees().get(choice - 1);
-            selectedProject.addEmployeeToProject(employee.getInitials());
-            menuStackPush(selectProject);
-        } catch (BackException e) {
-        } catch (Exception e) {
-            view.error(e);
-        }
-    }
-
-    public void removeEmployeeFromProject() {
-        // TODO:Mangler implementering
-        menuStackPush(selectProject);
-
-    }
-
-    public void selectActivity() {
+    // project end; 
+    public static void selectActivity() {
         ArrayList<String> UIListOfProjectsActivity = new ArrayList<>();
         for (Activity activity : selectedProject.getActivities()) {
             UIListOfProjectsActivity.add(activity.getTitle());
@@ -379,7 +293,7 @@ public class Controller {
         try {
 
             int choice = Integer.parseInt(consoleInputWithBack());
-            this.selectedActivity = selectedProject.getActivities().get(choice - 1);
+            selectedActivity = selectedProject.getActivities().get(choice - 1);
 
             ArrayList<String> menu = new ArrayList<>(
                     Arrays.asList(addEmployeeToActivity, removeEmployeeFromActivity,
@@ -432,8 +346,16 @@ public class Controller {
         }
     }
 
-    public void setActivityEstimate() {
-        // TODO: IMplemerting
+    public static void setActivityEstimate() {
+        view.menu(setActivityEstimate, new ArrayList<>(Arrays.asList("Type estimate: ")));
+        try {
+            int estimate = Integer.parseInt(consoleInputWithBack());
+            selectedActivity.setActivityEstimate(estimate);
+            menuStackPush(selectActivity);
+        } catch (BackException e) {
+        } catch (Exception e) {
+            view.error(e);
+        }
     }
 
     public void changeActivityStart() {
@@ -462,7 +384,7 @@ public class Controller {
 
     // Employee-menu
 
-    public void activityCalendar() {
+    public static void activityCalendar() {
         ArrayList<Activity> employeeActivities = ((Employee) ProjectPlanner.getLoggedIn()).getEmployeeActivities();
 
         ArrayList<String> UIlistOfActivities = new ArrayList<>();
@@ -475,7 +397,7 @@ public class Controller {
         menuStackPush(mainMenu);
     }
 
-    public void registerTime() {
+    public static void registerTime() {
         ArrayList menu = new ArrayList<>(
                 Arrays.asList("Activities you are assigned to", "Projects you are a part of", "All projects"));
         view.menuEnumerate(registerTime, menu);
@@ -537,14 +459,14 @@ public class Controller {
 
     }
 
-    public void logOut() {
-        projectPlanner.logOut();
+    public static void logOut() {
+        ProjectPlanner.logOut();
         menuStackClear();
         menuStackPush(logIn);
     }
 
     // Help-functions
-    public ArrayList<Integer> setDateWithTime(String title) {
+    public static ArrayList<Integer> setDateWithTime(String title) {
         ArrayList<Integer> list = new ArrayList<>();
 
         view.menu(title, new ArrayList<>(Arrays.asList("Time (Ex. 8:30 or 13:00): ")));
