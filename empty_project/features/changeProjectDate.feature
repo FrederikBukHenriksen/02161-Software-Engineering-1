@@ -4,35 +4,35 @@ Feature: Change a project's start date
 
     # Main Scenario:
     Scenario: Set start date of a project
-        Given there is a project titled "Software Development" with id "2022-1"
-        And that the project leader is logged in
-        When the projectleader  set start date to day "1", month "1", and year "2022"
-        Then the project's start date is set to day "1", month "1", and year "2022"
+        Given that there exists a project titled "Software Development" with id "2022-1"
+        And that the project leader with id "fred" for the project "2022-1" is logged in
+        When the projectleader  sets project with id "2022-1" start date to day "1", month "1", and year "2022"
+        Then the project's with id "2022-1" start date is set to day "1", month "1", and year "2022"
 
-    # tænker ikke dette behøves: 
+# tænker ikke dette behøves:
 
-    # Scenario: Change start date of a project
-    #     Given that the project leader is logged in
-    #     And there is a project titled "Software Development" with id "2022-1"
-    #     And the project's start date is set to day "1", month "1", and year "2022"
-    #     When the project's start date is set to day "1", month "12", and year "2022"
-    #     Then the project's start date is set to day "1", month "12", and year "2022"
+# Scenario: Change start date of a project
+#     Given that the project leader is logged in
+#     And there is a project titled "Software Development" with id "2022-1"
+#     And the project's start date is set to day "1", month "1", and year "2022"
+#     When the project's start date is set to day "1", month "12", and year "2022"
+#     Then the project's start date is set to day "1", month "12", and year "2022"
 
-    #Alternative use-case(s)
-    Scenario: Set start date of a project when the project leader is not logged in
-        Given there is a project already created titled "Software Development" with id "2022-1"
-        Given that the project leader is not logged in
-        When the sets start date is set to day "1", month "1", and year "2022"
-        Then the error message "Project leader login is required" is given to user
+#Alternative use-case(s)
+# Scenario: Set start date of a project when the project leader is not logged in
+#     Given that there exists a project titled "Software Development" with id "2022-1"
+#     And that the project leader for the project "2022-1" isn't logged in
+#     When the projectleader  sets project with id "2022-1" start date to day "1", month "1", and year "2022"
+#     Then the error message "Project leader login is required" is given
 
-    # tænker ikke dette behøves: 
+# tænker ikke dette behøves:
 
-    # Scenario: Change start date of a project when the project leader is not logged in
-    #     Given that the project leader is logged in
-    #     And there is a project titled "Software Development" with id "2022-1"
-    #     And the project's start date is set to day "1", month "1", and year "2022"
-    #     When the project's start date is set to day "1", month "12", and year "2022"
-    #     Then the error message "Project leader login is required" is given
+# Scenario: Change start date of a project when the project leader is not logged in
+#     Given that the project leader is logged in
+#     And there is a project titled "Software Development" with id "2022-1"
+#     And the project's start date is set to day "1", month "1", and year "2022"
+#     When the project's start date is set to day "1", month "12", and year "2022"
+#     Then the error message "Project leader login is required" is given
 
 
 
