@@ -32,7 +32,9 @@ public class User {
         return initials;
     }
 
-
+    public void createActivity(String title) {
+        activities.add(new Activity(this, title));
+    }
 
     public ArrayList<Activity> getActivities() {
         return activities;

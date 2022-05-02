@@ -37,12 +37,8 @@ public class checkEmployeeActivity {
     @Given("the employee with id {string} has an active activity in their list of activities")
     public void the_employee_with_id_has_an_active_activity_in_their_list_of_activities(String employeeID2) throws Exception {
         User employee2 = ProjectPlanner.getUser(employeeID2);
-        projectPlanner.cucumberCreateProject("project");
-        Project project = ProjectPlanner.getProject("2022-1");
-        project.CucumbercreateActivity("lav en Activity");
-        Activity activity = project.getActivity("lav en Activity");
-        activity.cucumberAddEmployeeToActivity(employee2);
-        assertTrue(employee2.getActivities().stream().anyMatch(act -> act.getTitle().equals("lav en Activity")));
+        employee2.createActivity("lave en Activity");
+        assertTrue(employee2.getActivities().stream().anyMatch(predicate -> predicate.getTitle().equals("lave en Activity")));
     }
 
     @Then("the system displays the list of activities of the employee with id {string}")
@@ -50,7 +46,7 @@ public class checkEmployeeActivity {
             throws Exception {
         User employee = new User(null);
         assertTrue(employee.getActivitiesFromOtherEmployee(employeeID2).stream()
-                .anyMatch(predicate -> predicate.equals("lav en Activity")));
+                .anyMatch(predicate -> predicate.equals("lave en Activity")));
     }
     
     @Given("the employee with id {string} has no active activity in their list of activities")
