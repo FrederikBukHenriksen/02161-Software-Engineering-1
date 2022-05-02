@@ -15,12 +15,11 @@ public class main {
             ProjectPlanner.logIn("HUBE", "PW1234");
             controller.projectPlanner.addEmployee("FRED");
             controller.projectPlanner.createProject("Programmeringsprojekt");
-            ArrayList<Project> list = ProjectPlanner.getProjects();
-            Project project = list.get(0);
-            project.addEmployeeToProject("FRED");
+            Project project = controller.projectPlanner.getProject("Programmeringsprojekt");
 
             project.setProjectLeader(ProjectPlanner.getUser("FRED"));
             ProjectPlanner.logIn("FRED", "01234");
+            project.addEmployeeToProject(ProjectPlanner.getUser("FRED"));
 
             project.createActivity("PisMigIØret");
             project.createActivity("Analyse");
@@ -36,7 +35,6 @@ public class main {
             project.getActivity("PisMigIØret")
                     .addEmployeeToActivity(ProjectPlanner.getUser("FRED"));
         } catch (Exception e) {
-            ;
         }
         controller.show();
     }

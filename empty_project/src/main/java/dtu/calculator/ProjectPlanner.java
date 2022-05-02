@@ -59,6 +59,20 @@ public class ProjectPlanner {
         return list;
     }
 
+    // Used for UI:
+    // public static User getEmployee(String id) throws Exception {
+    // User foundUser = null;
+    // for (User user : getEmployees()) {
+    // if (user.getInitials().equalsIgnoreCase(id)) {
+    // foundUser = user;
+    // }
+    // }
+    // if (foundUser == null) {
+    // throw new Exception("Employee not found");
+    // }
+    // return foundUser;
+    // }
+
     public void removeEmployee(User user) throws Exception {
         if (administratorLoggedIn()) {
             users.remove(user);
@@ -129,10 +143,10 @@ public class ProjectPlanner {
         return users;
     }
 
-    public static Project getProject(String id) throws Exception {
+    public static Project getProject(String title) throws Exception {
         Project found = null;
         for (Project project : getProjects()) {
-            if (project.getId().equals(id)) {
+            if (project.getTitle().equalsIgnoreCase(title)) {
                 found = project;
             }
         }
