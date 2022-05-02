@@ -67,7 +67,6 @@ public class MainController {
     final static String changeActivityStart = "Change activity start";
     final static String changeActivityEnd = "Change activity end";
 
-
     public MainController() {
         menuStackPush(logIn);
     }
@@ -106,23 +105,26 @@ public class MainController {
                 removeEmployee();
                 break;
             case changeProjectDate:
-            projectMenu.changeProjectDate();
+                projectMenu.changeProjectDate();
                 break;
 
             case createActivity:
-            projectMenu.createActivity();
+                projectMenu.createActivity();
                 break;
             case addEmployeeToProject:
-            projectMenu.addEmployeeToProject();
+                projectMenu.addEmployeeToProject();
                 break;
             case removeEmployeeFromProject:
-            projectMenu.removeEmployeeFromProject();
+                projectMenu.removeEmployeeFromProject();
                 break;
             case selectActivity:
                 selectActivity();
                 break;
             case setActivityEstimate:
                 setActivityEstimate();
+            case setProjectLeader:
+                projectMenu.setProjectLeader();
+                break;
             case activityCalendar:
                 activityCalendar();
                 break;
@@ -206,10 +208,10 @@ public class MainController {
 
         }
 
-            view.menuEnumerate(mainMenu, menu);
-            String choice = consoleInput();
-            String menuSelect = menu.get(Integer.parseInt(choice) - 1);
-            menuStackPush(menuSelect);
+        view.menuEnumerate(mainMenu, menu);
+        String choice = consoleInput();
+        String menuSelect = menu.get(Integer.parseInt(choice) - 1);
+        menuStackPush(menuSelect);
 
     }
 
@@ -247,7 +249,6 @@ public class MainController {
         }
     }
 
-
     public static void addEmployee() {
         view.menu(addEmployee, new ArrayList<>(Arrays.asList("Employee initials: ")));
         try {
@@ -280,9 +281,9 @@ public class MainController {
         }
     }
 
-    // project start: 
+    // project start:
 
-    // project end; 
+    // project end;
     public static void selectActivity() {
         ArrayList<String> UIListOfProjectsActivity = new ArrayList<>();
         for (Activity activity : selectedProject.getActivities()) {
