@@ -42,7 +42,7 @@ public class projectMenu {
 
     final static String deleteProject = "Delete project";
 
-    final String setProjectLeader = "Set project leader";
+    final static String setProjectLeader = "Set project leader";
 
     final static String changeProjectDate = "Change project date";
 
@@ -56,15 +56,12 @@ public class projectMenu {
 
     final String removeActivity = "Remove Activity";
 
-    final String addEmployeeToActivity = "Add employee to activity";
+    final static String addEmployeeToActivity = "Add employee to activity";
     final String removeEmployeeFromActivity = "Remove employee from activity";
 
     final String setActivityEstimate = "Set activity estimate";
     final String changeActivityStart = "Change activity start";
     final String changeActivityEnd = "Change activity end";
-
-
-
 
     public static void selectProject() {
         ArrayList<String> UIListOfProjects = new ArrayList<>();
@@ -79,10 +76,10 @@ public class projectMenu {
             MainController.selectedProject = ProjectPlanner.getProjects().get(choice - 1);
 
             ArrayList<String> menu = new ArrayList<>(
-                    Arrays.asList(changeProjectDate,
-                            createActivity, selectActivity, addEmployeeToProject,
-                            removeEmployeeFromProject, deleteProject));
-                            MainController.view.menuEnumerate(selectProject, menu);
+                    Arrays.asList( // changeProjectDate, createActivity, selectActivity,
+                            addEmployeeToProject,
+                            removeEmployeeFromProject, setProjectLeader, deleteProject));
+            MainController.view.menuEnumerate(selectProject, menu);
             choice = Integer.parseInt(MainController.consoleInputWithBack());
             MainController.menuStackPush(menu.get(choice - 1));
 
@@ -92,14 +89,14 @@ public class projectMenu {
         }
     }
 
-    public void setProjectLeader() {
+    public static void setProjectLeader() {
         ArrayList<String> UIListOfProjectEmployees = new ArrayList<>();
         for (User employee : MainController.selectedProject.getProjectEmployees()) {
             UIListOfProjectEmployees.add(employee.getInitials());
         }
 
         try {
-            MainController.view.menuEnumerate(addEmployeeToActivity, UIListOfProjectEmployees);
+            MainController.view.menuEnumerate(setProjectLeader, UIListOfProjectEmployees);
             int choice = Integer.parseInt(MainController.consoleInputWithBack());
             User chosenEmployee = MainController.selectedProject.getProjectEmployees().get(choice - 1);
             MainController.selectedProject.setProjectLeader(chosenEmployee);
@@ -116,7 +113,8 @@ public class projectMenu {
         try {
             MainController.view.menu(changeProjectDate, new ArrayList<>(Arrays.asList("Type day: ")));
             int day = Integer.parseInt(MainController.consoleInputWithBack());
-            MainController.view.menu(changeProjectDate, new ArrayList<>(Arrays.asList("Type day: " + day, "Type month: ")));
+            MainController.view.menu(changeProjectDate,
+                    new ArrayList<>(Arrays.asList("Type day: " + day, "Type month: ")));
             int month = Integer.parseInt(MainController.consoleInputWithBack());
             MainController.view.menu(changeProjectDate,
                     new ArrayList<>(Arrays.asList("Type day: " + day, "Type month: " + month, "Type year: ")));
@@ -145,14 +143,17 @@ public class projectMenu {
     public static void addEmployeeToProject() {
         ArrayList<String> UIListOfEmployees = new ArrayList<>();
         for (User user : ProjectPlanner.getEmployees()) {
-            UIListOfEmployees.add(user.getInitials());
+            if (!MainController.selectedProject.getProjectEmployees().contains(user)) {
+                UIListOfEmployees.add(user.getInitials());
+            }
+
         }
 
         MainController.view.menuEnumerate(addEmployeeToProject, UIListOfEmployees);
         try {
             int choice = Integer.parseInt(MainController.consoleInputWithBack());
             User employee = ProjectPlanner.getEmployees().get(choice - 1);
-            MainController.selectedProject.addEmployeeToProject(employee.getInitials());
+            MainController.selectedProject.addEmployeeToProject(employee); // Muhammed retter dette.
             MainController.menuStackPush(selectProject);
         } catch (BackException e) {
         } catch (Exception e) {
@@ -166,5 +167,4 @@ public class projectMenu {
 
     }
 
-    
 }

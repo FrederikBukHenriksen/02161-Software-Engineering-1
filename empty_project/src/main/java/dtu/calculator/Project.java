@@ -87,17 +87,30 @@ public class Project {
 
     public void addEmployeeToProject(String employeeID) throws Exception {
         if (projectLeaderLoggedIn()) {
-            for (User employee : ProjectPlanner.getUsers()) {
-                if (employeeID.equals(employee.getInitials())) {
-                    if (!projectEmployees.contains(employee)) {
-                        projectEmployees.add(employee);
-                        return;
-                    } else {
-                        throw new Exception("Employee is already in project");
-                    }
-                }
+            User employee = ProjectPlanner.getUser(employeeID);
+            if (!projectEmployees.contains(employee)) {
+                projectEmployees.add(employee);
+                return;
+            } else {
+                throw new Exception("Employee is already in project");
             }
-            throw new Exception("Employee with id " + employeeID + " does not exist");
+
+        } else {
+            ErrorMessageHolder.setErrorMessage("Only a project leader can add an employee to the project");
+            // throw new Exception("Only a project leader can add an employee to the
+            // project");
+        }
+
+    }
+    public void addEmployeeToProject(User employee) throws Exception {
+        if (projectLeaderLoggedIn()) {
+            if (!projectEmployees.contains(employee)) {
+                projectEmployees.add(employee);
+                return;
+            } else {
+                throw new Exception("Employee is already in project");
+            }
+
         } else {
             ErrorMessageHolder.setErrorMessage("Only a project leader can add an employee to the project");
             // throw new Exception("Only a project leader can add an employee to the
