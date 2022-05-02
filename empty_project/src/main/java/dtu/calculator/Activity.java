@@ -51,32 +51,29 @@ public class Activity {
     }
 
     public void setStartDate(Integer Year, Integer Week) {
-        if(Week <54){
-            if (project.projectLeaderLoggedIn()) {
-                startTime = Year + "-" + Week;
-            } else {
-                ErrorMessageHolder.setErrorMessage("Project leader login is required");
-            }   
-        } else{
-            ErrorMessageHolder.setErrorMessage("Week number is out of range");
-        }
+        if (project.projectLeaderLoggedIn()) {
+            startTime = Year + "-" + Week;
+        } else {
+            ErrorMessageHolder.setErrorMessage("Project leader login is required");
+        }   
+        
     }
 
-    public void setEndDate(Integer Year, Integer Week) {
-        if(Week <54){
-            if (project.projectLeaderLoggedIn()) {
-                if(Integer.valueOf(startTime.substring(0, 4))<=Year && Integer.valueOf(startTime.substring(startTime.length()-2, startTime.length()))<=Week){
-                    endTime = Year + "-" + Week;
-                } else{
-                    ErrorMessageHolder.setErrorMessage("The end date is before the start date");
-                }
-            } else {
-                ErrorMessageHolder.setErrorMessage("Project leader login is required");
-            }
-        } else{
-            ErrorMessageHolder.setErrorMessage("Week number is out of range");
-        }    
-    }
+    // public void setEndDate(Integer Year, Integer Week) {
+    //     if(Week <54){
+    //         if (project.projectLeaderLoggedIn()) {
+    //             if(Integer.valueOf(startTime.substring(0, 4))<=Year && Integer.valueOf(startTime.substring(startTime.length()-2, startTime.length()))<=Week){
+    //                 endTime = Year + "-" + Week;
+    //             } else{
+    //                 ErrorMessageHolder.setErrorMessage("The end date is before the start date");
+    //             }
+    //         } else {
+    //             ErrorMessageHolder.setErrorMessage("Project leader login is required");
+    //         }
+    //     } else{
+    //         ErrorMessageHolder.setErrorMessage("Week number is out of range");
+    //     }    
+    // }
 
     public String getStartDate() {
         return startTime;
