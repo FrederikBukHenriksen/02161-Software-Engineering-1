@@ -24,13 +24,6 @@ public class createProjectSteps {
         this.projectPlanner = projectplanner;
     }
 
-    // @Given("an administrator is logged in")
-    // public void an_administrator_is_logged_in() {
-
-    //     ProjectPlanner.loggedIn = ProjectPlanner.getUsers().get(0); // TODO: Brug den normale login-funktion.
-    //     assertTrue(projectPlanner.administratorLoggedIn());
-    // }
-
     @Given("the date is year {int} month {int} day {int}")
     public void the_date_is_year_month_day(Integer year, Integer month, Integer day) {
         DateServer.setDate(year, month, day);
