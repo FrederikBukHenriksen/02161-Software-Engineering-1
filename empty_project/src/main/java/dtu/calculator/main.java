@@ -1,8 +1,43 @@
 package dtu.calculator;
 
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
+
+import dtu.calculator.controller.MainController;
+
 public class main {
+
     public static void main(String[] args) {
-        Controller controller = new Controller();
-      
+        DateServer.setDate(2022, 1, 1);
+
+        MainController controller = new MainController();
+        try {
+            ProjectPlanner.logIn("HUBE", "PW1234");
+            controller.projectPlanner.addEmployee("FRED");
+            controller.projectPlanner.createProject("Programmeringsprojekt");
+            ArrayList<Project> list = ProjectPlanner.getProjects();
+            Project project = list.get(0);
+            project.addEmployeeToProject("FRED");
+
+            project.setProjectLeader(ProjectPlanner.getUser("FRED"));
+            ProjectPlanner.logIn("FRED", "01234");
+
+            project.createActivity("PisMigIØret");
+            project.createActivity("Analyse");
+            project.createActivity("lolcat");
+
+            project.getActivity("Analyse").setStartDate(2022, 7);
+            project.getActivity("Analyse").setEndDate(2022, 8);
+            project.getActivity("PisMigIØret").setStartDate(2021,1);
+            project.getActivity("PisMigIØret").setEndDate(2022, 8);
+
+            project.getActivity("Analyse")
+                    .addEmployeeToActivity(ProjectPlanner.getUser("FRED"));
+            project.getActivity("PisMigIØret")
+                    .addEmployeeToActivity(ProjectPlanner.getUser("FRED"));
+        } catch (Exception e) {
+            ;
+        }
+        controller.show();
     }
 }

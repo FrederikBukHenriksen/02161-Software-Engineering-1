@@ -7,8 +7,8 @@ public class User {
     protected String initials;
     protected String password;
 
+    protected ArrayList<Registration> registration = new ArrayList<>();
     ArrayList<Activity> activities = new ArrayList<>();
-
 
     public User(String initials, String password) {
         this.initials = initials;
@@ -20,8 +20,8 @@ public class User {
         this.password = generatePassword();
     }
 
-    public void setPassword(String passW){
-        password = passW;
+    public void setPassword(String password) {
+        password = password;
     }
 
     public String generatePassword() {
@@ -37,7 +37,7 @@ public class User {
     public ArrayList<Activity> getActivities() {
         return activities;
     }
-    
+
     public ArrayList<String> getActivitiesFromOtherEmployee(String otherUserInitials) throws Exception {
         ArrayList<String> activitiesTitle = new ArrayList<>();
         for (Activity activity : ProjectPlanner.getUser(otherUserInitials).getActivities()) {

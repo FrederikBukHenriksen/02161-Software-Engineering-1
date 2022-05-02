@@ -36,7 +36,7 @@ public class Project {
     }
 
     public void createActivity(String title) {
-        if (projectLeaderLoggedIn()) {
+        if (projectLeaderLoggedIn() || ProjectPlanner.administratorLoggedIn()) {
 
             if (uniqueTitle(title)) {
                 activities.add(new Activity(title, this));
@@ -140,6 +140,11 @@ public class Project {
 
     }
 
+    public void setStartDate(int day, int month, int year) {
+        if (projectLeaderLoggedIn() || ProjectPlanner.administratorLoggedIn()) {
+            this.startDate = ("" + day + "/" + month + "/" + year);}
+        };
+
     public void cucumberAddEmployeeToProject(String employeeID) throws Exception {
         projectEmployees.add(ProjectPlanner.getUser(employeeID));
     }
@@ -158,16 +163,10 @@ public class Project {
         }
     }
 
-    public void setStartDate(String day, String month, String year) {
-        if (projectLeaderLoggedIn()) {
-            startDate = day + "/" + month + "/" + year;
-        } else {
-            ErrorMessageHolder.setErrorMessage("Project leader login is required");
-        }
-    }
+    
+
 
     public String getStartDate() {
         return startDate;
-
     }
 }

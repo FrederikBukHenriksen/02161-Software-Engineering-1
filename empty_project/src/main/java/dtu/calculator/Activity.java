@@ -59,6 +59,15 @@ public class Activity {
         
     }
 
+
+    public void setEndDate(Integer Year, Integer Week) { // TODO: Mangler code coverage.  
+        if (project.projectLeaderLoggedIn()) {
+            endTime = Year + "-" + Week;
+        } else {
+            ErrorMessageHolder.setErrorMessage("Project leader login is required");
+        }
+    }
+
     // public void setEndDate(Integer Year, Integer Week) {
     //     if(Week <54){
     //         if (project.projectLeaderLoggedIn()) {
@@ -74,6 +83,7 @@ public class Activity {
     //         ErrorMessageHolder.setErrorMessage("Week number is out of range");
     //     }    
     // }
+
 
     public String getStartDate() {
         return startTime;

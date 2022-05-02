@@ -16,6 +16,8 @@ public class changeProjectDateSteps {
         DateServer.setDate(2022, 4, 16);
     }
 
+
+  
     // @Given("there is a project titled {string} with id {string}")
     // public void there_is_a_project_titled_with_id(String projectTitle, String
     // projectID) throws Exception {
@@ -50,22 +52,18 @@ public class changeProjectDateSteps {
     // assertTrue(project.projectLeaderLoggedIn());
     // }
 
-    @When("the projectleader  sets project with id {string} start date to day {string}, month {string}, and year {string}")
-    public void the_projectleader_sets_project_with_id_start_date_to_day_month_and_year(String string, String string2,
-            String string3, String string4) throws Exception {
+    @When("the projectleader  sets project with id {string} start date to day {int}, month {int}, and year {int}")
+    public void the_projectleader_sets_project_with_id_start_date_to_day_month_and_year(String string, Integer int1, Integer int2, Integer int3) throws Exception {
         Project project = ProjectPlanner.getProject(string);
         System.out.println(project.getTitle());
-        project.setStartDate(string2, string3, string4);
-
+        project.setStartDate(int1, int2, int3);
     }
 
-    @Then("the project's with id {string} start date is set to day {string}, month {string}, and year {string}")
-    public void the_project_s_with_id_start_date_is_set_to_day_month_and_year(String string, String string2,
-            String string3, String string4)
-            throws Exception {
+    @Then("the project's with id {string} start date is set to day {int}, month {int}, and year {int}")
+public void the_project_s_with_id_start_date_is_set_to_day_month_and_year(String string, Integer int1, Integer int2, Integer int3) throws Exception {
         Project project = ProjectPlanner.getProject(string);
 
-        String date = string2 + "/" + string3 + "/" + string4;
+        String date = ("" + int1 + "/" + int2 + "/" + int3);
 
         Boolean found = false;
         if (project.getStartDate().equals(date)) {
@@ -75,30 +73,4 @@ public class changeProjectDateSteps {
         assertTrue("Found start date of project", found);
 
     }
-
-    // @Given("there is a project already created titled {string} with id {string}")
-    // public void there_is_a_project_already_created_titled_with_id(String string,
-    // String string2) throws Exception {
-    // Boolean found = false;
-    // projectPlanner.cucumberCreateProject(string);
-    // project = ProjectPlanner.getProject(string2);
-    // if (project.title.equalsIgnoreCase(string) &&
-    // project.getId().equals(string2)) {
-    // found = true;
-    // }
-
-    // assertTrue("Found project", found);
-    // }
-
-    // @Given("that the project leader is not logged in")
-    // public void that_the_project_leader_is_not_logged_in() throws Exception {
-    // ProjectPlanner.logOut();
-    // assertFalse(project.projectLeaderLoggedIn());
-    // }
-
-    // @Then("the error message {string} is given to user")
-    // public void the_error_message_is_given_to_user(String string) {
-    // project.setStartDate("1", "1", "1");
-    // assertTrue(ErrorMessageHolder.getErrorMessage().equals(string));
-    // }
 }
