@@ -59,6 +59,20 @@ public class ProjectPlanner {
         return list;
     }
 
+    // Used for UI:
+    // public static User getEmployee(String id) throws Exception {
+    // User foundUser = null;
+    // for (User user : getEmployees()) {
+    // if (user.getInitials().equalsIgnoreCase(id)) {
+    // foundUser = user;
+    // }
+    // }
+    // if (foundUser == null) {
+    // throw new Exception("Employee not found");
+    // }
+    // return foundUser;
+    // }
+
     public void removeEmployee(User user) throws Exception {
         if (administratorLoggedIn()) {
             users.remove(user);

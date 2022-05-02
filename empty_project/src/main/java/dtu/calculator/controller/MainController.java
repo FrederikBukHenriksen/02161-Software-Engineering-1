@@ -107,8 +107,7 @@ public class MainController {
                 break;
             case changeProjectDate:
             projectMenu.changeProjectDate();
-                break;
-
+            break;
             case createActivity:
             projectMenu.createActivity();
                 break;
@@ -202,7 +201,7 @@ public class MainController {
                     Arrays.asList(createProject, selectProject, addEmployee, removeEmployee, logOut));
         } else if (ProjectPlanner.employeeLoggedIn()) {
             menu = new ArrayList<>(
-                    Arrays.asList(registerTime, activityCalendar, logOut));
+                    Arrays.asList(selectProject, registerTime, activityCalendar, logOut));
 
         }
 

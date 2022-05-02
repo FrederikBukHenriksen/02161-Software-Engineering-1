@@ -17,7 +17,8 @@ public class main {
             controller.projectPlanner.createProject("Programmeringsprojekt");
             ArrayList<Project> list = ProjectPlanner.getProjects();
             Project project = list.get(0);
-            project.addEmployeeToProject("FRED");
+            project.addEmployeeToProject(ProjectPlanner.getUser("FRED"));
+            ;
 
             project.setProjectLeader(ProjectPlanner.getUser("FRED"));
             ProjectPlanner.logIn("FRED", "01234");
@@ -36,7 +37,6 @@ public class main {
             project.getActivity("PisMigIØret")
                     .addEmployeeToActivity(ProjectPlanner.getUser("FRED"));
         } catch (Exception e) {
-            ;
         }
         controller.show();
     }

@@ -11,4 +11,13 @@ public class Work extends Registration {
         this.activity = activity;
     }
 
+    public GregorianCalendar calendarWork(int year, int month, int dayOfMonth, int hourOfDay, int minute)
+            throws Exception {
+        if (minute % 30 != 0) {
+            throw new Exception("Only half-hour resolution allowed for work registration");
+        }
+        GregorianCalendar calendar = new GregorianCalendar(year, month, dayOfMonth, hourOfDay, minute);
+        return calendar;
+    }
+
 }
