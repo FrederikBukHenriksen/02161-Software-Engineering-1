@@ -143,10 +143,10 @@ public class ProjectPlanner {
         return users;
     }
 
-    public static Project getProject(String title) throws Exception {
+    public static Project getProject(String id) throws Exception {
         Project found = null;
         for (Project project : getProjects()) {
-            if (project.getTitle().equalsIgnoreCase(title)) {
+            if (project.getId().equalsIgnoreCase(id)) {
                 found = project;
             }
         }
