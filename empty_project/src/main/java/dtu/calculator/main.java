@@ -14,6 +14,8 @@ public class main {
         try {
             ProjectPlanner.logIn("HUBE", "PW1234");
             controller.projectPlanner.addEmployee("FRED");
+            controller.projectPlanner.addEmployee("GUST");
+
             controller.projectPlanner.createProject("Programmeringsprojekt");
             Project project = controller.projectPlanner.getProject("Programmeringsprojekt");
 
@@ -27,7 +29,7 @@ public class main {
 
             project.getActivity("Analyse").setStartDate(2022, 7);
             project.getActivity("Analyse").setEndDate(2022, 8);
-            project.getActivity("PisMigIØret").setStartDate(2021,1);
+            project.getActivity("PisMigIØret").setStartDate(2021, 1);
             project.getActivity("PisMigIØret").setEndDate(2022, 8);
 
             project.getActivity("Analyse")

@@ -90,6 +90,12 @@ public class MainController {
             case mainMenu:
                 mainMenu();
                 break;
+            case addEmployeeToActivity:
+                addEmployeeToActivity();
+                break;
+            case removeEmployeeFromActivity:
+                removeEmployeeFromActivity();
+                break;
             case createProject:
                 createProject();
                 break;
@@ -314,7 +320,7 @@ public class MainController {
 
     }
 
-    public void addEmployeeToActivity() {
+    public static void addEmployeeToActivity() {
         ArrayList<String> UIListOfProjectEmployees = new ArrayList<>();
         for (User employee : selectedProject.getProjectEmployees()) {
             UIListOfProjectEmployees.add(employee.getInitials());
@@ -334,7 +340,7 @@ public class MainController {
 
     }
 
-    public void removeEmployeeFromActivity() {
+    public static void removeEmployeeFromActivity() {
         ArrayList<String> UIListOfActivityEmployees = new ArrayList<>();
         for (User employee : selectedActivity.getEmployees()) {
             UIListOfActivityEmployees.add(employee.getInitials());

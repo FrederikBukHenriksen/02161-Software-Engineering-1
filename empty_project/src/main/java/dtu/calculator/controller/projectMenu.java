@@ -50,6 +50,7 @@ public class projectMenu {
 
     final static String addEmployeeToProject = "Add employee to project";
     final static String removeEmployeeFromProject = "Remove employee from project";
+    final static String printProjectData = "Print Project data";
 
     // Activitymenu
     final static String selectActivity = "Select activity";
@@ -75,30 +76,53 @@ public class projectMenu {
 
             MainController.selectedProject = ProjectPlanner.getProjects().get(choice - 1);
 
-            ArrayList<String> menu = new ArrayList<>(
-                    Arrays.asList( // changeProjectDate, createActivity, selectActivity,
-                            addEmployeeToProject,
-                            removeEmployeeFromProject, setProjectLeader, deleteProject));
-            MainController.view.menuEnumerate(selectProject, menu);
-            choice = Integer.parseInt(MainController.consoleInputWithBack());
-            MainController.menuStackPush(menu.get(choice - 1));
+            if (ProjectPlanner.administratorLoggedIn()) {
 
-        } catch (BackException e) {
+                ArrayList<String> menu = new ArrayList<>(
+                        Arrays.asList(setProjectLeader, deleteProject));
+                MainController.view.menuEnumerate(selectProject, menu);
+                choice = Integer.parseInt(MainController.consoleInputWithBack());
+                MainController.menuStackPush(menu.get(choice - 1));
+
+            } else if (MainController.selectedProject.projectLeaderLoggedIn()) {
+
+                ArrayList<String> menu = new ArrayList<>(
+                        Arrays.asList(changeProjectDate, addEmployeeToProject, createActivity, selectActivity,
+                                removeEmployeeFromProject));
+                MainController.view.menuEnumerate(selectProject, menu);
+                choice = Integer.parseInt(MainController.consoleInputWithBack());
+                MainController.menuStackPush(menu.get(choice - 1));
+
+            } else if (ProjectPlanner.employeeLoggedIn()) {
+
+                ArrayList<String> menu = new ArrayList<>(
+                        Arrays.asList(printProjectData));
+                MainController.view.menuEnumerate(selectProject, menu);
+                choice = Integer.parseInt(MainController.consoleInputWithBack());
+                MainController.menuStackPush(menu.get(choice - 1));
+
+            } else {
+                MainController.menuStackPush(selectProject);
+            }
+
+        } catch (
+
+        BackException e) {
         } catch (Exception e) {
             MainController.view.error(e);
         }
     }
 
     public static void setProjectLeader() {
-        ArrayList<String> UIListOfProjectEmployees = new ArrayList<>();
-        for (User employee : MainController.selectedProject.getProjectEmployees()) {
-            UIListOfProjectEmployees.add(employee.getInitials());
+        ArrayList<String> UIListOfEmployees = new ArrayList<>();
+        for (User employee : ProjectPlanner.getEmployees()) {
+            UIListOfEmployees.add(employee.getInitials());
         }
 
         try {
-            MainController.view.menuEnumerate(setProjectLeader, UIListOfProjectEmployees);
+            MainController.view.menuEnumerate(setProjectLeader, UIListOfEmployees);
             int choice = Integer.parseInt(MainController.consoleInputWithBack());
-            User chosenEmployee = MainController.selectedProject.getProjectEmployees().get(choice - 1);
+            User chosenEmployee = ProjectPlanner.getEmployees().get(choice - 1);
             MainController.selectedProject.setProjectLeader(chosenEmployee);
             MainController.menuStackPush(selectProject);
 
