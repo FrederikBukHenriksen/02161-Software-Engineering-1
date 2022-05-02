@@ -52,10 +52,14 @@ public class removeActivitySteps {
         
     }
 
+    @Given("the project leader has chosen the activity")
+    public void the_project_leader_has_chosen_an_activity_titled() {
+        assertTrue(true); // TODO: Find out how to pick an activity - search for its name?
+    }
+
     @Given("an activity titled {string} is part of the project")
     public void an_activity_titled_is_part_of_the_project(String activityTitle) {
-        removeActivity
-        activity = new Activity(activityTitle, project);
+        activity = new Activity(activityTitle,project);
         project.createActivity(activityTitle);
 
         if (project.projectLeaderLoggedIn()) {
@@ -66,8 +70,7 @@ public class removeActivitySteps {
     @When("the activity is removed from the project")
     public void the_activity_is_removed_from_the_project() {
         if (project.projectLeaderLoggedIn()) { // don't like having to do this, but it's too important not to
-            removeActivity
-            Activity temp = new Activity("temp", null);
+            Activity temp = new Activity("temp",null);
             boolean activityFound = false;
             for (Activity act : project.getActivities()) {
                 if (act.getTitle().equals(activity.getTitle())) {
