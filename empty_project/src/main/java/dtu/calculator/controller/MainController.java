@@ -16,6 +16,7 @@ import dtu.calculator.Project;
 import dtu.calculator.ProjectPlanner;
 import dtu.calculator.User;
 import dtu.calculator.View;
+import dtu.calculator.Work;
 
 public class MainController {
 
@@ -153,16 +154,22 @@ public class MainController {
         return input;
     }
 
-    public static void enterToContinue() {
+    public static void handleException(Exception exception) {
+        view.error(exception);
+        pressEnterToContinue();
+    }
+
+    public static void pressEnterToContinue() {
         boolean flag = false;
         while (flag == false) {
-            String input = scanner.nextLine();
-            System.out.println(input);
+            Scanner enterScanner = new Scanner(System.in);
+            String input = enterScanner.nextLine();
             if (input.equals("")) {
                 flag = true;
             }
         }
     }
+
 
     public static void menuStackPush(String menu) {
         menuStack.push(menu);
@@ -189,8 +196,7 @@ public class MainController {
             ProjectPlanner.logIn(initials, password);
             menuStackPush(mainMenu);
         } catch (Exception e) {
-            view.error(e);
-            enterToContinue();
+            handleException(e);
             menuStackPush(logIn);
         }
     }
@@ -225,8 +231,7 @@ public class MainController {
         } catch (BackException e) {
 
         } catch (Exception e) {
-            view.error(e);
-            enterToContinue();
+            handleException(e);
         }
     }
 
@@ -257,7 +262,7 @@ public class MainController {
             menuStackPush(mainMenu);
         } catch (BackException e) {
         } catch (Exception e) {
-            view.error(e);
+            handleException(e);
         }
     }
 
@@ -277,7 +282,7 @@ public class MainController {
             menuStackPush(mainMenu);
         } catch (BackException e) {
         } catch (Exception e) {
-            view.error(e);
+            handleException(e);
         }
     }
 
@@ -304,7 +309,7 @@ public class MainController {
             menuStackPush(menu.get(choice - 1));
         } catch (BackException e) {
         } catch (Exception e) {
-            view.error(e);
+            handleException(e);
         }
 
     }
@@ -324,7 +329,7 @@ public class MainController {
 
         } catch (BackException e) {
         } catch (Exception e) {
-            view.error(e);
+            handleException(e);
         }
 
     }
@@ -343,7 +348,7 @@ public class MainController {
             menuStackPush(selectActivity);
         } catch (BackException e) {
         } catch (Exception e) {
-            view.error(e);
+            handleException(e);
         }
     }
 
@@ -355,7 +360,7 @@ public class MainController {
             menuStackPush(selectActivity);
         } catch (BackException e) {
         } catch (Exception e) {
-            view.error(e);
+            handleException(e);
         }
     }
 
@@ -367,7 +372,7 @@ public class MainController {
             menuStackPush(selectActivity);
         } catch (BackException e) {
         } catch (Exception e) {
-            view.error(e);
+            handleException(e);
         }
     }
 
@@ -379,7 +384,7 @@ public class MainController {
             menuStackPush(selectActivity);
         } catch (BackException e) {
         } catch (Exception e) {
-            view.error(e);
+            handleException(e);
         }
     }
 
@@ -442,12 +447,13 @@ public class MainController {
             Activity chosenActivity = listOfActivities.get(choice - 1);
 
             ArrayList<Integer> startCal = setDateWithTime(registerTime + " start time");
-            GregorianCalendar startTime = new GregorianCalendar(startCal.get(4),
+            GregorianCalendar startTime = Work.calendarWork(startCal.get(4),
                     startCal.get(
                             3),
                     startCal.get(2), startCal.get(1), startCal.get(0));
             ArrayList<Integer> endCal = setDateWithTime(registerTime + " end time");
-            GregorianCalendar endTime = new GregorianCalendar(startCal.get(4),
+            GregorianCalendar endTime = Work
+                    .calendarWork(startCal.get(4),
                     startCal.get(
                             3),
                     startCal.get(2), startCal.get(1), startCal.get(0));
@@ -455,7 +461,7 @@ public class MainController {
             ((Employee) ProjectPlanner.getLoggedIn()).registerWork(startTime, endTime, chosenActivity);
         } catch (BackException e) {
         } catch (Exception e) {
-            view.error(e);
+            handleException(e);
         }
 
     }
@@ -470,7 +476,7 @@ public class MainController {
     public static ArrayList<Integer> setDateWithTime(String title) {
         ArrayList<Integer> list = new ArrayList<>();
 
-        view.menu(title, new ArrayList<>(Arrays.asList("Time (Ex. 8:30 or 13:00): ")));
+        view.menu(title, new ArrayList<>(Arrays.asList("Time (half hour resolution): ")));
         String hour = consoleInput();
         String[] timeSplit = hour.split(":");
         list.add(Integer.valueOf(timeSplit[1]));

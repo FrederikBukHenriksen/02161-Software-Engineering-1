@@ -2,6 +2,8 @@ package dtu.calculator;
 
 import java.util.ArrayList;
 
+import dtu.calculator.controller.MainController;
+
 public class View {
 
     public View() {
@@ -60,8 +62,11 @@ public class View {
 
     public void error(Exception e) {
         title("ERROR");
-        subSection("Something went wrong: ");
+        subSectionln("Something went wrong: ");
         subSectionln(e.getMessage());
+        subSection("Press enter to continue");
+
+        MainController.pressEnterToContinue();
     }
 
 }
