@@ -91,7 +91,7 @@ public void the_employee_with_id_isn_t_in_the_project_with_id(String employeeID,
         }
         Employee employee = (Employee) ProjectPlanner.getUser(employeeID);
         try {
-            project.addEmployeeToProject(employee);
+            project.addUserToProject(employee);
         } catch (Exception e) {
             ErrorMessageHolder.setErrorMessage(e.getMessage());
         }

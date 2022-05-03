@@ -19,7 +19,7 @@ public class main {
 
             project.setProjectLeader(ProjectPlanner.getUser("FRED"));
             ProjectPlanner.logIn("FRED", "01234");
-            project.addEmployeeToProject(ProjectPlanner.getUser("FRED"));
+            project.addUserToProject(ProjectPlanner.getUser("FRED"));
 
             project.createActivity("PisMigIØret");
             project.createActivity("Analyse");

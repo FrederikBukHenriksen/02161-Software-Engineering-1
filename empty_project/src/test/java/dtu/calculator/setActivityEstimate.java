@@ -29,7 +29,7 @@ public class setActivityEstimate {
             String projectID) throws Exception {
         Project project = ProjectPlanner.getProject(projectID);
         projectPlanner.cucumberAddEmployee(employeeID);
-        project.cucumberAddEmployeeToProject(employeeID);
+        project.cucumberAddUserToProject(employeeID);
         assertTrue(project.getProjectEmployees().contains(ProjectPlanner.getUser(employeeID)));
     }
     @Given("the employee with id {string} is in the list of employees for the activity titled {string} in the project with id {string}")

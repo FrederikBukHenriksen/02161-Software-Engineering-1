@@ -6,8 +6,8 @@ import java.util.GregorianCalendar;
 public class Project {
 
     // Containers
-    private ArrayList<Activity> activities = new ArrayList<>();
-    private ArrayList<User> projectEmployees = new ArrayList<>();
+    private ArrayList<Activity> projectActovoties = new ArrayList<>();
+    private ArrayList<User> projectUsers = new ArrayList<>();
 
     // Project variables
     String title;
@@ -26,7 +26,7 @@ public class Project {
     public void createActivity(String title) throws Exception {
         if (isProjectLeaderLoggedIn()) {
             if (isActivityTitleUnique(title)) {
-                activities.add(new Activity(title, this));
+                projectActovoties.add(new Activity(title, this));
             } else {
                 throw new Exception("The activity already exists");
             }
@@ -35,10 +35,10 @@ public class Project {
         }
     }
 
-    public void addEmployeeToProject(User employee) throws Exception {
+    public void addUserToProject(User user) throws Exception {
         if (isProjectLeaderLoggedIn()) {
-            if (!projectEmployees.contains(employee)) {
-                projectEmployees.add(employee);
+            if (!projectUsers.contains(user)) {
+                projectUsers.add(user);
             } else {
                 throw new Exception("Employee is already in project");
             }
@@ -50,9 +50,9 @@ public class Project {
 
     // Remove or delete functions
 
-    public void removeEmployeeFromProject(User employee) throws Exception {
+    public void removeUserFromProject(User user) throws Exception {
         if (isProjectLeaderLoggedIn()) {
-            if (!projectEmployees.remove(employee)) // Returns boolean wether remove was possible
+            if (!projectUsers.remove(user)) // Returns boolean wether remove was possible
                 throw new Exception("employee isn't in the project");
 
             // ErrorMessageHolder.setErrorMessage("employee isn't in the project");
@@ -66,7 +66,7 @@ public class Project {
 
     public void removeActivity(Activity activity) throws Exception {
         if (isProjectLeaderLoggedIn()) {
-            activities.remove(activity);
+            projectActovoties.remove(activity);
         } else {
             throw new Exception("Project leader login is required");
         }
@@ -90,7 +90,7 @@ public class Project {
     }
 
     private boolean isActivityTitleUnique(String title) {
-        for (Activity activity : activities) {
+        for (Activity activity : projectActovoties) {
             if (activity.getTitle().equalsIgnoreCase(title)) {
                 return false;
             }
@@ -112,9 +112,9 @@ public class Project {
         }
     }
 
-    public void setProjectLeader(User employee) throws Exception {
+    public void setProjectLeader(User user) throws Exception {
         if (ProjectPlanner.administratorLoggedIn()) {
-            projectLeader = employee;
+            projectLeader = user;
         } else {
             throw new Exception("Administrator login is required");
         }
@@ -135,7 +135,7 @@ public class Project {
     }
 
     public ArrayList<User> getProjectEmployees() {
-        return projectEmployees;
+        return projectUsers;
     }
 
     public User getProjectleader() {
@@ -143,11 +143,11 @@ public class Project {
     }
 
     public ArrayList<Activity> getActivities() {
-        return activities;
+        return projectActovoties;
     }
 
     public Activity getActivity(String title) {
-        for (Activity activity : activities) {
+        for (Activity activity : projectActovoties) {
             if (activity.getTitle().equalsIgnoreCase(title)) {
                 return activity;
             }
@@ -157,15 +157,15 @@ public class Project {
 
     // JUNIT Helpfunctions
 
-    public void cucumberAddEmployeeToProject(String employeeID) throws Exception {
-        projectEmployees.add(ProjectPlanner.getUser(employeeID));
+    public void cucumberAddUserToProject(String userID) throws Exception {
+        projectUsers.add(ProjectPlanner.getUser(userID));
     }
 
-    public void cucumberSetProjectLeader(Employee employee) {
-        projectLeader = employee;
+    public void cucumberSetProjectLeader(User user) {
+        projectLeader = user;
     }
 
     public void CucumbercreateActivity(String title) {
-        activities.add(new Activity(title, this));
+        projectActovoties.add(new Activity(title, this));
     }
 }

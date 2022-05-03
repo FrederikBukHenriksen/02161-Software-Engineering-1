@@ -153,7 +153,7 @@ public class projectMenu {
         try {
             int choice = Integer.parseInt(MainController.consoleInputWithBack());
             User employee = ProjectPlanner.getEmployees().get(choice - 1);
-            MainController.selectedProject.addEmployeeToProject(employee); // Muhammed retter dette.
+            MainController.selectedProject.addUserToProject(employee); // Muhammed retter dette.
             MainController.menuStackPush(selectProject);
         } catch (BackException e) {
         } catch (Exception e) {
