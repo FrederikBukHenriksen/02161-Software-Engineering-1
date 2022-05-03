@@ -28,7 +28,7 @@ public class Activity {
                 ErrorMessageHolder.setErrorMessage("The employee is already assigned to the activity");
             }
         }
-        if (project.projectLeaderLoggedIn()) {
+        if (project.isProjectLeaderLoggedIn()) {
             if (found == false) {
                 activityEmployees.add(employee);
             }
@@ -51,7 +51,7 @@ public class Activity {
     }
 
     public void setStartDate(Integer Year, Integer Week) {
-        if (project.projectLeaderLoggedIn()) {
+        if (project.isProjectLeaderLoggedIn()) {
             startTime = Year + "-" + Week;
         } else {
             ErrorMessageHolder.setErrorMessage("Project leader login is required");
@@ -61,7 +61,7 @@ public class Activity {
 
 
     public void setEndDate(Integer Year, Integer Week) { // TODO: Mangler code coverage.  
-        if (project.projectLeaderLoggedIn()) {
+        if (project.isProjectLeaderLoggedIn()) {
             endTime = Year + "-" + Week;
         } else {
             ErrorMessageHolder.setErrorMessage("Project leader login is required");

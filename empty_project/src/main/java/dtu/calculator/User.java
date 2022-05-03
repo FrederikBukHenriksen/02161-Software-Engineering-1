@@ -32,6 +32,9 @@ public class User {
         return initials;
     }
 
+    public String getPassword() {
+        return password;
+    }
 
 
     public ArrayList<Activity> getActivities() {

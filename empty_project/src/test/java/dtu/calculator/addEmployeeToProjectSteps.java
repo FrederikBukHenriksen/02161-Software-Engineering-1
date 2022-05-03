@@ -52,8 +52,7 @@ public void that_the_project_leader_with_id_for_the_project_is_logged_in(String 
         project.setProjectLeader(projectLeader);
 
         ProjectPlanner.logIn(projectLeaderInitials, "01234");
-        assertTrue(project.projectLeaderLoggedIn());
-        
+        assertTrue(project.isProjectLeaderLoggedIn());
         
     }
 
@@ -82,13 +81,21 @@ public void the_employee_with_id_isn_t_in_the_project_with_id(String employeeID,
     }
 
     @When("the project leader for the project {string} adds the employee with id {string} to the project")
-    public void the_project_leader_for_the_project_adds_the_employee_with_id_to_the_project(String projectId, String employeeID) throws Exception {
+    public void the_project_leader_for_the_project_adds_the_employee_with_id_to_the_project(String projectId,
+            String employeeID) throws Exception {
         Project project = ProjectPlanner.getProject(projectId);
-        projectPlanner.cucumberAddEmployee(employeeID);
-        project.addEmployeeToProject(employeeID);
+        try {
+            ProjectPlanner.getUser(employeeID);
+        } catch (Exception e) {
+            ProjectPlanner.cucumberAddEmployee(employeeID);
+        }
+        Employee employee = (Employee) ProjectPlanner.getUser(employeeID);
+        try {
+            project.addEmployeeToProject(employee);
+        } catch (Exception e) {
+            ErrorMessageHolder.setErrorMessage(e.getMessage());
+        }
     }
-    
-    
 
     @Then("the employee with id {string} is added to the project with id {string}")
     public void the_employee_with_id_is_added_to_the_project_with_id(String employeeID, String projectId)throws Exception {
@@ -102,7 +109,7 @@ public void the_employee_with_id_isn_t_in_the_project_with_id(String employeeID,
 public void that_the_project_leader_for_the_project_isn_t_logged_in(String projectId) throws Exception { 
         ProjectPlanner.logOut();
         Project project = ProjectPlanner.getProject(projectId);
-        assertFalse(project.projectLeaderLoggedIn());
+        assertFalse(project.isProjectLeaderLoggedIn());
     }
 
     @Then("the employee with id {string} is not added to the project with id {string}")

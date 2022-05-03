@@ -35,3 +35,6 @@ Feature: Create a project
         When create a project titled "Software Development"
         Then the project "Software Development" with id "2022-1" is not added to the list of projects
         And the error message "Administrator login is required" is given
+
+        
+

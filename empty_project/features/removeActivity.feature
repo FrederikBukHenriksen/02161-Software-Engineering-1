@@ -1,11 +1,11 @@
-Feature: Add/remove an activity to/from a project
+Feature: remove an activity from a project
     Description: An activity is added/removed to/from a project
     Actors: Project leader
 
     #Main use-case(s)
     Scenario: Remove activity
         Given there is a Project titled "Software Development" with id "2022-1"
-        And that the Project Leader is logged in
+        And that the project leader with id "fred" for the project "2022-1" is logged in
         And an activity titled "Analysis" is part of the project
         And the project leader has chosen the activity
         When the activity is removed from the project

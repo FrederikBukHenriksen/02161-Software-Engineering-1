@@ -44,10 +44,14 @@ public class removeActivitySteps {
                 projectLeader = projectLeader_;
             }
         }
+        try {
         project.setProjectLeader(projectLeader);
+    } catch (Exception e) {
+        ErrorMessageHolder.setErrorMessage(e.getMessage());
+    }
 
         ProjectPlanner.logIn("fred", "01234");
-        assertTrue(project.projectLeaderLoggedIn());
+        assertTrue(project.isProjectLeaderLoggedIn());
         
         
     }
@@ -60,16 +64,20 @@ public class removeActivitySteps {
     @Given("an activity titled {string} is part of the project")
     public void an_activity_titled_is_part_of_the_project(String activityTitle) {
         activity = new Activity(activityTitle,project);
-        project.createActivity(activityTitle);
+        try {
+            project.createActivity(activityTitle);
+        } catch (Exception e) {
+            ErrorMessageHolder.setErrorMessage(e.getMessage());
+        }
 
-        if (project.projectLeaderLoggedIn()) {
+        if (project.isProjectLeaderLoggedIn()) {
             assertTrue(project.getActivities().stream().anyMatch(act -> act.getTitle().equals(activityTitle)));
         }
     }
 
     @When("the activity is removed from the project")
     public void the_activity_is_removed_from_the_project() {
-        if (project.projectLeaderLoggedIn()) { // don't like having to do this, but it's too important not to
+        if (project.isProjectLeaderLoggedIn()) { // don't like having to do this, but it's too important not to
             Activity temp = new Activity("temp",null);
             boolean activityFound = false;
             for (Activity act : project.getActivities()) {
@@ -94,7 +102,7 @@ public class removeActivitySteps {
     @Given("that the Project Leader is not logged in")
     public void that_the_project_leader_is_not_logged_in() {
         ProjectPlanner.logOut();
-        assertFalse(project.projectLeaderLoggedIn());
+        assertFalse(project.isProjectLeaderLoggedIn());
     }
 
     @Given("an activity titled {string} is not part of the project")

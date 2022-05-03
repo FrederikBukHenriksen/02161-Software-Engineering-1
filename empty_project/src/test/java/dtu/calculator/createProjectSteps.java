@@ -31,7 +31,7 @@ public class createProjectSteps {
 
     @Given("the project {string} with id {string} does not already exists on the list")
     public void the_project_does_not_already_exist(String string, String id) {
-        assertTrue(projectPlanner.uniqueProject(string, id));
+        assertTrue(projectPlanner.uniqueProjectTitleAndId(string, id));
     }
 
     @When("create a project titled {string}")

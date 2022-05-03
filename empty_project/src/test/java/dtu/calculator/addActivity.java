@@ -23,14 +23,6 @@ public class addActivity {
         DateServer.setDate(2022, 4, 16);
     }
 
-        
-    
-
-
-    
-
-
-    
     // Er dette ikke altid sandt? Vi burde vel streame activities, og tjekke om activityTitle findes i streamen
     @Given("there is an activity titled {string}")
     public void there_is_an_activity_titled(String activityTitle) {
@@ -50,7 +42,12 @@ public class addActivity {
     public void the_activity_titled_is_added_to_the_list_of_activities_for_the_project_with_id(String activityTitle,
             String projectId) throws Exception {
         Project project = ProjectPlanner.getProject(projectId);
+        try {
         project.createActivity(activityTitle);
+
+    } catch (Exception e) {
+        ErrorMessageHolder.setErrorMessage(e.getMessage());
+    }
     }
     
     @Then("the activity titled {string} is added to list of activities for the project with id {string}")

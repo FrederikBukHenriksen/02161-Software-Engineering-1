@@ -45,7 +45,6 @@ public class View {
         System.out.println("######## " + title.toUpperCase() + " ########");
     }
 
-
     public void subSection(String input) {
         System.out.print("   " + input);
 
@@ -68,5 +67,6 @@ public class View {
 
         MainController.pressEnterToContinue();
     }
+
 
 }

@@ -1,61 +1,95 @@
 package dtu.calculator;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.GregorianCalendar;
 
 public class Project {
 
-    String title;
-    String id;
-    String startDate;
-    User projectLeader;
+    // Containers
     private ArrayList<Activity> activities = new ArrayList<>();
     private ArrayList<User> projectEmployees = new ArrayList<>();
 
+    // Project variables
+    String title;
+    String id;
+    GregorianCalendar startDate;
+    User projectLeader;
+
+
     public Project(String title) {
         this.title = title;
-        this.id = getNextId();
+        id = getNextId();
     }
 
-    private String getNextId() {
-        int maxId = 0;
+    // Create or add functions
 
-        for (Project project : ProjectPlanner.getProjects()) {
-            int idToCompare = Integer.parseInt(project.id.split("-")[1]);
-            if (idToCompare > maxId) {
-                maxId = idToCompare;
-            }
-        }
-        maxId++;
-
-        int year = DateServer.getYear();
-
-        return String.valueOf(year) + "-" + String.valueOf(maxId);
-
-    }
-
-    public void createActivity(String title) {
-        if (projectLeaderLoggedIn() || ProjectPlanner.administratorLoggedIn()) {
-
-            if (uniqueTitle(title)) {
+    public void createActivity(String title) throws Exception {
+        if (isProjectLeaderLoggedIn()) {
+            if (isActivityTitleUnique(title)) {
                 activities.add(new Activity(title, this));
             } else {
-                // throw new Exception("Tile is already in use by another activity.");
-                ErrorMessageHolder.setErrorMessage("The activity already exists");
+                throw new Exception("The activity already exists");
             }
         } else {
-            // throw new Exception("Only project leader can create activities.");
-            ErrorMessageHolder.setErrorMessage("Project leader login is required");
+            throw new Exception("Project leader login is required");
+        }
+    }
+
+    public void addEmployeeToProject(User employee) throws Exception {
+        if (isProjectLeaderLoggedIn()) {
+            if (!projectEmployees.contains(employee)) {
+                projectEmployees.add(employee);
+            } else {
+                throw new Exception("Employee is already in project");
+            }
+        } else {
+            throw new Exception("Only a project leader can add an employee to the project");
         }
 
     }
 
-    public void CucumbercreateActivity(String title) {
-        activities.add(new Activity(title, this));
+    // Remove or delete functions
+
+    public void removeEmployeeFromProject(User employee) throws Exception {
+        if (isProjectLeaderLoggedIn()) {
+            if (!projectEmployees.remove(employee)) // Returns boolean wether remove was possible
+                throw new Exception("employee isn't in the project");
+
+            // ErrorMessageHolder.setErrorMessage("employee isn't in the project");
+        } else {
+            throw new Exception("Only a project leader can remove an employee to the project");
+
+            // ErrorMessageHolder.setErrorMessage("Only a project leader can remove an
+            // employee to the project");
+        }
     }
 
-    private boolean uniqueTitle(String title) {
+    public void removeActivity(Activity activity) throws Exception {
+        if (isProjectLeaderLoggedIn()) {
+            activities.remove(activity);
+        } else {
+            throw new Exception("Project leader login is required");
+        }
+    }
+
+    // Check and help functions
+
+    private String getNextId() {
+        // Find highest id in use, and create the following.
+        int maxIdInUse = 0;
+        for (Project project : ProjectPlanner.getProjects()) {
+            int idToCompare = Integer.parseInt(project.getId().split("-")[1]);
+            if (idToCompare > maxIdInUse) {
+                maxIdInUse = idToCompare;
+            }
+        }
+        maxIdInUse++;
+
+        return String.valueOf(DateServer.getYear()) + "-" + String.valueOf(maxIdInUse);
+
+    }
+
+    private boolean isActivityTitleUnique(String title) {
         for (Activity activity : activities) {
             if (activity.getTitle().equalsIgnoreCase(title)) {
                 return false;
@@ -64,12 +98,52 @@ public class Project {
         return true;
     }
 
-    public void removeActivity(Activity activity) {
-        activities.remove(activity);
+    public boolean isProjectLeaderLoggedIn() {
+        return projectLeader == ProjectPlanner.getLoggedIn() && projectLeader != null;
     }
 
-    public void setProjectLeader(User employee) {
-        projectLeader = employee;
+    // Set functions
+
+    public void setStartDate(int day, int month, int year) throws Exception {
+        if (isProjectLeaderLoggedIn()) {
+            startDate = new GregorianCalendar(year, month, day);
+        } else {
+            throw new Exception("Project leader login is required");
+        }
+    }
+
+    public void setProjectLeader(User employee) throws Exception {
+        if (ProjectPlanner.administratorLoggedIn()) {
+            projectLeader = employee;
+        } else {
+            throw new Exception("Administrator login is required");
+        }
+    }
+
+    // Get functions
+
+    public String getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public GregorianCalendar getStartDate() {
+        return startDate;
+    }
+
+    public ArrayList<User> getProjectEmployees() {
+        return projectEmployees;
+    }
+
+    public User getProjectleader() {
+        return projectLeader;
+    }
+
+    public ArrayList<Activity> getActivities() {
+        return activities;
     }
 
     public Activity getActivity(String title) {
@@ -81,92 +155,17 @@ public class Project {
         return null;
     }
 
-    public ArrayList<Activity> getActivities() {
-        return activities;
-    }
-
-    public void addEmployeeToProject(String employeeID) throws Exception {
-        if (projectLeaderLoggedIn()) {
-            User employee = ProjectPlanner.getUser(employeeID);
-            if (!projectEmployees.contains(employee)) {
-                projectEmployees.add(employee);
-                return;
-            } else {
-                throw new Exception("Employee is already in project");
-            }
-
-        } else {
-            ErrorMessageHolder.setErrorMessage("Only a project leader can add an employee to the project");
-            // throw new Exception("Only a project leader can add an employee to the
-            // project");
-        }
-
-    }
-    public void addEmployeeToProject(User employee) throws Exception {
-        if (projectLeaderLoggedIn()) {
-            if (!projectEmployees.contains(employee)) {
-                projectEmployees.add(employee);
-                return;
-            } else {
-                throw new Exception("Employee is already in project");
-            }
-
-        } else {
-            ErrorMessageHolder.setErrorMessage("Only a project leader can add an employee to the project");
-            // throw new Exception("Only a project leader can add an employee to the
-            // project");
-        }
-
-    }
-
-    public User getProjectleader() {
-        return projectLeader;
-    }
-
-    public boolean projectLeaderLoggedIn() {
-        return projectLeader == ProjectPlanner.getLoggedIn() && projectLeader != null;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public ArrayList<User> getProjectEmployees() {
-        return projectEmployees;
-
-    }
-
-    public void setStartDate(int day, int month, int year) {
-        if (projectLeaderLoggedIn() || ProjectPlanner.administratorLoggedIn()) {
-            this.startDate = ("" + day + "/" + month + "/" + year);}
-        };
+    // JUNIT Helpfunctions
 
     public void cucumberAddEmployeeToProject(String employeeID) throws Exception {
         projectEmployees.add(ProjectPlanner.getUser(employeeID));
     }
 
-    public void removeEmployeeFromProject(User Employee) {
-        if (projectLeaderLoggedIn()) {
-            for (User employee : projectEmployees) {
-                if (employee == Employee) {
-                    projectEmployees.remove(employee);
-                    return;
-                }
-            }
-            ErrorMessageHolder.setErrorMessage("employee isn't in the project");
-        } else {
-            ErrorMessageHolder.setErrorMessage("Only a project leader can remove an employee to the project");
-        }
+    public void cucumberSetProjectLeader(Employee employee) {
+        projectLeader = employee;
     }
 
-    
-
-
-    public String getStartDate() {
-        return startDate;
+    public void CucumbercreateActivity(String title) {
+        activities.add(new Activity(title, this));
     }
 }

@@ -2,9 +2,6 @@
 Feature: Remove an employee from project
   Description: Allow a project leader to remove employees from project
 
-
-
-
 Scenario: Remove an employee from the project
 
 Given that there exists a project titled "Software Development" with id "2022-1"
