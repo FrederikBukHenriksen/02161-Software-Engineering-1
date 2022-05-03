@@ -21,7 +21,6 @@ public class setActivityEstimate {
 
     public setActivityEstimate() {
         projectPlanner = new ProjectPlanner();
-        DateServer.setDate(2022, 4, 16);
     }
 
     @Given("there is an employee with id {string} who is in the list of employees for the project with id {string}")
@@ -36,7 +35,7 @@ public class setActivityEstimate {
     public void the_employee_with_id_is_in_the_list_of_employees_for_the_activity_titled_in_the_project_with_id(
             String employeeID, String activityTitle, String projectID) throws Exception {
         Project project = ProjectPlanner.getProject(projectID);
-        project.CucumbercreateActivity(activityTitle);
+        project.CucumberCreateActivity(activityTitle);
         Activity activity = project.getActivity(activityTitle);
         User employee = ProjectPlanner.getUser(employeeID);
         activity.cucumberAddEmployeeToActivity(employee);

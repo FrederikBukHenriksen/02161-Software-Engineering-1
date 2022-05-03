@@ -11,10 +11,7 @@ import io.cucumber.java.en.When;
 
 public class addEmployeeToActivity {
 
-
-
     ProjectPlanner projectPlanner;
-
 
     @Before
     public void Before() {
@@ -23,19 +20,13 @@ public class addEmployeeToActivity {
 
     public addEmployeeToActivity() {
         projectPlanner = new ProjectPlanner();
-        DateServer.setDate(2022, 4, 16);
-        projectPlanner.cucumberCreateProject("Project1");
-
     }
-
-
-    
 
 
     @Given("the project with id {string} contains an activity titled {string}")
     public void the_project_with_id_contains_an_activity_titled(String projectId, String activityTitle) throws Exception {
         Project project = ProjectPlanner.getProject(projectId);
-        project.CucumbercreateActivity(activityTitle);
+        project.CucumberCreateActivity(activityTitle);
         assertTrue(project.getActivities().stream().anyMatch(act -> act.getTitle().equals(activityTitle)));
     }
 
@@ -58,7 +49,12 @@ public class addEmployeeToActivity {
         Project project = ProjectPlanner.getProject(projectId);
         User employee = ProjectPlanner.getUser(employeeID);
         Activity activity = project.getActivity(activityTitle);
-        activity.addEmployeeToActivity(employee);
+        activity.project = project;
+        try {
+            activity.addUserToActivity(employee);
+        } catch (Exception e) {
+            ErrorMessageHolder.setErrorMessage(e.getMessage());
+        }
     }
 
     @Then("employee with id {string} is added to the list of employees for the activity with the title {string} in the project with id {string}")
@@ -78,7 +74,14 @@ public class addEmployeeToActivity {
         Project project = ProjectPlanner.getProject(projectId);
         User employee = ProjectPlanner.getUser(employeeID);
         Activity activity = project.getActivity(activityTitle);
-        activity.addEmployeeToActivity(employee);
+        activity.project = project;
+
+        try {
+            activity.addUserToActivity(employee);
+        } catch (Exception e) {
+            ErrorMessageHolder.setErrorMessage(e.getMessage());
+        }
+
         assertTrue(activity.getEmployees().stream().anyMatch(user -> user.getInitials().equalsIgnoreCase(employee.getInitials())));
 }
 }

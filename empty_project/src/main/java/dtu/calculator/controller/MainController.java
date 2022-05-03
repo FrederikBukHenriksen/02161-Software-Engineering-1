@@ -9,6 +9,8 @@ import java.util.GregorianCalendar;
 import java.util.Scanner;
 import java.util.Stack;
 
+import org.xml.sax.ErrorHandler;
+
 import dtu.calculator.Activity;
 import dtu.calculator.BackException;
 import dtu.calculator.Employee;
@@ -251,6 +253,7 @@ public class MainController {
 
             menuStackPush(mainMenu);
         } catch (BackException e) {
+        } catch (Exception e) {
         }
     }
 
@@ -324,7 +327,7 @@ public class MainController {
             view.menuEnumerate(addEmployeeToActivity, UIListOfProjectEmployees);
             int choice = Integer.parseInt(consoleInputWithBack());
             User chosenEmployee = selectedProject.getProjectEmployees().get(choice - 1);
-            selectedActivity.addEmployeeToActivity(chosenEmployee);
+            selectedActivity.addUserToActivity(chosenEmployee);
             menuStackPush(selectActivity);
 
         } catch (BackException e) {

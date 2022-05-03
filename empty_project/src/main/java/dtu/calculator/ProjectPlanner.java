@@ -8,19 +8,21 @@ public class ProjectPlanner {
     public static ArrayList<Project> projects = new ArrayList<>();
     public static ArrayList<User> users = new ArrayList<>();
 
-    // ProjectPlanner variables
+    // Class variables
     GregorianCalendar startTime;
     public static User loggedIn;
+    DateServer dateServer;
 
     public ProjectPlanner() {
         users.add(new Administrator("HUBE", "PW1234")); // Create the administrator profile.
+        dateServer = new DateServer(2022, 1, 1);
     }
 
     // Create or add functions
 
     public void createProject(String title) throws Exception {
         if (administratorLoggedIn()) {
-            projects.add(new Project(title));
+            projects.add(new Project(title, this));
         } else {
             throw new Exception("Administrator login is required");
         }
@@ -44,9 +46,11 @@ public class ProjectPlanner {
 
     // Remove or delete functions
 
-    public void removeProject(Project project) {
+    public void removeProject(Project project) throws Exception {
         if (administratorLoggedIn()) {
             projects.remove(project);
+        } else {
+            throw new Exception("Administrator login is required");
         }
     }
 
@@ -85,8 +89,6 @@ public class ProjectPlanner {
     public static boolean employeeLoggedIn() {
         return (loggedIn instanceof Employee);
     }
-
-    // Log in and log out
 
     public static void logIn(String initals, String password) throws Exception {
         // Flag instead of check for null for safety reason
@@ -138,7 +140,7 @@ public class ProjectPlanner {
 
     public static Project getProject(String search) throws Exception {
         for (Project project : getProjects()) {
-            if (project.getTitle().equalsIgnoreCase(search) || project.getId().equalsIgnoreCase(search)) {
+            if (project.getId().equalsIgnoreCase(search)) {
                 return project;
             }
         }
@@ -164,7 +166,7 @@ public class ProjectPlanner {
     }
 
     public void cucumberCreateProject(String title) {
-        projects.add(new Project(title));
+        projects.add(new Project(title, this));
     }
 
     public static void addAdministrator() {

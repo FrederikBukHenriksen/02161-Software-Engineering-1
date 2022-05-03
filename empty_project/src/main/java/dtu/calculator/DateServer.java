@@ -5,18 +5,22 @@ import java.util.GregorianCalendar;
 
 public class DateServer {
 
-	public static GregorianCalendar calendar;
+	public GregorianCalendar calendar;
 
-	public static GregorianCalendar getDate() {
+	public DateServer(int year, int month, int day) {
+		this.calendar = new GregorianCalendar(year, month, day);
+	}
+
+	public GregorianCalendar getDate() {
 		return calendar;
 	}
 
-	public static int getYear() {
+	public int getYear() {
 		return calendar.get(1);
 	}
 
 	// BRUGES KUN TIL CUCUMBER TESTS
-	public static void setDate(int year, int month, int date) {
+	public void setDate(int year, int month, int date) {
 		calendar = new GregorianCalendar(year, month, date);
 
 	}

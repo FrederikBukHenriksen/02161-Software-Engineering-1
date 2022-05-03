@@ -8,8 +8,6 @@ import dtu.calculator.controller.MainController;
 public class main {
 
     public static void main(String[] args) {
-        DateServer.setDate(2022, 1, 1);
-
         MainController controller = new MainController();
         try {
             ProjectPlanner.logIn("HUBE", "PW1234");
@@ -31,9 +29,9 @@ public class main {
             project.getActivity("PisMigIØret").setEndDate(2022, 8);
 
             project.getActivity("Analyse")
-                    .addEmployeeToActivity(ProjectPlanner.getUser("FRED"));
+                    .addUserToActivity(ProjectPlanner.getUser("FRED"));
             project.getActivity("PisMigIØret")
-                    .addEmployeeToActivity(ProjectPlanner.getUser("FRED"));
+                    .addUserToActivity(ProjectPlanner.getUser("FRED"));
         } catch (Exception e) {
         }
         controller.show();

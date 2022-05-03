@@ -13,7 +13,6 @@ public class changeProjectDateSteps {
 
     public changeProjectDateSteps() {
         projectPlanner = new ProjectPlanner();
-        DateServer.setDate(2022, 4, 16);
     }
 
 

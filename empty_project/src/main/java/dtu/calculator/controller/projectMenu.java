@@ -132,7 +132,7 @@ public class projectMenu {
         try {
             String title = MainController.consoleInputWithBack();
             // this.selectedProject.createActivity(title);
-            MainController.selectedProject.CucumbercreateActivity(title);
+            MainController.selectedProject.CucumberCreateActivity(title);
             MainController.menuStackPush(selectProject); // Go to the project menu.
         } catch (BackException e) {
         } catch (Exception e) {

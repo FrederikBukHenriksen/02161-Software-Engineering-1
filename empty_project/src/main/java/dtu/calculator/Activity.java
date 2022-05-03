@@ -5,60 +5,67 @@ import java.util.GregorianCalendar;
 
 public class Activity {
 
+    // Contained
+    Project project;
+
+    // Containers
+    ArrayList<User> activityEmployees = new ArrayList<>();
+
+    // Class variables
+
     private String title;
     int budgetedTime;
     String startTime;
     String endTime;
     double activityEstimate;
-    private Project project;
-    ArrayList<User> activityEmployees = new ArrayList<>();
 
+    // TODO: Constructor med Project bruges kun til cucumber.
     public Activity(String title, Project project) {
         this.title = title;
         this.project = project;
     }
 
+    public Activity(String title) {
+        this.title = title;
+    }
 
-    public void addEmployeeToActivity(User employee) {
-        boolean found = false;
-        for (User user : activityEmployees) {
-            if (user.getInitials().equalsIgnoreCase(employee.getInitials())) {
-                found = true;
-                user.activities.add(this);
-                ErrorMessageHolder.setErrorMessage("The employee is already assigned to the activity");
-            }
-        }
+    // Create or add functions
+
+    public void addUserToActivity(User user) throws Exception {
         if (project.isProjectLeaderLoggedIn()) {
-            if (found == false) {
-                activityEmployees.add(employee);
+            // Check if user is already assigned to the activity
+            if (getEmployees().contains(user)) {
+                throw new Exception("The employee is already assigned to the activity");
             }
+            activityEmployees.add(user);
         } else {
-            ErrorMessageHolder.setErrorMessage("Project leader login is required");
+            throw new Exception("Project leader login is required");
         }
     }
 
-    public void cucumberAddEmployeeToActivity(User employee) {
-        employee.activities.add(this);
-        activityEmployees.add(employee);
-    }
+    // Remove or delete functions
 
     public void removeEmployee(User employee) {
         activityEmployees.remove(employee);
+
     }
 
-    public String getTitle() {
-        return title;
-    }
+    // Check and help functions
+
+    // Set functions
 
     public void setStartDate(Integer Year, Integer Week) {
         if (project.isProjectLeaderLoggedIn()) {
             startTime = Year + "-" + Week;
         } else {
             ErrorMessageHolder.setErrorMessage("Project leader login is required");
-        }   
-        
+        }
+
     }
 
+    public void setActivityEstimate(double time) {
+        activityEstimate = time;
+    }
 
     public void setEndDate(Integer Year, Integer Week) { // TODO: Mangler code coverage.  
         if (project.isProjectLeaderLoggedIn()) {
@@ -68,38 +75,26 @@ public class Activity {
         }
     }
 
-    // public void setEndDate(Integer Year, Integer Week) {
-    //     if(Week <54){
-    //         if (project.projectLeaderLoggedIn()) {
-    //             if(Integer.valueOf(startTime.substring(0, 4))<=Year && Integer.valueOf(startTime.substring(startTime.length()-2, startTime.length()))<=Week){
-    //                 endTime = Year + "-" + Week;
-    //             } else{
-    //                 ErrorMessageHolder.setErrorMessage("The end date is before the start date");
-    //             }
-    //         } else {
-    //             ErrorMessageHolder.setErrorMessage("Project leader login is required");
-    //         }
-    //     } else{
-    //         ErrorMessageHolder.setErrorMessage("Week number is out of range");
-    //     }    
-    // }
+    // Get functions
 
+    public String getTitle() {
+        return title;
+    }
 
     public String getStartDate() {
         return startTime;
-
     }
 
     public ArrayList<User> getEmployees() {
         return activityEmployees;
     }
 
-    public void setActivityEstimate(double time) {
-        activityEstimate = time;
-    }
-
     public double getActivityEstimate() {
         return activityEstimate;
     }
 
+    // JUNIT Helpfunctions
+    public void cucumberAddEmployeeToActivity(User employee) {
+        activityEmployees.add(employee);
+    }
 }

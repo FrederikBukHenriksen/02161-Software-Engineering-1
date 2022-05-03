@@ -18,7 +18,6 @@ public class checkEmployeeActivity {
     
     public checkEmployeeActivity() {
         projectPlanner = new ProjectPlanner();
-        DateServer.setDate(2022, 4, 16);
     }
 
     @Given("that employee with id {string} is logged in")
@@ -39,7 +38,7 @@ public class checkEmployeeActivity {
         User employee2 = ProjectPlanner.getUser(employeeID2);
         projectPlanner.cucumberCreateProject("project");
         Project project = ProjectPlanner.getProject("2022-1");
-        project.CucumbercreateActivity("lav en Activity");
+        project.CucumberCreateActivity("lav en Activity");
         Activity activity = project.getActivity("lav en Activity");
         activity.cucumberAddEmployeeToActivity(employee2);
         assertTrue(employee2.getActivities().stream().anyMatch(act -> act.getTitle().equals("lav en Activity")));
@@ -48,7 +47,8 @@ public class checkEmployeeActivity {
     @Then("the system displays the list of activities of the employee with id {string}")
     public void the_system_displays_the_list_of_activities_of_the_employee_with_id(String employeeID2)
             throws Exception {
-        User employee = new User(null);
+        // User employee = new User(null);
+        User employee = ProjectPlanner.getUser(employeeID2);
         assertTrue(employee.getActivitiesFromOtherEmployee(employeeID2).stream()
                 .anyMatch(predicate -> predicate.equals("lav en Activity")));
     }
@@ -62,7 +62,8 @@ public class checkEmployeeActivity {
 
     @Then("the system displays that the employee with id {string} has no active activities")
     public void the_system_displays_that_the_employee_with_id_has_no_active_activities(String employeeID2) throws Exception {
-        User employee = new User(null);
+        // User employee = new User(null);
+        User employee = ProjectPlanner.getUser(employeeID2);
         assertTrue(employee.getActivitiesFromOtherEmployee(employeeID2).size() == 0);
     }    
 

@@ -2,7 +2,7 @@ package dtu.calculator;
 
 import java.util.ArrayList;
 
-public class User {
+public abstract class User {
 
     protected String initials;
     protected String password;

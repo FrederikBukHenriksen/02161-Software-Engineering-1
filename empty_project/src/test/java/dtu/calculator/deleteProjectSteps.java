@@ -12,12 +12,12 @@ public class deleteProjectSteps {
 
     ProjectPlanner projectPlanner;
 
-    public deleteProjectSteps(ProjectPlanner projectplanner, ErrorMessageHolder errorMessageHolder) {
-        this.projectPlanner = projectplanner;
+    public deleteProjectSteps() {
+        this.projectPlanner = new ProjectPlanner();
     }
 
-    @When("delete the project with id {string}")
-    public void delete_the_project_with_id(String id) {
+    @When("delete the project {string}")
+    public void delete_the_project(String id) {
         try {
             projectPlanner.removeProject(projectPlanner.getProject(id));
         } catch (Exception e) {
