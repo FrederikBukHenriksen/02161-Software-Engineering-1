@@ -7,15 +7,16 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-public class removeActivitySteps {
+public class deleteActivitySteps {
 
-    ProjectPlanner projectPlanner;
+    final public CommonSteps commonSteps = new CommonSteps();
+    final public ProjectPlanner projectPlanner;
 
-    public removeActivitySteps() {
-        projectPlanner = new ProjectPlanner();
+    public deleteActivitySteps(CommonSteps commonSteps) {
+        projectPlanner = commonSteps.projectPlanner;
     }
 
-    @When("the activity {string} is removed from the project {string}")
+    @When("delete activity {string} from project {string}")
     public void the_activity_is_removed_from_the_project(String activityTitle, String projectId) throws Exception {
         Project project = projectPlanner.getProject(projectId);
         try {
@@ -52,11 +53,12 @@ public class removeActivitySteps {
     // assertTrue(found);
     // }
 
-    // findes et andet sted ('addActivity.java' og 'addEmployeeToProjectSteps.java'), men med andet navn
+    // findes et andet sted ('addActivity.java' og
+    // 'addEmployeeToProjectSteps.java'), men med andet navn
     // @Given("that the Project Leader is logged in") // TODO: Fix koden, så vi ikke
     // behøver duplicate steps med små navneændringer
     // public void that_the_project_leader_is_logged_in() throws Exception {
-        
+
     // projectPlanner.cucumberAddEmployee("fred");
     // User projectLeader = null;
     // for (User projectLeader_ : ProjectPlanner.getUsers()) {
@@ -72,8 +74,7 @@ public class removeActivitySteps {
 
     // ProjectPlanner.logIn("fred", "01234");
     // assertTrue(project.isProjectLeaderLoggedIn());
-        
-        
+
     // }
 
     // @Given("the project leader has chosen the activity")

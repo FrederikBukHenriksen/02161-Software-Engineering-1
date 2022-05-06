@@ -44,10 +44,10 @@ public class Project {
             if (!projectUsers.contains(user)) {
                 projectUsers.add(user);
             } else {
-                throw new Exception("User is already on the project");
+                throw new Exception("User is already in the project");
             }
         } else {
-            throw new Exception("Only a project leader can add an employee to the project");
+            throw new Exception("Project leader login is required");
         }
 
     }
@@ -65,9 +65,7 @@ public class Project {
 
     public void removeActivity(Activity activity) throws Exception {
         if (isProjectLeaderLoggedIn()) {
-            if (!projectActivities.remove(activity)) {
-                throw new Exception("The activity does not exist in the project");
-            }
+            projectActivities.remove(activity);
         } else {
             throw new Exception("Project leader login is required");
         }
@@ -139,6 +137,7 @@ public class Project {
         return projectUsers;
     }
 
+
     public User getProjectleader() {
         return projectLeader;
     }
@@ -153,7 +152,7 @@ public class Project {
                 return activity;
             }
         }
-        throw new Exception("Activity does not exist");
+        throw new Exception("Activity does not exist in the project");
     }
 
     // JUNIT Helpfunctions

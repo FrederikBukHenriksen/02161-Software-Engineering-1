@@ -13,7 +13,6 @@ Feature: Delete project
         And login user "FRED"
         And add user "ANDR" to project "2022-1"
 
-
     Scenario: Delete project
         Given login user "HUBE"
         When delete project "2022-1" from projectplanner
