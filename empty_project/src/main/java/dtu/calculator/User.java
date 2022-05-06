@@ -52,7 +52,7 @@ public class User {
         return activitiesTitle;
     }
     
-    public ArrayList<String> getLeave() {
+    public ArrayList<String> getLeaveAll() {
         ArrayList<String> leaveTitles = new ArrayList<>();
         for (Registration registration : registration) {
             if (registration instanceof Leave) {
@@ -60,6 +60,16 @@ public class User {
             }
         }
         return leaveTitles;
+    }
+    public Leave getLeave(String leaveTitle) throws Exception {
+        for (Registration registration : registration) {
+            if (registration instanceof Leave) {
+                if (((Leave) registration).getLeaveTitle().equals(leaveTitle)) {
+                    return (Leave) registration;
+                }
+            }
+        }
+        throw new Exception("Leave does not exist");
     }
 
     public void createLeave(GregorianCalendar startDate, GregorianCalendar endDate, String leaveTitle) {
