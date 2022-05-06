@@ -12,22 +12,16 @@ public class Activity {
     ArrayList<User> activityEmployees = new ArrayList<>();
 
     // Class variables
-
     private String title;
     int budgetedTime;
     String startTime;
     String endTime;
     double activityEstimate;
 
-    // TODO: Constructor med Project bruges kun til cucumber.
     public Activity(String title, Project project) {
         this.title = title;
         this.project = project;
     }
-
-    // public Activity(String title) {
-    // this.title = title;
-    // }
 
     // Create or add functions
 

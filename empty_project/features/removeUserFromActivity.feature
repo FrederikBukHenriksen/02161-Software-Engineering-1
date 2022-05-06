@@ -28,9 +28,10 @@ Background: Background remove employee from an activity
         Then the error message "User is not in the activity" is given
         And user "ANDR" is not in activity "Analysis" in project "2022-1"
 
+
+
+
     Scenario: 
-
-
     #     Given that the project leader is logged in
     #     And there is a project titled "Software Development" with id "22001"
     #     And the project contains an activity titled "Analysis"
