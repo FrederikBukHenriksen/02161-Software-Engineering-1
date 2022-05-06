@@ -16,38 +16,55 @@ Background: Background remove employee from an activity
     And add user "ANDR" to project "2022-1"
     And add user "GUST" to project "2022-1"
     And create activity "Analysis" for project "2022-1"
+    And add user "FRED" to activity "Analysis" in project "2022-1"
+    And add user "ANDR" to activity "Analysis" in project "2022-1"
+    And add user "GUST" to activity "Analysis" in project "2022-1"
+
+
+    And create activity "Analysis" for project "2022-1"
 
     Scenario: Remove an employee from an activity
         Given login user "FRED"
         When remove user "ANDR" from activity "Analysis" project "2022-1"
         Then user "ANDR" is not in activity "Analysis" in project "2022-1"
 
+    Scenario: Project leader removes itself from activity
+        Given login user "FRED"
+        When remove user "FRED" from activity "Analysis" project "2022-1"
+        Then user "FRED" is not in activity "Analysis" in project "2022-1"  
+
     Scenario: Remove an employee from an activity which is not in the activity
         Given login user "FRED"
         When remove user "NIKL" from activity "Analysis" project "2022-1"
         Then the error message "User is not in the activity" is given
-        And user "ANDR" is not in activity "Analysis" in project "2022-1"
 
+    Scenario: Remove an employee which does not exist
+        Given login user "FRED"
+        When remove user "MUHA" from activity "Analysis" project "2022-1"
+        Then the error message "User does not exist" is given
 
+    Scenario: Remove an employee from an activity which does not exist
+        Given login user "FRED"
+        When remove user "ANDR" from activity "Conclusion" project "2022-1"
+        Then the error message "Activity does not exist in the project" is given   
+    
+    Scenario: Remove an employee from an activity not possible when administrator is logged in
+        Given login user "HUBE"
+        When remove user "ANDR" from activity "Analysis" project "2022-1"
+        Then the error message "Project leader login is required" is given   
+        And user "ANDR" is in activity "Analysis" in project "2022-1"
 
+    Scenario: Remove an employee from an activity not possible when activity user is logged in
+        Given login user "ANDR"
+        When remove user "GUST" from activity "Analysis" project "2022-1"
+        Then the error message "Project leader login is required" is given   
+        And user "GUST" is in activity "Analysis" in project "2022-1"
 
-    Scenario: 
-    #     Given that the project leader is logged in
-    #     And there is a project titled "Software Development" with id "22001"
-    #     And the project contains an activity titled "Analysis"
-    #     And the activity contains an employee with id "andr" in it's list of employees
-    #     When the employee is removed from the activity's list of employees
-    #     Then the employee with id "andr" is no longer in the activity's list of employees
-
-    # # Alternative activity
-    # Scenario: Remove employee from the activity but the project leader is not signed in
-    #     Given that the project leader is not logged in
-    #     And there is a project titled "Software Development" with id "22001"
-    #     And the project contains an activity titled "Analysis"
-    #     And the activity contains an employee with id "andr"
-    #     When the employee is removed from the activity's list of employees
-    #     Then the error message "Project leader login is required" is given
-
+    Scenario: Remove an employee from an activity not possible when projectplanner user is logged in
+        Given login user "NIKL"
+        When remove user "ANDR" from activity "Analysis" project "2022-1"
+        Then the error message "Project leader login is required" is given   
+        And user "ANDR" is in activity "Analysis" in project "2022-1"
 
 
 

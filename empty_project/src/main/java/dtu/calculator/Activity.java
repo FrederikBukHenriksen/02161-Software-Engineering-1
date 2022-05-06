@@ -46,6 +46,9 @@ public class Activity {
         if (!getEmployees().contains(user)) {
             throw new Exception("User is not in the activity");
         }
+        if (!project.isProjectLeaderLoggedIn()) {
+            throw new Exception("Project leader login is required");
+        }
         activityEmployees.remove(user);
     }
 

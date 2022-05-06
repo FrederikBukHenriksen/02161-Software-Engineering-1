@@ -12,27 +12,6 @@ public class CommonSteps {
     @Given("the date is year {int} month {int} day {int}")
     public void the_date_is_year_month_day(Integer year, Integer month, Integer date) {
         projectPlanner.dateServer.setDate(year, month, date);
-
-    }
-
-    @Given("an employee is logged in")
-    public void an_employee_is_logged_in() {
-        assertTrue(projectPlanner.employeeLoggedIn());
-    }
-
-    @Given("an employee is not logged in")
-    public void an_employee_is_not_logged_in() {
-        assertTrue(projectPlanner.employeeLoggedIn());
-    }
-
-    @Given("an administrator is logged in")
-    public void an_administrator_is_logged_in() throws Exception {
-        assertTrue(projectPlanner.administratorLoggedIn());
-    }
-
-    @Given("an administrator is not logged in")
-    public void an_administrator_is_not_logged_in() {
-        assertFalse(projectPlanner.administratorLoggedIn());
     }
 
     @Then("the error message {string} is given")
@@ -49,28 +28,6 @@ public class CommonSteps {
                 projectPlanner.getProjects().stream()
                         .anyMatch(project -> project.getTitle().equalsIgnoreCase(title) && project
                                 .getId().equalsIgnoreCase(id)));
-    }
-
-    @Given("JUNIT create an employee {string}")
-    public void junit_create_an_employee(String initials) {
-        projectPlanner.cucumberAddEmployee(initials);
-    }
-
-
-    @Given("JUNIT Add user {string} is to project {string}")
-    public void junit_add_user_is_to_project(String userId, String projectId) throws Exception {
-        projectPlanner.cucumberAddEmployee(userId);
-
-        User user = projectPlanner.getUser(userId);
-        Project project = projectPlanner.getProject(projectId);
-
-        project.cucumberAddUserToProject(user);
-
-    }
-
-    @Given("JUNIT create a project {string}")
-    public void junit_create_a_project(String initials) throws Exception {
-        projectPlanner.cucumberCreateProject(initials);
     }
 
     @Given("login user {string}")

@@ -9,13 +9,15 @@ Feature: Create a project
         And login user "HUBE"
         And create employee "FRED"
 
+    Background: Background user logout
+        Given the date is year 2022 month 1 day 1
+        And login user "HUBE"
+        And create employee "ANDR"
 
-    # Main Scenario:
     Scenario: Create a new project
         When create a project titled "Software Development"
         Then the project "Software Development" with id "2022-1" is in the projectplanner
 
-    # Alternative Scenario:
     Scenario: Project title is alredy used.
         And create a project titled "Software Development"
         Then the project "Software Development" with id "2022-1" is in the projectplanner
@@ -31,7 +33,6 @@ Feature: Create a project
 
     Scenario: Create a new project when the administrator is not logged in
         Given login user "FRED"
-        And an employee is logged in
         And the project "Software Development" with id "2022-1" is not in the projectplanner
         When create a project titled "Software Development"
         Then the project "Software Development" with id "2022-1" is not in the projectplanner
