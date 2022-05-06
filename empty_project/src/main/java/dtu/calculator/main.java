@@ -3,21 +3,19 @@ package dtu.calculator;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-import dtu.calculator.controller.MainController;
-
 public class main {
 
     public static void main(String[] args) {
         MainController controller = new MainController();
         try {
-            ProjectPlanner.logIn("HUBE", "PW1234");
+            controller.projectPlanner.logIn("HUBE", "PW1234");
             controller.projectPlanner.addEmployee("FRED");
             controller.projectPlanner.createProject("Programmeringsprojekt");
             Project project = controller.projectPlanner.getProject("2022-1");
 
-            project.setProjectLeader(ProjectPlanner.getUser("FRED"));
-            ProjectPlanner.logIn("FRED", "01234");
-            project.addUserToProject(ProjectPlanner.getUser("FRED"));
+            project.setProjectLeader(controller.projectPlanner.getUser("FRED"));
+            controller.projectPlanner.logIn("FRED", "01234");
+            project.addUserToProject(controller.projectPlanner.getUser("FRED"));
 
             project.createActivity("PisMigIØret");
             project.createActivity("Analyse");
@@ -29,9 +27,9 @@ public class main {
             project.getActivity("PisMigIØret").setEndDate(2022, 8);
 
             project.getActivity("Analyse")
-                    .addUserToActivity(ProjectPlanner.getUser("FRED"));
+                    .addUserToActivity(controller.projectPlanner.getUser("FRED"));
             project.getActivity("PisMigIØret")
-                    .addUserToActivity(ProjectPlanner.getUser("FRED"));
+                    .addUserToActivity(controller.projectPlanner.getUser("FRED"));
         } catch (Exception e) {
         }
         controller.show();

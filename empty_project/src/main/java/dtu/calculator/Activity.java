@@ -25,9 +25,9 @@ public class Activity {
         this.project = project;
     }
 
-    public Activity(String title) {
-        this.title = title;
-    }
+    // public Activity(String title) {
+    // this.title = title;
+    // }
 
     // Create or add functions
 

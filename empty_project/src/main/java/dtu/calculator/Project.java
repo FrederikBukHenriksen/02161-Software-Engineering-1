@@ -30,7 +30,7 @@ public class Project {
     public void createActivity(String title) throws Exception {
         if (isProjectLeaderLoggedIn()) {
             if (isActivityTitleUnique(title)) {
-                projectActivities.add(new Activity(title));
+                projectActivities.add(new Activity(title, this));
             } else {
                 throw new Exception("The activity already exists");
             }
@@ -167,6 +167,6 @@ public class Project {
     }
 
     public void CucumberCreateActivity(String title) {
-        projectActivities.add(new Activity(title));
+        projectActivities.add(new Activity(title, this));
     }
 }

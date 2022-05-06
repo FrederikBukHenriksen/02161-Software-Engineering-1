@@ -1,7 +1,7 @@
 Feature: Add an employee to project
   Description: Allow a project leader to Add employees to project
 
-Background: Create project
+Background: Background add employee to project
 Given that there exists a project titled "Software Development" with id "2022-1"
 And JUNIT create an employee "fred"
 And JUNIT create an employee "andr"

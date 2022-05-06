@@ -1,33 +1,38 @@
 package dtu.calculator;
 
 import static org.junit.jupiter.api.Assertions.*;
-import java.util.ArrayList;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
 
-import java.util.Optional;
+public class CommonSteps {
 
-import dtu.calculator.ProjectPlanner;
+    final public ProjectPlanner projectPlanner = new ProjectPlanner();
 
-public class commonSteps {
+    @Given("the date is year {int} month {int} day {int}")
+    public void the_date_is_year_month_day(Integer year, Integer month, Integer date) {
+        projectPlanner.dateServer.setDate(year, month, date);
 
-    ProjectPlanner projectPlanner;
+    }
 
-    public commonSteps(ProjectPlanner projectPlanner) {
-        this.projectPlanner = projectPlanner;
+    @Given("an employee is logged in")
+    public void an_employee_is_logged_in() {
+        assertTrue(projectPlanner.employeeLoggedIn());
+    }
+
+    @Given("an employee is not logged in")
+    public void an_employee_is_not_logged_in() {
+        assertTrue(projectPlanner.employeeLoggedIn());
     }
 
     @Given("an administrator is logged in")
     public void an_administrator_is_logged_in() throws Exception {
-        ProjectPlanner.logIn("HUBE", "PW1234");
-        assertTrue(ProjectPlanner.administratorLoggedIn());
+        assertTrue(projectPlanner.administratorLoggedIn());
     }
 
     @Given("an administrator is not logged in")
     public void an_administrator_is_not_logged_in() {
-        assertFalse(ProjectPlanner.administratorLoggedIn());
+        assertFalse(projectPlanner.administratorLoggedIn());
     }
 
     @Then("the error message {string} is given")
@@ -51,6 +56,7 @@ public class commonSteps {
         projectPlanner.cucumberAddEmployee(initials);
     }
 
+
     @Given("JUNIT Add user {string} is to project {string}")
     public void junit_add_user_is_to_project(String userId, String projectId) throws Exception {
         projectPlanner.cucumberAddEmployee(userId);
@@ -67,14 +73,22 @@ public class commonSteps {
         projectPlanner.cucumberCreateProject(initials);
     }
 
+    @Given("login user {string}")
+    public void user_is_logged_in(String userId) throws Exception {
+        User user = projectPlanner.getUser(userId);
+        projectPlanner.logIn(user.getInitials(), user.getPassword());
+        assertTrue(projectPlanner.getLoggedIn().equals(user));
+    }
+
     // Project
+
 
     @Given("set user {string} as project leader for project {string}")
     public void there_exists_an_employee(String initials, String projectID) {
         try {
             User user = projectPlanner.getUser(initials);
             Project project = projectPlanner.getProject(projectID);
-            project.cucumberSetProjectLeader(user);
+            project.setProjectLeader(user);
         } catch (Exception e) {
             ErrorMessageHolder.setErrorMessage(e.getMessage());
         }
@@ -90,6 +104,12 @@ public class commonSteps {
             ErrorMessageHolder.setErrorMessage(e.getMessage());
         }
         assertTrue(projectPlanner.getProject(projectID).isProjectLeaderLoggedIn());
+    }
+
+    @Given("the user {string} is logged in")
+    public void the_user_is_logged_in(String userId) throws Exception {
+        User user = projectPlanner.getUser(userId);
+        projectPlanner.logIn(user.getInitials(), user.getPassword());
     }
 
     @Given("that the project leader of the project {string} is not logged in")

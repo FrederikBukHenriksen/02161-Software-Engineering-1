@@ -10,37 +10,54 @@ import io.cucumber.java.en.When;
 
 public class addEmployeeToProjectSteps {
 
-    ProjectPlanner projectPlanner;
+    final public CommonSteps commonSteps = new CommonSteps();
+    final public ProjectPlanner projectPlanner;
 
-     @io.cucumber.java.Before
-    public void Before() {
-        Memory.reset();
+    public addEmployeeToProjectSteps(CommonSteps commonSteps) {
+        projectPlanner = commonSteps.projectPlanner;
     }
 
-    public addEmployeeToProjectSteps() {
-        projectPlanner = new ProjectPlanner();
-    }
-
-
-
-    @Given("that the project leader with id {string} for the project {string} is logged in")
-    public void that_the_project_leader_with_id_for_the_project_is_logged_in(String projectLeaderInitials,
-            String projectID) throws Exception {
-        
-        projectPlanner.cucumberAddEmployee(projectLeaderInitials);
-        User projectLeader = null;
-        for (User projectLeader_ : ProjectPlanner.getUsers()) {
-            if (projectLeader_.getInitials().equalsIgnoreCase(projectLeaderInitials)) {
-                projectLeader = projectLeader_;
-            }
+    // FREDERIK START
+    @Given("add user {string} to project {string}")
+    public void add_user_to_project(String userId, String projectId) throws Exception {
+        Project project = projectPlanner.getProject(projectId);
+        try {
+            User user = projectPlanner.getUser(userId);
+            project.addUserToProject(user);
+        } catch (Exception e) {
+            ErrorMessageHolder.setErrorMessage(e.getMessage());
         }
-        Project project = ProjectPlanner.getProject(projectID);
 
-        project.setProjectLeader(projectLeader);
+    }
 
-        ProjectPlanner.logIn(projectLeaderInitials, "01234");
-        assertTrue(project.isProjectLeaderLoggedIn());
-        
+    // FREDERIK END
+
+    @Then("the user {string} is in the activity {string} in the project {string}")
+    public void the_user_is_in_the_activity_in_the_project(String userId, String ActivityTitle, String ProjectId)
+            throws Exception {
+        Project project = projectPlanner.getProject(ProjectId);
+        User user = projectPlanner.getUser(userId);
+        Activity activity = project.getActivity(ActivityTitle);
+        assertTrue(activity.getEmployees().contains(user));
+    }
+
+    @Given("the user {string} is not in the activity {string} in the project {string}")
+    public void the_user_is_not_in_the_activity_in_the_project(String userId, String ActivityTitle, String ProjectId)
+            throws Exception {
+        Project project = projectPlanner.getProject(ProjectId);
+        User user = projectPlanner.getUser(userId);
+        Activity activity = project.getActivity(ActivityTitle);
+        assertFalse(activity.getEmployees().contains(user));
+    }
+
+    @When("the user {string} is added to the activity {string} in the project {string}")
+    public void the_user_is_added_to_the_activity_in_the_project(String userId, String ActivityTitle,
+            String ProjectId) throws Exception {
+        Project project = projectPlanner.getProject(ProjectId);
+        User user = projectPlanner.getUser(userId);
+        Activity activity = project.getActivity(ActivityTitle);
+        activity.addUserToActivity(user);
+        assertTrue(activity.getEmployees().contains(user));
     }
 
     @Given("project leader for the project {string} has chosen an employee with id {string}")
@@ -51,9 +68,9 @@ public void project_leader_for_the_project_has_chosen_an_employee_with_id(String
 
     @Given("the employee {string} isn't in the project {string}")
 public void the_employee_with_id_isn_t_in_the_project_with_id(String employeeID, String projectID) throws Exception {
-        Project project = ProjectPlanner.getProject(projectID);
+    Project project = projectPlanner.getProject(projectID);
         User employee = null;
-        for (User employee_ : ProjectPlanner.getUsers()) {
+        for (User employee_ : projectPlanner.getUsers()) {
             if (employee_.getInitials().equalsIgnoreCase(employeeID)) {
                 employee = employee_;
             }
@@ -69,9 +86,9 @@ public void the_employee_with_id_isn_t_in_the_project_with_id(String employeeID,
 
     @When("the user {string} is added to the project {string}")
     public void the_user_is_added_to_the_project(String userID, String projectID) throws Exception {
-        Project project = ProjectPlanner.getProject(projectID);
+        Project project = projectPlanner.getProject(projectID);
         try {
-            User user = ProjectPlanner.getUser(userID);
+            User user = projectPlanner.getUser(userID);
             project.addUserToProject(user);
         } catch (Exception e) {
             ErrorMessageHolder.setErrorMessage(e.getMessage());
@@ -80,7 +97,7 @@ public void the_employee_with_id_isn_t_in_the_project_with_id(String employeeID,
 
     @Then("the user {string} is only once in the project {string}")
     public void the_user_is_only_once_in_the_project(String userID, String projectID) throws Exception {
-        Project project = ProjectPlanner.getProject(projectID);
+        Project project = projectPlanner.getProject(projectID);
         long count = project.getProjectEmployees().stream().filter(user -> user.getInitials().equalsIgnoreCase(userID))
                 .count();
         assertEquals(count, 1);
@@ -89,15 +106,15 @@ public void the_employee_with_id_isn_t_in_the_project_with_id(String employeeID,
 
     @Then("the user {string} is in the project {string}")
     public void the_user_is_assigned_to_the_project(String userInitials, String projectID) throws Exception {
-        Project project = ProjectPlanner.getProject(projectID);
-        User user = ProjectPlanner.getUser(userInitials);
+        Project project = projectPlanner.getProject(projectID);
+        User user = projectPlanner.getUser(userInitials);
         assertTrue(project.getProjectEmployees().contains(user));
     }
 
     @Then("the employee with id {string} is not added to the project with id {string}")
     public void the_employee_with_id_is_not_added_to_the_project_with_id(String employeeID, String projectId)
             throws Exception {
-        Project project = ProjectPlanner.getProject(projectId);
+        Project project = projectPlanner.getProject(projectId);
         assertFalse(project.getProjectEmployees().stream()
                 .anyMatch(employee -> employee.getInitials().equalsIgnoreCase(employeeID)));
     }

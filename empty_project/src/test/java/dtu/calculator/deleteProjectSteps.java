@@ -10,13 +10,14 @@ import io.cucumber.java.en.When;
 
 public class deleteProjectSteps {
 
-    ProjectPlanner projectPlanner;
+    final public CommonSteps commonSteps = new CommonSteps();
+    final public ProjectPlanner projectPlanner;
 
-    public deleteProjectSteps() {
-        this.projectPlanner = new ProjectPlanner();
+    public deleteProjectSteps(CommonSteps commonSteps) {
+        projectPlanner = commonSteps.projectPlanner;
     }
 
-    @When("delete the project {string}")
+    @When("delete project {string} from projectplanner")
     public void delete_the_project(String id) {
         try {
             projectPlanner.removeProject(projectPlanner.getProject(id));

@@ -5,7 +5,7 @@ Feature: Change a project's start date
     # Main Scenario:
     Scenario: Set start date of a project
         Given that there exists a project titled "Software Development" with id "2022-1"
-        And that the project leader with id "fred" for the project "2022-1" is logged in
+        And the user "fred" for the project "2022-1" is logged in
         When the projectleader  sets project with id "2022-1" start date to day 1, month 1, and year 2022
         Then the project's with id "2022-1" start date is set to day 1, month 1, and year 2022
 

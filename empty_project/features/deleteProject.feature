@@ -1,33 +1,48 @@
-Feature: delete project
-    Description: An administrator deletes a project
+Feature: Delete project
+    Description: Delete project from projektplanner
     Actors: administrator
 
-Background: Background delete project
-    Given the date is year 2022 month 1 day 1
-
-
-    # Main Scenario:
-    Scenario: delete a project
-        Given an administrator is logged in
+    Background: Background delete project
+        Given the date is year 2022 month 1 day 1
+        And login user "HUBE"
         And create a project titled "Software Development"
-        And the project "Software Development" with id "2022-1" is in the projectplanner
-        When delete the project "2022-1"
-        Then the project "2022-1" is not on the list of projects
+        And create employee "FRED"
+        And create employee "ANDR"
+        And create employee "GUST"
+        And set user "FRED" as project leader for project "2022-1"
+        And login user "FRED"
+        And add user "ANDR" to project "2022-1"
 
-    # Alternative Scenario
-    Scenario: delete a project when the administrator is not logged in
-        Given an administrator is not logged in
-        And JUNIT create a project "Software Development"
-        And the project "Software Development" with id "2022-1" is in the projectplanner
-        When delete the project "2022-1"
-        Then the project "Software Development" with id "2022-1" is in the projectplanner
-        And the error message "Administrator login is required" is given
+
+    Scenario: Delete project
+        Given login user "HUBE"
+        When delete project "2022-1" from projectplanner
+        Then the project "Software Development" with id "2022-1" is not in the projectplanner
 
     Scenario: delete a project which does not exist
-        Given an administrator is not logged in
-        And the project "Software Development" with id "2022-1" is not in the projectplanner
-        When delete the project "2022-1"
+        Given login user "HUBE"
+        When delete project "2022-2" from projectplanner
         Then the error message "Project does not exist" is given
+
+    Scenario: Delete project not possible by project leader
+        Given login user "FRED"
+        When delete project "2022-1" from projectplanner
+        Then the error message "Administrator login is required" is given
+        Then the project "Software Development" with id "2022-1" is in the projectplanner
+
+    Scenario: Delete project not possible by a project user
+        Given login user "ANDR"
+        When delete project "2022-1" from projectplanner
+        Then the error message "Administrator login is required" is given
+        Then the project "Software Development" with id "2022-1" is in the projectplanner
+
+    Scenario: Delete project not possible by a user
+        Given login user "GUST"
+        When delete project "2022-1" from projectplanner
+        Then the error message "Administrator login is required" is given
+        Then the project "Software Development" with id "2022-1" is in the projectplanner
+
+
 
 
 

@@ -5,17 +5,16 @@ import java.util.GregorianCalendar;
 
 public class ProjectPlanner {
     // Containers
-    public static ArrayList<Project> projects = new ArrayList<>();
-    public static ArrayList<User> users = new ArrayList<>();
+    public ArrayList<Project> projects = new ArrayList<>();
+    public ArrayList<User> users = new ArrayList<>();
 
     // Class variables
     GregorianCalendar startTime;
-    public static User loggedIn;
-    DateServer dateServer;
+    public User loggedIn;
+    public DateServer dateServer = new DateServer(2022, 1, 1);
 
     public ProjectPlanner() {
-        users.add(new Administrator("HUBE", "PW1234")); // Create the administrator profile.
-        dateServer = new DateServer(2022, 1, 1);
+        users.add(new Administrator("HUBE", "PW1234", this)); // Create the administrator profile.
     }
 
     // Create or add functions
@@ -32,7 +31,7 @@ public class ProjectPlanner {
         if (administratorLoggedIn()) {
             if (initials.length() == 4) {
                 if (uniqueUserInitials(initials)) {
-                    users.add(new Employee(initials.toUpperCase()));
+                    users.add(new Employee(initials.toUpperCase(), this));
                 } else {
                     throw new Exception("Initals are already in use");
                 }
@@ -82,21 +81,22 @@ public class ProjectPlanner {
         return true;
     }
 
-    public static boolean administratorLoggedIn() {
+    public boolean administratorLoggedIn() {
         return (loggedIn instanceof Administrator);
     }
 
-    public static boolean employeeLoggedIn() {
+    public boolean employeeLoggedIn() {
         return (loggedIn instanceof Employee);
     }
 
-    public static void logIn(String initals, String password) throws Exception {
+    public void logIn(String initals, String password) throws Exception {
         // Flag instead of check for null for safety reason
         boolean logInSuccesful = false;
-        for (User employee : getUsers()) {
-            if (employee.getInitials().equalsIgnoreCase(initals) && employee.getPassword().equals(password)) {
-                setLoggedIn(employee);
+        for (User user : getUsers()) {
+            if (user.getInitials().equalsIgnoreCase(initals) && user.getPassword().equals(password)) {
+                setLoggedIn(user);
                 logInSuccesful = true;
+                return;
             }
         }
         if (!logInSuccesful) {
@@ -104,13 +104,13 @@ public class ProjectPlanner {
         }
     }
 
-    public static void logOut() {
+    public void logOut() {
         setLoggedIn(null);
     }
 
     // Set functions
 
-    public static void setLoggedIn(User user) {
+    private void setLoggedIn(User user) {
         loggedIn = user;
     }
 
@@ -120,11 +120,11 @@ public class ProjectPlanner {
 
     // Get functions
 
-    public static User getLoggedIn() {
+    public User getLoggedIn() {
         return loggedIn;
     }
 
-    public static ArrayList<User> getEmployees() {
+    public ArrayList<User> getEmployees() {
         ArrayList<User> list = new ArrayList<>();
         for (User user : getUsers()) {
             if (user instanceof Employee) {
@@ -134,11 +134,11 @@ public class ProjectPlanner {
         return list;
     }
 
-    public static ArrayList<User> getUsers() {
+    public ArrayList<User> getUsers() {
         return users;
     }
 
-    public static Project getProject(String search) throws Exception {
+    public Project getProject(String search) throws Exception {
         for (Project project : getProjects()) {
             if (project.getId().equalsIgnoreCase(search)) {
                 return project;
@@ -147,7 +147,7 @@ public class ProjectPlanner {
             throw new Exception("Project does not exist");
         }
 
-        public static User getUser(String initials) throws Exception {
+        public User getUser(String initials) throws Exception {
         for (User user : getUsers()) {
             if (user.getInitials().equalsIgnoreCase(initials)) {
                 return user;
@@ -156,21 +156,21 @@ public class ProjectPlanner {
         throw new Exception("User does not exist");
     }
 
-    public static ArrayList<Project> getProjects() {
+    public ArrayList<Project> getProjects() {
         return projects;
     }
 
     // JUNIT Helpfunctions
-    public static void cucumberAddEmployee(String initials) {
-        users.add(new Employee(initials));
+    public void cucumberAddEmployee(String initials) {
+        users.add(new Employee(initials, this));
     }
 
     public void cucumberCreateProject(String title) {
         projects.add(new Project(title, this));
     }
 
-    public static void addAdministrator() {
-        users.add(new Administrator("HUBE", "PW1234"));
+    public void cucumberCreateAdministrator(String initials) {
+        users.add(new Administrator("HUBE", "PW1234", this));
     }
 
 }

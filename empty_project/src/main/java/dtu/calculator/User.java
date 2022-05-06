@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 public abstract class User {
 
+    // Contained
+    ProjectPlanner projectPlanner;
+
     protected String initials;
     protected String password;
 
@@ -15,9 +18,10 @@ public abstract class User {
         this.password = password;
     }
 
-    public User(String initials) {
+    public User(String initials, ProjectPlanner projectPlanner) {
         this.initials = initials;
         this.password = generatePassword();
+        this.projectPlanner = projectPlanner;
     }
 
     public void setPassword(String password) {
@@ -43,7 +47,7 @@ public abstract class User {
 
     public ArrayList<String> getActivitiesFromOtherEmployee(String otherUserInitials) throws Exception {
         ArrayList<String> activitiesTitle = new ArrayList<>();
-        for (Activity activity : ProjectPlanner.getUser(otherUserInitials).getActivities()) {
+        for (Activity activity : projectPlanner.getUser(otherUserInitials).getActivities()) {
             activitiesTitle.add(activity.getTitle());
         }
         return activitiesTitle;

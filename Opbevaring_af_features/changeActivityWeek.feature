@@ -6,7 +6,7 @@ Feature: Change an activity' date
     # Main Scenario:
     Scenario: Set start date of an activity
         Given that there exists a project titled "Software Development" with id "2022-1"
-        And that the project leader with id "fred" for the project "2022-1" is logged in
+        And the user "fred" for the project "2022-1" is logged in
         And the project with id "2022-1" contains an activity titled "Analysis"
         When the project "2022-1" activity's with title "Analysis" start date is set to week 1 and year 2022
         Then the project "2022-1" activity's with title "Analysis" date is set to week 1 and year 2022
