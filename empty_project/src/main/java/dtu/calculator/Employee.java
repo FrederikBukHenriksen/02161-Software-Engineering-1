@@ -7,16 +7,16 @@ import java.util.GregorianCalendar;
 
 public class Employee extends User {
 
-    public Employee(String initials) {
-        super(initials);
+    public Employee(String initials, ProjectPlanner projectPlanner) {
+        super(initials, projectPlanner);
     }
 
     public ArrayList<Activity> getEmployeeActivities() {
         ArrayList<Activity> employeeActivities = new ArrayList<>();
-        for (Project project : ProjectPlanner.getProjects()) {
+        for (Project project : projectPlanner.getProjects()) {
             for (Activity activity : project.getActivities()) {
                 for (User employee : activity.getEmployees()) {
-                    if (ProjectPlanner.getLoggedIn().equals(employee)) {
+                    if (projectPlanner.getLoggedIn().equals(employee)) {
                         employeeActivities.add(activity);
 
                     }

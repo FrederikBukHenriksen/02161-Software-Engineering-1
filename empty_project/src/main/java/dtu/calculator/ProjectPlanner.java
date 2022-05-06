@@ -2,42 +2,36 @@ package dtu.calculator;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.function.BooleanSupplier;
 
 public class ProjectPlanner {
-    public static ArrayList<Project> projects = new ArrayList<>();
+    // Containers
+    public ArrayList<Project> projects = new ArrayList<>();
+    public ArrayList<User> users = new ArrayList<>();
 
-    public static ArrayList<User> users = new ArrayList<>();
+    // Class variables
     GregorianCalendar startTime;
-
-
-    public static User loggedIn;
+    public User loggedIn;
+    public DateServer dateServer = new DateServer(2022, 1, 1);
 
     public ProjectPlanner() {
-        users.add(new Administrator("HUBE", "PW1234")); // Create the administrator profile.
+        users.add(new Administrator("HUBE", "PW1234", this)); // Create the administrator profile.
     }
+
+    // Create or add functions
 
     public void createProject(String title) throws Exception {
         if (administratorLoggedIn()) {
-            projects.add(new Project(title));
-        }
-        else {
+            projects.add(new Project(title, this));
+        } else {
             throw new Exception("Administrator login is required");
-        }
-    }
-
-    public void removeProject(Project project) {
-        if (administratorLoggedIn()) {
-            projects.remove(project);
         }
     }
 
     public void addEmployee(String initials) throws Exception {
         if (administratorLoggedIn()) {
             if (initials.length() == 4) {
-                if (uniqueInitials(initials)) {
-                    users.add(new Employee(initials.toUpperCase()));
+                if (uniqueUserInitials(initials)) {
+                    users.add(new Employee(initials.toUpperCase(), this));
                 } else {
                     throw new Exception("Initals are already in use");
                 }
@@ -49,9 +43,94 @@ public class ProjectPlanner {
         }
     }
 
-    public static ArrayList<User> getEmployees() {
-        ArrayList<User> list = new ArrayList<>();
+    // Remove or delete functions
+
+    public void removeProject(Project project) throws Exception {
+        if (administratorLoggedIn()) {
+            projects.remove(project);
+        } else {
+            throw new Exception("Administrator login is required");
+        }
+    }
+
+    public void removeEmployee(User user) throws Exception {
+        if (administratorLoggedIn()) {
+            if (!(user instanceof Administrator)) {
+            getUsers().remove(user);
+        } else {
+            throw new Exception("Cannot delete administrator profile");
+        }
+    } else {
+            throw new Exception("Administrator login is required");
+        }
+    }
+
+    // Check and help functions
+
+    public boolean uniqueUserInitials(String initials) {
         for (User user : users) {
+            if (user.getInitials().equalsIgnoreCase(initials)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean uniqueProjectTitleAndId(String title, String id) {
+        for (Project project : projects) {
+            if (!project.getTitle().equalsIgnoreCase(title) && project.getId().equals(id)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean administratorLoggedIn() {
+        return (loggedIn instanceof Administrator);
+    }
+
+    public boolean employeeLoggedIn() {
+        return (loggedIn instanceof Employee);
+    }
+
+    public void logIn(String initals, String password) throws Exception {
+        // Flag instead of check for null for safety reason
+        boolean logInSuccesful = false;
+        for (User user : getUsers()) {
+            if (user.getInitials().equalsIgnoreCase(initals) && user.getPassword().equals(password)) {
+                setLoggedIn(user);
+                logInSuccesful = true;
+                return;
+            }
+        }
+        if (!logInSuccesful) {
+            throw new Exception("Wrong id or password");
+        }
+    }
+
+    public void logOut() {
+        setLoggedIn(null);
+    }
+
+    // Set functions
+
+    private void setLoggedIn(User user) {
+        loggedIn = user;
+    }
+
+    public void setStartTime(GregorianCalendar calendar) {
+        startTime = calendar;
+    }
+
+    // Get functions
+
+    public User getLoggedIn() {
+        return loggedIn;
+    }
+
+    public ArrayList<User> getEmployees() {
+        ArrayList<User> list = new ArrayList<>();
+        for (User user : getUsers()) {
             if (user instanceof Employee) {
                 list.add(user);
             }
@@ -59,134 +138,43 @@ public class ProjectPlanner {
         return list;
     }
 
-    // Used for UI:
-    // public static User getEmployee(String id) throws Exception {
-    // User foundUser = null;
-    // for (User user : getEmployees()) {
-    // if (user.getInitials().equalsIgnoreCase(id)) {
-    // foundUser = user;
-    // }
-    // }
-    // if (foundUser == null) {
-    // throw new Exception("Employee not found");
-    // }
-    // return foundUser;
-    // }
-
-    public void removeEmployee(User user) throws Exception {
-        if (administratorLoggedIn()) {
-            users.remove(user);
-        } else {
-            throw new Exception("Administrator login is required");
-        }
-    }
-
-    public boolean uniqueInitials(String initials) {
-        for (User employee : users) {
-            if (employee.initials.equalsIgnoreCase(initials)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public boolean uniqueProject(String title, String id) {
-        for (Project project : projects) {
-            if (project.title.equalsIgnoreCase(title) && project.getId().equals(id)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public static void logIn(String initals, String password) throws Exception {
-        boolean checker = false;
-
-        for (User employee : users) {
-            if (employee.initials.equalsIgnoreCase(initals) && employee.password.equals(password)) {
-                loggedIn = employee;
-                checker = true;
-            }
-        
-        }
-        if (!checker){
-            throw new Exception("Wrong id or password");
-            
-        }
-    }
-
-    public static void logOut() {
-        loggedIn = null;
-    }
-
-    public static boolean administratorLoggedIn() {
-        if (loggedIn instanceof Administrator) {
-            return true;
-        }
-        return false;
-    }
-
-    public static boolean employeeLoggedIn() {
-        if (loggedIn instanceof Employee) {
-            return true;
-        }
-        return false;
-    }
-
-    // ##### GET FUNKTIONER #####
-
-    public static User getLoggedIn() {
-        return loggedIn;
-    }
-
-    public static ArrayList<User> getUsers() {
+    public ArrayList<User> getUsers() {
         return users;
     }
 
-    public static Project getProject(String id) throws Exception {
-        Project found = null;
+    public Project getProject(String search) throws Exception {
         for (Project project : getProjects()) {
-            if (project.getId().equalsIgnoreCase(id)) {
-                found = project;
+            if (project.getId().equalsIgnoreCase(search)) {
+                return project;
             }
         }
-        if (found == null) {
             throw new Exception("Project does not exist");
         }
-        return found;
-    }
 
-    public static User getUser(String initials) throws Exception {
-        User found = null;
+        public User getUser(String initials) throws Exception {
         for (User user : getUsers()) {
-            if (user.initials.equalsIgnoreCase(initials))
-                found = user;
+            if (user.getInitials().equalsIgnoreCase(initials)) {
+                return user;
+            }
         }
-        if (found == null) {
-            throw new Exception("User does not exist");
-        }
-        return found;
+        throw new Exception("User does not exist");
     }
 
-    public static ArrayList<Project> getProjects() {
+    public ArrayList<Project> getProjects() {
         return projects;
     }
 
-    // ##### JUNIT FUNKTIONER #####
-    public static void cucumberAddEmployee(String initials) {
-        users.add(new Employee(initials));
+    // JUNIT Helpfunctions
+    public void cucumberAddEmployee(String initials) {
+        users.add(new Employee(initials, this));
     }
 
     public void cucumberCreateProject(String title) {
-        projects.add(new Project(title));
+        projects.add(new Project(title, this));
     }
 
-    public static void lolcat() {
-        System.out.println("CLEAR VIRKER");
-    }
-
-    public static void addAdministrator() {
-        users.add(new Administrator("HUBE", "PW1234"));
+    public void cucumberCreateAdministrator(String initials) {
+        users.add(new Administrator("HUBE", "PW1234", this));
     }
 
 }

@@ -3,7 +3,10 @@ package dtu.calculator;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-public class User {
+public abstract class User {
+
+    // Contained
+    ProjectPlanner projectPlanner;
 
     protected String initials;
     protected String password;
@@ -16,9 +19,10 @@ public class User {
         this.password = password;
     }
 
-    public User(String initials) {
+    public User(String initials, ProjectPlanner projectPlanner) {
         this.initials = initials;
         this.password = generatePassword();
+        this.projectPlanner = projectPlanner;
     }
 
     public void setPassword(String password) {
@@ -33,6 +37,9 @@ public class User {
         return initials;
     }
 
+    public String getPassword() {
+        return password;
+    }
 
 
     public ArrayList<Activity> getActivities() {
@@ -41,7 +48,7 @@ public class User {
 
     public ArrayList<String> getActivitiesFromOtherEmployee(String otherUserInitials) throws Exception {
         ArrayList<String> activitiesTitle = new ArrayList<>();
-        for (Activity activity : ProjectPlanner.getUser(otherUserInitials).getActivities()) {
+        for (Activity activity : projectPlanner.getUser(otherUserInitials).getActivities()) {
             activitiesTitle.add(activity.getTitle());
         }
         for (Registration registration : ProjectPlanner.getUser(otherUserInitials).getRegistration()) {
