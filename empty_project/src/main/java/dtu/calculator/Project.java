@@ -57,7 +57,7 @@ public class Project {
     public void removeUserFromProject(User user) throws Exception {
         if (isProjectLeaderLoggedIn()) {
             if (!projectUsers.remove(user)) // Returns boolean wether remove was possible
-                throw new Exception("employee isn't in the project");
+                throw new Exception("User is not in the project");
         } else {
             throw new Exception("Project leader login is required");
         }

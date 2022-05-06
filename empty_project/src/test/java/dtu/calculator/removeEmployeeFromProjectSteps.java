@@ -9,18 +9,17 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 public class removeEmployeeFromProjectSteps {
-        ProjectPlanner projectPlanner;
+    final public CommonSteps commonSteps = new CommonSteps();
+    final public ProjectPlanner projectPlanner;
 
+    public removeEmployeeFromProjectSteps(CommonSteps commonSteps) {
+        projectPlanner = commonSteps.projectPlanner;
+    }
 
-    
-     public removeEmployeeFromProjectSteps() {
-         projectPlanner = new ProjectPlanner();
-     }
-
-     @When("the user {string} is removed from the project {string}")
+    @When("remove user {string} from project {string}")
      public void the_user_is_removed_from_the_project(String userId, String projectId) throws Exception {
-         Project project = projectPlanner.getProject(projectId);
          try {
+             Project project = projectPlanner.getProject(projectId);
              User user = projectPlanner.getUser(userId);
              project.removeUserFromProject(user);
          } catch (Exception e) {
