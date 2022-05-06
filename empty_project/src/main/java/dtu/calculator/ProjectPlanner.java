@@ -55,8 +55,12 @@ public class ProjectPlanner {
 
     public void removeEmployee(User user) throws Exception {
         if (administratorLoggedIn()) {
+            if (!(user instanceof Administrator)) {
             getUsers().remove(user);
         } else {
+            throw new Exception("Cannot delete administrator profile");
+        }
+    } else {
             throw new Exception("Administrator login is required");
         }
     }
