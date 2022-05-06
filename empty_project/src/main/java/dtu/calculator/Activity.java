@@ -34,8 +34,11 @@ public class Activity {
     public void addUserToActivity(User user) throws Exception {
         if (project.isProjectLeaderLoggedIn()) {
             // Check if user is already assigned to the activity
+            if (!project.getProjectEmployees().contains(user)) {
+                throw new Exception("User is not in the project");
+            }
             if (getEmployees().contains(user)) {
-                throw new Exception("The employee is already assigned to the activity");
+                throw new Exception("User is already in the activity");
             }
             activityEmployees.add(user);
         } else {
@@ -45,9 +48,11 @@ public class Activity {
 
     // Remove or delete functions
 
-    public void removeEmployee(User employee) {
-        activityEmployees.remove(employee);
-
+    public void removeEmployee(User user) throws Exception {
+        if (!getEmployees().contains(user)) {
+            throw new Exception("User is not in the activity");
+        }
+        activityEmployees.remove(user);
     }
 
     // Check and help functions
