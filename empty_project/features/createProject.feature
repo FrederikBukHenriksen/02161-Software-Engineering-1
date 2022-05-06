@@ -4,15 +4,10 @@ Feature: Create a project
     Description: An administrator creates a project which employees can be assigned to.
     Actors: administrator
 
-    Background: Background create project
+    Background: Create project
         Given the date is year 2022 month 1 day 1
         And login user "HUBE"
         And create employee "FRED"
-
-    Background: Background user logout
-        Given the date is year 2022 month 1 day 1
-        And login user "HUBE"
-        And create employee "ANDR"
 
     Scenario: Create a new project
         When create a project titled "Software Development"
