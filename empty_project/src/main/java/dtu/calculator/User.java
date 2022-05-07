@@ -59,15 +59,40 @@ public abstract class User {
         return activitiesTitle;
     }
     
+
     public ArrayList<String> getLeaveAll() {
         ArrayList<String> leaveTitles = new ArrayList<>();
+
         for (Registration registration : registration) {
             if (registration instanceof Leave) {
-                leaveTitles.add(((Leave) registration).getLeaveTitle());
+                leaves.add(((Leave) registration));
             }
         }
-        return leaveTitles;
+        if(leaves.isEmpty()) {
+            throw new Exception("No leaves");
+        }
+        return leaves;
     }
+
+    public Leave getLeave(String leaveTitle) throws Exception {
+        for (Leave leave : getLeaves()) {
+            if (leave.getLeaveTitle().equals(leaveTitle)) {
+                return leave;
+            }
+        }   
+        throw new Exception("The leave you are looking for does not exist");
+    }
+
+    //     public ArrayList<String> getLeaveTitles() {
+    //     ArrayList<String> leaveTitles = new ArrayList<>();
+    //     for (Registration registration : registration) {
+    //         if (registration instanceof Leave) {
+    //             leaveTitles.add(((Leave) registration).getLeaveTitle());
+    //         }
+    //     }
+    //     return leaveTitles;
+    // }
+
     public Leave getLeave(String leaveTitle) throws Exception {
         for (Registration registration : registration) {
             if (registration instanceof Leave) {
@@ -78,6 +103,7 @@ public abstract class User {
         }
         throw new Exception("Leave does not exist");
     }
+
 
     public void createLeave(GregorianCalendar startDate, GregorianCalendar endDate, String leaveTitle) {
         registration.add(new Leave(startDate, endDate, leaveTitle));
