@@ -23,18 +23,18 @@ public class main {
             ProjectPlanner.logIn("FRED", "01234");
             project.addEmployeeToProject(ProjectPlanner.getUser("FRED"));
 
-            project.createActivity("PisMigIØret");
-            project.createActivity("Analyse");
-            project.createActivity("lolcat");
+            project.createActivity("activity_1");
+            project.createActivity("activity_2");
+            project.createActivity("activity_3");
 
-            project.getActivity("Analyse").setStartDate(2022, 7);
-            project.getActivity("Analyse").setEndDate(2022, 8);
-            project.getActivity("PisMigIØret").setStartDate(2021, 1);
-            project.getActivity("PisMigIØret").setEndDate(2022, 8);
+            project.getActivity("activity_1").setStartDate(2022, 7);
+            project.getActivity("activity_2").setEndDate(2022, 8);
+            project.getActivity("activity_2").setStartDate(2021, 1);
+            project.getActivity("activity_2").setEndDate(2022, 8);
 
-            project.getActivity("Analyse")
+            project.getActivity("activity_1")
                     .addEmployeeToActivity(ProjectPlanner.getUser("FRED"));
-            project.getActivity("PisMigIØret")
+            project.getActivity("activity_2")
                     .addEmployeeToActivity(ProjectPlanner.getUser("FRED"));
         } catch (Exception e) {
         }

@@ -35,7 +35,7 @@ public class projectMenu {
     final String removeEmployee = "Remove employee";
 
     final String registerTime = "Register time";
-    final String activityCalendar = "Calendar";
+    final static String activityCalendar = "My Calendar";
 
     // Projektmenu
     final static String selectProject = "Select project";
@@ -50,12 +50,11 @@ public class projectMenu {
 
     final static String addEmployeeToProject = "Add employee to project";
     final static String removeEmployeeFromProject = "Remove employee from project";
-    final static String printProjectData = "Print Project data";
 
     // Activitymenu
     final static String selectActivity = "Select activity";
 
-    final String removeActivity = "Remove Activity";
+    final static String removeActivity = "Remove Activity";
 
     final static String addEmployeeToActivity = "Add employee to activity";
     final String removeEmployeeFromActivity = "Remove employee from activity";
@@ -63,6 +62,7 @@ public class projectMenu {
     final String setActivityEstimate = "Set activity estimate";
     final String changeActivityStart = "Change activity start";
     final String changeActivityEnd = "Change activity end";
+    final static String getProjectInfo = "Get project info";
 
     public static void selectProject() {
         ArrayList<String> UIListOfProjects = new ArrayList<>();
@@ -96,7 +96,7 @@ public class projectMenu {
             } else if (ProjectPlanner.employeeLoggedIn()) {
 
                 ArrayList<String> menu = new ArrayList<>(
-                        Arrays.asList(printProjectData));
+                        Arrays.asList(getProjectInfo));
                 MainController.view.menuEnumerate(selectProject, menu);
                 choice = Integer.parseInt(MainController.consoleInputWithBack());
                 MainController.menuStackPush(menu.get(choice - 1));
@@ -170,7 +170,6 @@ public class projectMenu {
             if (!MainController.selectedProject.getProjectEmployees().contains(user)) {
                 UIListOfEmployees.add(user.getInitials());
             }
-
         }
 
         MainController.view.menuEnumerate(addEmployeeToProject, UIListOfEmployees);
@@ -186,9 +185,47 @@ public class projectMenu {
     }
 
     public static void removeEmployeeFromProject() {
-        // TODO:Mangler implementering
-        MainController.menuStackPush(selectProject);
+        ArrayList<String> UIListOfEmployees = new ArrayList<>();
+        for (User user : MainController.selectedProject.getProjectEmployees()) {
+            UIListOfEmployees.add(user.getInitials());
+        }
 
+        MainController.view.menuEnumerate(removeEmployeeFromProject, UIListOfEmployees);
+        try {
+            int choice = Integer.parseInt(MainController.consoleInputWithBack());
+            User employee = ProjectPlanner.getEmployees().get(choice - 1);
+            MainController.selectedProject.removeEmployeeFromProject(employee);
+            MainController.menuStackPush(selectProject);
+        } catch (BackException e) {
+        } catch (Exception e) {
+            MainController.view.error(e);
+        }
+    }
+
+    public static void getProjectInfo() {
+        ArrayList<String> UIProjectInfo = new ArrayList<>();
+
+        UIProjectInfo.add("Project title: " + MainController.selectedProject.getTitle());
+        UIProjectInfo.add("Project start date: " + MainController.selectedProject.getStartDate());
+        // UIProjectInfo.add("Project end date: " + project.getEndDate());
+        UIProjectInfo.add("Project leader: " + MainController.selectedProject.getProjectleader().getInitials());
+        UIProjectInfo.add("Project employees: ");
+        for (User employee : MainController.selectedProject.getProjectEmployees()) {
+            UIProjectInfo.add(employee.getInitials());
+        }
+        UIProjectInfo.add("Project activities: ");
+        for (Activity activity : MainController.selectedProject.getActivities()) {
+            UIProjectInfo.add(activity.getTitle());
+        }
+
+        try {
+            int choice = Integer.parseInt(MainController.consoleInputWithBack());
+            MainController.view.menuEnumerate(getProjectInfo, UIProjectInfo);
+            MainController.menuStackPush(selectProject);
+        } catch (BackException e) {
+        } catch (Exception e) {
+            MainController.view.error(e);
+        }
     }
 
 }

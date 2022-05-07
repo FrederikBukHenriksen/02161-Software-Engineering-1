@@ -40,7 +40,7 @@ public class MainController {
     final static String removeEmployee = "Remove employee";
 
     final static String registerTime = "Register time";
-    final static String activityCalendar = "Calendar";
+    final static String activityCalendar = "My Calendar";
 
     // Projektmenu
     final static String selectProject = "Select project";
@@ -67,6 +67,7 @@ public class MainController {
     final static String setActivityEstimate = "Set activity estimate";
     final static String changeActivityStart = "Change activity start";
     final static String changeActivityEnd = "Change activity end";
+    final static String getProjectInfo = "Get project info";
 
     public MainController() {
         menuStackPush(logIn);
@@ -92,6 +93,11 @@ public class MainController {
                 break;
             case addEmployeeToActivity:
                 addEmployeeToActivity();
+            case changeActivityStart:
+                changeActivityStart();
+                break;
+            case changeActivityEnd:
+                changeActivityEnd();
                 break;
             case removeEmployeeFromActivity:
                 removeEmployeeFromActivity();
@@ -124,11 +130,15 @@ public class MainController {
             case removeEmployeeFromProject:
                 projectMenu.removeEmployeeFromProject();
                 break;
+            case removeActivity:
+                removeActivity();
+                break;
             case selectActivity:
                 selectActivity();
                 break;
             case setActivityEstimate:
                 setActivityEstimate();
+                break;
             case setProjectLeader:
                 projectMenu.setProjectLeader();
                 break;
@@ -137,6 +147,9 @@ public class MainController {
                 break;
             case registerTime:
                 registerTime();
+                break;
+            case getProjectInfo:
+                projectMenu.getProjectInfo();
                 break;
             default:
                 break;
@@ -175,7 +188,6 @@ public class MainController {
             }
         }
     }
-
 
     public static void menuStackPush(String menu) {
         menuStack.push(menu);
@@ -361,20 +373,24 @@ public class MainController {
     public static void setActivityEstimate() {
         view.menu(setActivityEstimate, new ArrayList<>(Arrays.asList("Type estimate: ")));
         try {
-            int estimate = Integer.parseInt(consoleInputWithBack());
+            double estimate = Double.parseDouble(consoleInputWithBack());
             selectedActivity.setActivityEstimate(estimate);
             menuStackPush(selectActivity);
         } catch (BackException e) {
         } catch (Exception e) {
             handleException(e);
+
         }
     }
 
-    public void changeActivityStart() {
+    public static void changeActivityStart() {
         view.menu(changeActivityStart, new ArrayList<>(Arrays.asList("Type acitivity start week: ")));
         try {
-            int choice = Integer.parseInt(consoleInputWithBack());
-            // TODO: Sæt start tiden
+            int choice_week = Integer.parseInt(consoleInputWithBack());
+            view.menu(changeActivityStart,
+                    new ArrayList<>(Arrays.asList("Type acitivity start Year: ", "type activity start week: ")));
+            int choice_year = Integer.parseInt(consoleInputWithBack());
+            selectedActivity.setStartDate(choice_year, choice_week);
             menuStackPush(selectActivity);
         } catch (BackException e) {
         } catch (Exception e) {
@@ -382,11 +398,14 @@ public class MainController {
         }
     }
 
-    public void changeActivityEnd() {
+    public static void changeActivityEnd() {
         view.menu(changeActivityStart, new ArrayList<>(Arrays.asList("Type acitivity end week: ")));
         try {
-            int choice = Integer.parseInt(consoleInputWithBack());
-            // TODO: Sæt slut tiden
+            int choice_year = Integer.parseInt(consoleInputWithBack());
+            view.menu(changeActivityStart,
+                    new ArrayList<>(Arrays.asList("Type acitivity start Year: ", "type activity start week: ")));
+            int choice_week = Integer.parseInt(consoleInputWithBack());
+            selectedActivity.setEndDate(choice_year, choice_week);
             menuStackPush(selectActivity);
         } catch (BackException e) {
         } catch (Exception e) {
@@ -401,7 +420,8 @@ public class MainController {
 
         ArrayList<String> UIlistOfActivities = new ArrayList<>();
         for (Activity activity : employeeActivities) {
-            UIlistOfActivities.add(activity.getTitle());
+            UIlistOfActivities.add(
+                    activity.getTitle() + ", Start: " + activity.getStartDate() + ", end: " + activity.getEndDate());
         }
 
         view.menuEnumerate(activityCalendar, UIlistOfActivities);
@@ -460,14 +480,32 @@ public class MainController {
             ArrayList<Integer> endCal = setDateWithTime(registerTime + " end time");
             GregorianCalendar endTime = Work
                     .calendarWork(startCal.get(4),
-                    startCal.get(
-                            3),
-                    startCal.get(2), startCal.get(1), startCal.get(0));
+                            startCal.get(
+                                    3),
+                            startCal.get(2), startCal.get(1), startCal.get(0));
 
             ((Employee) ProjectPlanner.getLoggedIn()).registerWork(startTime, endTime, chosenActivity);
         } catch (BackException e) {
         } catch (Exception e) {
             handleException(e);
+        }
+
+    }
+
+    public static void removeActivity() {
+        // ArrayList<String> UIListOfActivities = new ArrayList<>();
+        // for (Activity activity :
+        // ProjectPlanner.getProject(selectProject).getActivities()) {
+        // UIListOfActivities.add(activity.getTitle());
+        // }
+
+        // view.menuEnumerate(deleteProject, UIListOfActivities);
+
+        try {
+            MainController.selectedProject.removeActivity(MainController.selectedActivity);
+            MainController.menuStackPush(selectProject);
+        } catch (Exception e) {
+            MainController.view.error(e);
         }
 
     }
