@@ -3,7 +3,10 @@ package dtu.calculator;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-public class User {
+public abstract class User {
+
+    // Contained
+    ProjectPlanner projectPlanner;
 
     protected String initials;
     protected String password;
@@ -16,9 +19,10 @@ public class User {
         this.password = password;
     }
 
-    public User(String initials) {
+    public User(String initials, ProjectPlanner projectPlanner) {
         this.initials = initials;
         this.password = generatePassword();
+        this.projectPlanner = projectPlanner;
     }
 
     public void setPassword(String password) {
@@ -33,6 +37,9 @@ public class User {
         return initials;
     }
 
+    public String getPassword() {
+        return password;
+    }
 
 
     public ArrayList<Activity> getActivities() {
@@ -41,7 +48,7 @@ public class User {
 
     public ArrayList<String> getActivitiesFromOtherEmployee(String otherUserInitials) throws Exception {
         ArrayList<String> activitiesTitle = new ArrayList<>();
-        for (Activity activity : ProjectPlanner.getUser(otherUserInitials).getActivities()) {
+        for (Activity activity : projectPlanner.getUser(otherUserInitials).getActivities()) {
             activitiesTitle.add(activity.getTitle());
         }
         for (Registration registration : ProjectPlanner.getUser(otherUserInitials).getRegistration()) {
@@ -52,8 +59,10 @@ public class User {
         return activitiesTitle;
     }
     
-    public ArrayList<Leave> getLeaves() throws Exception {
-        ArrayList<Leave> leaves = new ArrayList<>();
+
+    public ArrayList<String> getLeaveAll() {
+        ArrayList<String> leaveTitles = new ArrayList<>();
+
         for (Registration registration : registration) {
             if (registration instanceof Leave) {
                 leaves.add(((Leave) registration));
@@ -73,6 +82,7 @@ public class User {
         }   
         throw new Exception("The leave you are looking for does not exist");
     }
+
     //     public ArrayList<String> getLeaveTitles() {
     //     ArrayList<String> leaveTitles = new ArrayList<>();
     //     for (Registration registration : registration) {
@@ -82,6 +92,18 @@ public class User {
     //     }
     //     return leaveTitles;
     // }
+
+    public Leave getLeave(String leaveTitle) throws Exception {
+        for (Registration registration : registration) {
+            if (registration instanceof Leave) {
+                if (((Leave) registration).getLeaveTitle().equals(leaveTitle)) {
+                    return (Leave) registration;
+                }
+            }
+        }
+        throw new Exception("Leave does not exist");
+    }
+
 
     public void createLeave(GregorianCalendar startDate, GregorianCalendar endDate, String leaveTitle) {
         registration.add(new Leave(startDate, endDate, leaveTitle));

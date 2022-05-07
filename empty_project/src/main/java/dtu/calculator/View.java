@@ -43,7 +43,6 @@ public class View {
         System.out.println("######## " + title.toUpperCase() + " ########");
     }
 
-
     public void subSection(String input) {
         System.out.print("   " + input);
 
@@ -60,8 +59,8 @@ public class View {
 
     public void error(Exception e) {
         title("ERROR");
-        subSection("Something went wrong: ");
+        subSectionln("Something went wrong: ");
         subSectionln(e.getMessage());
+        subSection("Press enter to continue");
     }
-
 }
