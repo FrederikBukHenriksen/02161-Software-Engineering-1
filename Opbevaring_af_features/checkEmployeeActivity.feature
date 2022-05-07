@@ -1,4 +1,3 @@
-# # Skrevet af Niklas Netterstrøm Johansen
 Feature: Check an employees activities
     Description: An employee checks the activities of another employee
 

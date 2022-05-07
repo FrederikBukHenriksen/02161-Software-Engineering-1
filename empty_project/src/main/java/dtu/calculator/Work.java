@@ -1,5 +1,6 @@
 package dtu.calculator;
 
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public class Work extends Registration {
@@ -18,6 +19,10 @@ public class Work extends Registration {
         }
         GregorianCalendar calendar = new GregorianCalendar(year, month, dayOfMonth, hourOfDay, minute);
         return calendar;
+    }
+
+    public Activity getActivity() {
+        return activity;
     }
 
 }

@@ -17,8 +17,17 @@ public class Registration {
         this.endTime = endTime;
     }
 
-    public long getHourDifference(GregorianCalendar startTime, GregorianCalendar endTime) {
-        return endTime.getTimeInMillis() - startTime.getTimeInMillis();
+    // public long getHourDifference(GregorianCalendar startTime, GregorianCalendar
+    // endTime) {
+    // return endTime.getTimeInMillis() - startTime.getTimeInMillis();
+    // }
+
+    public GregorianCalendar getStartTime() {
+        return startTime;
+    }
+
+    public GregorianCalendar getEndTime() {
+        return endTime;
     }
 
 }

@@ -36,9 +36,7 @@ public class Employee extends User {
         return employeeActivities;
     }
 
-    public void registerWork(GregorianCalendar startTime, GregorianCalendar endTime, Activity activity) {
-        registration.add(new Work(startTime, endTime, activity));
-    }
+
 
 
 }

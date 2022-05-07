@@ -27,6 +27,9 @@ public class Activity {
 
     public void addUserToActivity(User user) throws Exception {
         if (project.isProjectLeaderLoggedIn()) {
+            if (user instanceof Administrator) {
+                throw new Exception("Not allowed for administrator user");
+            }
             // Check if user is already assigned to the activity
             if (!project.getProjectEmployees().contains(user)) {
                 throw new Exception("User is not in the project");

@@ -41,6 +41,9 @@ public class Project {
 
     public void addUserToProject(User user) throws Exception {
         if (isProjectLeaderLoggedIn()) {
+            if (user instanceof Administrator) {
+                throw new Exception("Not allowed for administrator user");
+            }
             if (!projectUsers.contains(user)) {
                 projectUsers.add(user);
             } else {
@@ -112,7 +115,7 @@ public class Project {
     }
 
     public void setProjectLeader(User user) throws Exception {
-        if (projectPlanner.administratorLoggedIn()) {
+        if (projectPlanner.isAdministratorLoggedIn()) {
             projectLeader = user;
         } else {
             throw new Exception("Administrator login is required");

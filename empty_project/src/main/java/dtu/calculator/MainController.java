@@ -202,7 +202,7 @@ public class MainController {
 
         view.clearScreen();
         ArrayList<String> menu = new ArrayList<>();
-        if (projectPlanner.administratorLoggedIn()) {
+        if (projectPlanner.isAdministratorLoggedIn()) {
             menu = new ArrayList<>(
                     Arrays.asList(createProject, selectProject, addEmployee, removeEmployee, logOut));
         } else if (projectPlanner.employeeLoggedIn()) {

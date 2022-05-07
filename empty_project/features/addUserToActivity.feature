@@ -61,3 +61,9 @@ Scenario: Add employee to activity not possible when project user is logged in
     When add user "NIKL" to activity "Analysis" in project "2022-1"
     Then the error message "Project leader login is required" is given
     And user "GUST" is not in activity "Analysis" in project "2022-1"
+
+Scenario: Add administrator to activity not possible
+    Given login user "FRED"
+    When add user "HUBE" to activity "Analysis" in project "2022-1"
+    Then the error message "Not allowed for administrator user" is given
+    And user "HUBE" is not in activity "Analysis" in project "2022-1"

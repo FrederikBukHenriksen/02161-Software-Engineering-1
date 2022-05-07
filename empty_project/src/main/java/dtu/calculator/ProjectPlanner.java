@@ -20,7 +20,7 @@ public class ProjectPlanner {
     // Create or add functions
 
     public void createProject(String title) throws Exception {
-        if (administratorLoggedIn()) {
+        if (isAdministratorLoggedIn()) {
             projects.add(new Project(title, this));
         } else {
             throw new Exception("Administrator login is required");
@@ -28,7 +28,7 @@ public class ProjectPlanner {
     }
 
     public void addEmployee(String initials) throws Exception {
-        if (administratorLoggedIn()) {
+        if (isAdministratorLoggedIn()) {
             if (initials.length() == 4) {
                 if (uniqueUserInitials(initials)) {
                     users.add(new Employee(initials.toUpperCase(), this));
@@ -46,7 +46,7 @@ public class ProjectPlanner {
     // Remove or delete functions
 
     public void removeProject(Project project) throws Exception {
-        if (administratorLoggedIn()) {
+        if (isAdministratorLoggedIn()) {
             projects.remove(project);
         } else {
             throw new Exception("Administrator login is required");
@@ -54,7 +54,7 @@ public class ProjectPlanner {
     }
 
     public void removeEmployee(User user) throws Exception {
-        if (administratorLoggedIn()) {
+        if (isAdministratorLoggedIn()) {
             if (!(user instanceof Administrator)) {
             getUsers().remove(user);
         } else {
@@ -85,7 +85,7 @@ public class ProjectPlanner {
         return true;
     }
 
-    public boolean administratorLoggedIn() {
+    public boolean isAdministratorLoggedIn() {
         return (loggedIn instanceof Administrator);
     }
 

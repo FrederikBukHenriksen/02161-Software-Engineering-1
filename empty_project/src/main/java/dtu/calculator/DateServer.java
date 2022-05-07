@@ -19,7 +19,7 @@ public class DateServer {
 		return calendar.get(1);
 	}
 
-	// BRUGES KUN TIL CUCUMBER TESTS
+	// BRUGES KUN OPSTILLING AF CUCUMBER TESTS
 	public void setDate(int year, int month, int date) {
 		calendar = new GregorianCalendar(year, month, date);
 
