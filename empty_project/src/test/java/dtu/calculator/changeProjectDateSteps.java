@@ -55,7 +55,6 @@ public class changeProjectDateSteps {
     @When("the projectleader  sets project with id {string} start date to day {int}, month {int}, and year {int}")
     public void the_projectleader_sets_project_with_id_start_date_to_day_month_and_year(String string, Integer int1, Integer int2, Integer int3) throws Exception {
         Project project = ProjectPlanner.getProject(string);
-        System.out.println(project.getTitle());
         project.setStartDate(int1, int2, int3);
     }
 
