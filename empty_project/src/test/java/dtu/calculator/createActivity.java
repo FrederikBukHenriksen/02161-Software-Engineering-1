@@ -37,7 +37,6 @@ public class createActivity {
     }
 
 
-
     @Then("the activity {string} is in the project {string}")
     public void the_activity_is_in_the_project(String activityTitle, String projectID) throws Exception {
         Project project = projectPlanner.getProject(projectID);
@@ -53,8 +52,5 @@ public class createActivity {
         assertEquals(count, 1);
     }
 
-
-
- 
 
 }

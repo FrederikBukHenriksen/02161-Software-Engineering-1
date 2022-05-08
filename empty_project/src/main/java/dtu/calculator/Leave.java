@@ -5,14 +5,15 @@ import java.util.GregorianCalendar;
 public class Leave extends Registration {
     String title;
 
-    public Leave(CustomCalendar startTime, CustomCalendar endTime, ProjectPlanner projectPlanner, String title) {
+
+    public Leave(CustomCalendar startTime, CustomCalendar endTime, ProjectPlanner projectPlanner, String title) throws Exception {
         super(startTime, endTime, projectPlanner);
         this.title = title;
     }
 
     
     public void changeDates(CustomCalendar startTime, CustomCalendar endTime) throws Exception {
-        if(startTime.compareTo(endTime) > 0) {
+        if(startTime.getDate().compareTo(endTime.getDate()) > 0) {
             throw new Exception("Start time must be before end time");
         }
         this.startTime = startTime;

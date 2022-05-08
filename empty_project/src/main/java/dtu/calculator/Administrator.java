@@ -7,6 +7,9 @@ public class Administrator extends User {
         this.password = password;
     }
 
+    public Administrator(String initials, ProjectPlanner projectPlanner) {
+        super(initials, projectPlanner);
+    }
 
 
 }

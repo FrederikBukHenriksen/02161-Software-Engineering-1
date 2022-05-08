@@ -42,6 +42,7 @@ Feature: Register work time
     When user "ANDR" register work time from 2022 / 1 / 1 / 8:00 to 2022 / 1 / 1 / 16:00 to activity "Analysis" in project "2022-1"
     And user "ANDR" does have a registration from 2022 / 1 / 1 8:00 to 2022 / 1 / 1 / 16:00 in activity "Analysis" in project "2022-1"
 
+
   Scenario: Register work time for another user not possible
     Given login user "ANDR"
     When user "GUST" register work time from 2022 / 1 / 1 / 8:00 to 2022 / 1 / 1 / 16:00 to activity "Analysis" in project "2022-1"
