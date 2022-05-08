@@ -22,7 +22,7 @@ public class changeLeaveSteps {
         @Given("there is leave titled {string} with start date set to day {int}, month {int}, year {int}, and end date set to day {int}, month {int}, year {int}")
     public void there_is_leave_titled_with_start_date_set_to_day_month_year_and_end_date_set_to_day_month_year(
             String leaveTitle, Integer startDay, Integer startMonth, Integer startYear, Integer endDay,
-            Integer endMonth, Integer endYear) {
+            Integer endMonth, Integer endYear) throws Exception {
         CustomCalendar start = new CustomCalendar(startYear, startMonth, startDay);
         CustomCalendar end = new CustomCalendar(endYear, endMonth, endDay);
         Leave leave = new Leave(start, end, projectPlanner,leaveTitle);
@@ -78,7 +78,6 @@ public class changeLeaveSteps {
     @Given("there is leave titled {string} with start date set to day {int}, month {int}, year {int}, and end date set to day {int}, month {int}, year {int}, in the employees with id {string} list of activities")
     public void there_is_leave_titled_with_start_date_set_to_day_month_year_and_end_date_set_to_day_month_year_in_the_employees_list_of_activities( String leaveTitle, Integer startDay, Integer startMonth, Integer startYear, Integer endDay,
             Integer endMonth, Integer endYear, String employeeID) throws Exception {
-
         CustomCalendar start = new CustomCalendar(startYear, startMonth, startDay);
         CustomCalendar end = new CustomCalendar(endYear, endMonth, endDay);
         User employee = projectPlanner.getUser(employeeID);
@@ -90,7 +89,6 @@ public class changeLeaveSteps {
     @When("the employee with id {string} changes the leave with title {string} start date to day {int}, month {int}, year {int} and the end date to day {int}, month {int}, year {int}")
     public void the_employee_with_id_changes_the_leave_with_title_start_date_to_day_month_year_and_the_end_date_to_day_month_year(String employeeID, String leaveTitle, Integer startDay, Integer startMonth, Integer startYear, Integer endDay,
             Integer endMonth, Integer endYear) throws Exception {
-
         User employee = projectPlanner.getUser(employeeID);
         CustomCalendar start = new CustomCalendar(startYear, startMonth, startDay);
         CustomCalendar end = new CustomCalendar(endYear, endMonth, endDay);
@@ -112,7 +110,7 @@ public class changeLeaveSteps {
         Leave leave = employee.getLeave(leaveTitle);
         CustomCalendar start = new CustomCalendar(startYear, startMonth, startDay);
         CustomCalendar end = new CustomCalendar(endYear, endMonth, endDay);
-        assertTrue(leave.getStartTime().equals(start) && leave.getEndTime().equals(end));
+        assertTrue(leave.getStartTime().getDate().equals(start.getDate()) && leave.getEndTime().getDate().equals(end.getDate()));
     }
     
 

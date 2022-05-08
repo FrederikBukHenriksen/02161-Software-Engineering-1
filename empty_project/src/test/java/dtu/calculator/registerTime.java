@@ -69,7 +69,9 @@ public class registerTime {
             }
 
         }
-        assertTrue(found == true);
+
+        assertTrue(found);
+
     }
 
     @Then("user {string} does not have a registration from {int} \\/ {int} \\/ {int} {int}:{int} to {int} \\/ {int} \\/ {int} \\/ {int}:{int} in activity {string} in project {string}")
@@ -99,7 +101,9 @@ public class registerTime {
             }
 
         }
-        assertFalse(found == true);
+
+        assertFalse(found);
+
     }
 
     // Frederik End

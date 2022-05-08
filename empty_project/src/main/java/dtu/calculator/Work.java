@@ -7,7 +7,8 @@ public class Work extends Registration {
 
     Activity activity;
 
-    public Work(CustomCalendar startTime, CustomCalendar endTime, ProjectPlanner projectPlanner, Activity activity) {
+
+    public Work(CustomCalendar startTime, CustomCalendar endTime, ProjectPlanner projectPlanner, Activity activity) throws Exception {
         super(startTime, endTime, projectPlanner);
         this.activity = activity;
     }

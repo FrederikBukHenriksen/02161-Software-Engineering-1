@@ -26,15 +26,5 @@ public class deleteProjectSteps {
         }
     }
 
-    @Then("the project {string} is not on the list of projects")
-    public void the_project_is_not_on_the_list_of_projects(String id) {
-        assertFalse(projectPlanner.getProjects().stream().anyMatch(project -> project.getId().equals(id)));
-    }
-
-    @Then("the project {string} is on the list of projects")
-    public void the_project_is_on_the_list_of_projects(String id) {
-        assertTrue(projectPlanner.getProjects().stream().anyMatch(project -> project.getId().equals(id)));
-
-    }
 
 }
