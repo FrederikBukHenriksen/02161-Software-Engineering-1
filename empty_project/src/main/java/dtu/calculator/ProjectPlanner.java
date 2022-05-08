@@ -92,11 +92,11 @@ public class ProjectPlanner {
         return (loggedIn instanceof Employee);
     }
 
-    public void logIn(String initals, String password) throws Exception {
+    public void logIn(String initials, String password) throws Exception {
         // Flag instead of check for null for safety reason
         boolean logInSuccesful = false;
         for (User user : getUsers()) {
-            if (user.getInitials().equalsIgnoreCase(initals) && user.getPassword().equals(password)) {
+            if (user.getInitials().equalsIgnoreCase(initials) && user.getPassword().equals(password)) {
                 setLoggedIn(user);
                 logInSuccesful = true;
                 return;
@@ -159,17 +159,12 @@ public class ProjectPlanner {
         return projects;
     }
 
-    // JUNIT Helpfunctions
-    protected void cucumberAddEmployee(String initials) {
-        users.add(new Employee(initials, this));
-    }
-
-    protected void cucumberCreateProject(String title) {
-        projects.add(new Project(title, this));
-    }
-
-    protected void cucumberCreateAdministrator(String initials) {
-        users.add(new Administrator("HUBE", "PW1234", this));
+    protected ArrayList<String> getActivitiesFromOtherEmployee(User user) {
+        ArrayList<String> activitiesTitle = new ArrayList<>();
+        for (Activity activity : user.getEmployeeActivities()) {
+            activitiesTitle.add(activity.getTitle());
+        }
+        return activitiesTitle;
     }
 
 }

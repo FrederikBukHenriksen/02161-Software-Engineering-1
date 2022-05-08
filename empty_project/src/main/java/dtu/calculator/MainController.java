@@ -390,16 +390,16 @@ public class MainController {
 
     public void activityCalendar() {
         ArrayList<Activity> employeeActivities = ((Employee) projectPlanner.getLoggedIn()).getEmployeeActivities();
+            ArrayList<String> UIlistOfActivities = new ArrayList<>();
+            for (Activity activity : employeeActivities) {
+                UIlistOfActivities.add(activity.getTitle());
+            }
+            view.menuEnumerate(activityCalendar, UIlistOfActivities);
+            String input = consoleInput();
+            menuStackPush(mainMenu);
 
-        ArrayList<String> UIlistOfActivities = new ArrayList<>();
-        for (Activity activity : employeeActivities) {
-            UIlistOfActivities.add(activity.getTitle());
-        }
-
-        view.menuEnumerate(activityCalendar, UIlistOfActivities);
-        String input = consoleInput();
-        menuStackPush(mainMenu);
     }
+    
 
     public void registerTime() {
         ArrayList menu = new ArrayList<>(
