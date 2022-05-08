@@ -23,9 +23,7 @@ public abstract class User {
         this.projectPlanner = projectPlanner;
     }
 
-    protected GregorianCalendar createTimestamp(int year, int month, int date, int hour, int minute) {
-        return new GregorianCalendar(year, month, date, hour, minute);
-    }
+
 
     protected void registerWork(GregorianCalendar startTime, GregorianCalendar endTime, Activity activity)
             throws Exception {

@@ -10,11 +10,12 @@ public class Leave extends Registration {
         this.title = title;
     }
 
-    public void changeStartDate(GregorianCalendar startTime) {
+    
+    public void changeDates(GregorianCalendar startTime, GregorianCalendar endTime) {
+        if(startTime.compareTo(endTime) > 0) {
+            throw new IllegalArgumentException("Start time must be before end time");
+        }
         this.startTime = startTime;
-    }
-
-    public void changeEndDate(GregorianCalendar endTime) {
         this.endTime = endTime;
     }
 

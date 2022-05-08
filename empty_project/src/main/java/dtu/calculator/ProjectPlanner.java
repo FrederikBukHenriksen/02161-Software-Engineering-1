@@ -92,11 +92,11 @@ public class ProjectPlanner {
         return (loggedIn instanceof Employee);
     }
 
-    public void logIn(String initals, String password) throws Exception {
+    public void logIn(String initials, String password) throws Exception {
         // Flag instead of check for null for safety reason
         boolean logInSuccesful = false;
         for (User user : getUsers()) {
-            if (user.getInitials().equalsIgnoreCase(initals) && user.getPassword().equals(password)) {
+            if (user.getInitials().equalsIgnoreCase(initials) && user.getPassword().equals(password)) {
                 setLoggedIn(user);
                 logInSuccesful = true;
                 return;

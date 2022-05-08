@@ -19,6 +19,14 @@ public class DateServer {
 		return calendar.get(1);
 	}
 
+	protected GregorianCalendar createTimestamp(int year, int month, int date, int hour, int minute) {
+		return new GregorianCalendar(year, month - 1, date, hour, minute);
+	}
+
+	protected GregorianCalendar createDate(int year, int month, int date) {
+		return new GregorianCalendar(year, month-1, date);
+	}
+
 	// BRUGES KUN OPSTILLING AF CUCUMBER TESTS
 	public void setDate(int year, int month, int date) {
 		calendar = new GregorianCalendar(year, month, date);

@@ -8,7 +8,10 @@ import java.util.GregorianCalendar;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+
 public class changeLeaveSteps {
+    
+
     final public CommonSteps commonSteps = new CommonSteps();
     final public ProjectPlanner projectPlanner;
 
@@ -20,8 +23,8 @@ public class changeLeaveSteps {
     public void there_is_leave_titled_with_start_date_set_to_day_month_year_and_end_date_set_to_day_month_year(
             String leaveTitle, Integer startDay, Integer startMonth, Integer startYear, Integer endDay,
             Integer endMonth, Integer endYear) {
-        GregorianCalendar start = new GregorianCalendar(startYear, startMonth, startDay);
-        GregorianCalendar end = new GregorianCalendar(endYear, endMonth, endDay);
+        GregorianCalendar start = projectPlanner.dateServer.createDate(startYear, startMonth, startDay);
+        GregorianCalendar end = projectPlanner.dateServer.createDate(endYear, endMonth, endDay);
         Leave leave = new Leave(start, end, leaveTitle);
         assertTrue(leave.title.equals(leaveTitle));
         assertTrue(leave.getLeaveTitle().equals(leaveTitle) && leave.getEndTime().equals(end) && leave.getStartTime().equals(start));
@@ -32,14 +35,14 @@ public class changeLeaveSteps {
             String employeeID, String leaveTitle, Integer startDay, Integer startMonth, Integer startYear,
             Integer endDay,
             Integer endMonth, Integer endYear) throws Exception {
-        GregorianCalendar start = new GregorianCalendar(startYear, startMonth, startDay);
-        GregorianCalendar end = new GregorianCalendar(endYear, endMonth, endDay);
+        GregorianCalendar start = projectPlanner.dateServer.createDate(startYear, startMonth, startDay);
+        GregorianCalendar end = projectPlanner.dateServer.createDate(endYear, endMonth, endDay);
         projectPlanner.getUser(employeeID).createLeave(start, end, leaveTitle);
     }
 
     @Then("the leave titled {string} is added to the employee with id {string} list of activities")
     public void the_leave_titled_is_added_to_the_employee_with_id_list_of_activities(String leaveTitle,
-            String employeeID) throws Exception {
+            String employeeID) {
 
                 try {
                     assertTrue(projectPlanner.getUser(employeeID).getLeaveAll().stream().anyMatch(leave -> leave.getLeaveTitle().equals(leaveTitle)));
@@ -51,12 +54,10 @@ public class changeLeaveSteps {
     @Given("the employee with id {string} has a leave titled {string} with start date set to day {int}, month {int}, year {int}, and end date set to day {int}, month {int}, year {int} in their list of activities")
     public void the_employee_with_id_has_a_leave_titled_with_start_date_set_to_day_month_year_and_end_date_set_to_day_month_year_in_their_list_of_activities(
             String employeeID, String leaveTitle, Integer startDay, Integer startMonth, Integer startYear,
-            Integer endDay, Integer endMonth, Integer endYear) throws Exception {
+            Integer endDay, Integer endMonth, Integer endYear){
 
-        GregorianCalendar start = new GregorianCalendar(startYear, startMonth, startDay);
-        GregorianCalendar end = new GregorianCalendar(endYear, endMonth, endDay);
-
-        projectPlanner.getUser(employeeID).createLeave(start, end, leaveTitle);
+        GregorianCalendar start = projectPlanner.dateServer.createDate(startYear, startMonth, startDay);
+        GregorianCalendar end = projectPlanner.dateServer.createDate(endYear, endMonth, endDay);
         try {
             assertTrue(projectPlanner.getUser(employeeID).getLeaveAll().stream().anyMatch(leave -> leave.getEndTime().equals(end) && leave.getStartTime().equals(start) && leave.getLeaveTitle().equals(leaveTitle)));
         } catch (Exception e) {
@@ -77,8 +78,8 @@ public class changeLeaveSteps {
     @Given("there is leave titled {string} with start date set to day {int}, month {int}, year {int}, and end date set to day {int}, month {int}, year {int}, in the employees with id {string} list of activities")
     public void there_is_leave_titled_with_start_date_set_to_day_month_year_and_end_date_set_to_day_month_year_in_the_employees_list_of_activities( String leaveTitle, Integer startDay, Integer startMonth, Integer startYear, Integer endDay,
             Integer endMonth, Integer endYear, String employeeID) throws Exception {
-        GregorianCalendar start = new GregorianCalendar(startYear, startMonth, startDay);
-        GregorianCalendar end = new GregorianCalendar(endYear, endMonth, endDay);
+        GregorianCalendar start = projectPlanner.dateServer.createDate(startYear, startMonth, startDay);
+        GregorianCalendar end = projectPlanner.dateServer.createDate(endYear, endMonth, endDay);
         User employee = projectPlanner.getUser(employeeID);
         employee.createLeave(start, end, leaveTitle);
         Leave leave = employee.getLeave(leaveTitle);
@@ -90,21 +91,27 @@ public class changeLeaveSteps {
             Integer endMonth, Integer endYear) throws Exception {
 
         User employee = projectPlanner.getUser(employeeID);
-        GregorianCalendar start = new GregorianCalendar(startYear, startMonth, startDay);
-        GregorianCalendar end = new GregorianCalendar(endYear, endMonth, endDay);
-        employee.getLeave(leaveTitle).changeStartDate(start);
-        employee.getLeave(leaveTitle).changeEndDate(end);
+        GregorianCalendar start = projectPlanner.dateServer.createDate(startYear, startMonth, startDay);
+        GregorianCalendar end = projectPlanner.dateServer.createDate(endYear, endMonth, endDay);
+        Leave leave = employee.getLeave(leaveTitle);
+        try {
+            leave.changeDates(start, end);
+        } catch (Exception e) {
+            ErrorMessageHolder.setErrorMessage(e.getMessage());
+        }
+
     }
 
     @Then("the employee with id {string} leave with title {string} is changed to start date set to day {int}, month {int}, year {int} and end date set to day {int}, month {int}, year {int}")
     public void the_employee_with_id_leave_with_title_is_changed_to_start_date_set_to_day_month_year_and_end_date_set_to_day_month_year(
             String employeeID, String leaveTitle, Integer startDay, Integer startMonth, Integer startYear, Integer endDay,
             Integer endMonth, Integer endYear) throws Exception {
+
         User employee = projectPlanner.getUser(employeeID);
-        GregorianCalendar start = new GregorianCalendar(startYear, startMonth, startDay);
-        GregorianCalendar end = new GregorianCalendar(endYear, endMonth, endDay);
         Leave leave = employee.getLeave(leaveTitle);
-        assertTrue(leave.startTime.equals(start) && leave.endTime.equals(end));
+        GregorianCalendar start = projectPlanner.dateServer.createDate(startYear, startMonth, startDay);
+        GregorianCalendar end = projectPlanner.dateServer.createDate(endYear, endMonth, endDay);
+        assertTrue(leave.getStartTime().equals(start) && leave.getEndTime().equals(end));
     }
 
     @Then("the leave titled {string} is changed to start date set to day {int}, month {int}, year {int}, and end date set to day {int}, month {int}, year {int} in the employee with id {string} list of activities")
@@ -112,11 +119,10 @@ public class changeLeaveSteps {
             String leaveTitle, Integer startDay, Integer startMonth, Integer startYear,
             Integer endDay, Integer endMonth, Integer endYear, String employeeID) throws Exception {
 
-        GregorianCalendar start = new GregorianCalendar(startYear, startMonth, startDay);
-        GregorianCalendar end = new GregorianCalendar(endYear, endMonth, endDay);
+        GregorianCalendar start = projectPlanner.dateServer.createDate(startYear, startMonth, startDay);
+        GregorianCalendar end = projectPlanner.dateServer.createDate(endYear, endMonth, endDay);
             
         try {
-            
             Leave leave = projectPlanner.getUser(employeeID).getLeave(leaveTitle);
             assertTrue(leave.getEndTime().equals(end) && leave.getStartTime().equals(start));
         } catch (Exception e) {
