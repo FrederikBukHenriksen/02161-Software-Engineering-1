@@ -21,22 +21,21 @@ public class changeProjectStartDateSteps {
     @When("the projectleader sets project with id {string} start date to day {int}, month {int}, and year {int}")
     public void the_projectleader_sets_project_with_id_start_date_to_day_month_and_year(String projectID, Integer day,
             Integer month, Integer year) {
-                try {
-                    projectPlanner.getProject(projectID).setStartDate(year, month, day);
-                } catch (Exception e) {
-                    ErrorMessageHolder.setErrorMessage(e.getMessage());
-                }
-        
+        try {
+            projectPlanner.getProject(projectID).setStartDate(year, month, day);
+        } catch (Exception e) {
+            ErrorMessageHolder.setErrorMessage(e.getMessage());
+        }
 
     }
 
-
-
     @Then("the project with id {string} start date is set to day {int}, month {int}, and year {int}")
-    public void the_project_with_id_start_date_is_set_to_day_month_and_year(String projectID, Integer day, Integer month,
+    public void the_project_with_id_start_date_is_set_to_day_month_and_year(String projectID, Integer day,
+            Integer month,
             Integer year) throws Exception {
-        GregorianCalendar startDate = projectPlanner.dateServer.createDate(year, month, day);
+        CustomCalendar startDate = new CustomCalendar(year, month, day);
         assertTrue(projectPlanner.getProject(projectID).getStartDate().equals(startDate));
     }
 
 }
+

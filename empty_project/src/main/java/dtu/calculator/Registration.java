@@ -4,32 +4,32 @@ import java.util.GregorianCalendar;
 
 public abstract class Registration {
 
-    GregorianCalendar startTime;
-    GregorianCalendar endTime;
+    CustomCalendar startTime;
+    CustomCalendar endTime;
 
     protected ProjectPlanner projectPlanner;
 
-    public Registration(GregorianCalendar startTime, GregorianCalendar endTime, ProjectPlanner projectPlanner) {
+    public Registration(CustomCalendar startTime, CustomCalendar endTime, ProjectPlanner projectPlanner) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.projectPlanner = projectPlanner;
     }
 
     // Set functions
-    public void setEndTime(GregorianCalendar endTime) {
+    public void setEndTime(CustomCalendar endTime) {
         this.endTime = endTime;
     }
 
-    public void setStartTime(GregorianCalendar startTime) {
+    public void setStartTime(CustomCalendar startTime) {
         this.startTime = startTime;
     }
 
     // Get functions
-    protected GregorianCalendar getStartTime() {
+    protected CustomCalendar getStartTime() {
         return startTime;
     }
 
-    protected GregorianCalendar getEndTime() {
+    protected CustomCalendar getEndTime() {
         return endTime;
     }
 

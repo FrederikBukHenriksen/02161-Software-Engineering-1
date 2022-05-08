@@ -23,8 +23,8 @@ public class changeLeaveSteps {
     public void there_is_leave_titled_with_start_date_set_to_day_month_year_and_end_date_set_to_day_month_year(
             String leaveTitle, Integer startDay, Integer startMonth, Integer startYear, Integer endDay,
             Integer endMonth, Integer endYear) {
-        GregorianCalendar start = projectPlanner.dateServer.createDate(startYear, startMonth, startDay);
-        GregorianCalendar end = projectPlanner.dateServer.createDate(endYear, endMonth, endDay);
+        CustomCalendar start = new CustomCalendar(startYear, startMonth, startDay);
+        CustomCalendar end = new CustomCalendar(endYear, endMonth, endDay);
         Leave leave = new Leave(start, end, projectPlanner,leaveTitle);
         assertTrue(leave.title.equals(leaveTitle));
         assertTrue(leave.getLeaveTitle().equals(leaveTitle) && leave.getEndTime().equals(end) && leave.getStartTime().equals(start));
@@ -35,8 +35,8 @@ public class changeLeaveSteps {
             String employeeID, String leaveTitle, Integer startDay, Integer startMonth, Integer startYear,
             Integer endDay,
             Integer endMonth, Integer endYear) throws Exception {
-        GregorianCalendar start = projectPlanner.dateServer.createDate(startYear, startMonth, startDay);
-        GregorianCalendar end = projectPlanner.dateServer.createDate(endYear, endMonth, endDay);
+        CustomCalendar start = new CustomCalendar(startYear, startMonth, startDay);
+        CustomCalendar end = new CustomCalendar(endYear, endMonth, endDay);
         projectPlanner.getUser(employeeID).createLeave(start, end, leaveTitle);
     }
 
@@ -56,8 +56,8 @@ public class changeLeaveSteps {
             String employeeID, String leaveTitle, Integer startDay, Integer startMonth, Integer startYear,
             Integer endDay, Integer endMonth, Integer endYear){
 
-        GregorianCalendar start = projectPlanner.dateServer.createDate(startYear, startMonth, startDay);
-        GregorianCalendar end = projectPlanner.dateServer.createDate(endYear, endMonth, endDay);
+        CustomCalendar start = new CustomCalendar(startYear, startMonth, startDay);
+        CustomCalendar end = new CustomCalendar(endYear, endMonth, endDay);
         try {
             assertTrue(projectPlanner.getUser(employeeID).getLeaveAll().stream().anyMatch(leave -> leave.getEndTime().equals(end) && leave.getStartTime().equals(start) && leave.getLeaveTitle().equals(leaveTitle)));
         } catch (Exception e) {
@@ -78,8 +78,9 @@ public class changeLeaveSteps {
     @Given("there is leave titled {string} with start date set to day {int}, month {int}, year {int}, and end date set to day {int}, month {int}, year {int}, in the employees with id {string} list of activities")
     public void there_is_leave_titled_with_start_date_set_to_day_month_year_and_end_date_set_to_day_month_year_in_the_employees_list_of_activities( String leaveTitle, Integer startDay, Integer startMonth, Integer startYear, Integer endDay,
             Integer endMonth, Integer endYear, String employeeID) throws Exception {
-        GregorianCalendar start = projectPlanner.dateServer.createDate(startYear, startMonth, startDay);
-        GregorianCalendar end = projectPlanner.dateServer.createDate(endYear, endMonth, endDay);
+
+        CustomCalendar start = new CustomCalendar(startYear, startMonth, startDay);
+        CustomCalendar end = new CustomCalendar(endYear, endMonth, endDay);
         User employee = projectPlanner.getUser(employeeID);
         employee.createLeave(start, end, leaveTitle);
         Leave leave = employee.getLeave(leaveTitle);
@@ -91,8 +92,8 @@ public class changeLeaveSteps {
             Integer endMonth, Integer endYear) throws Exception {
 
         User employee = projectPlanner.getUser(employeeID);
-        GregorianCalendar start = projectPlanner.dateServer.createDate(startYear, startMonth, startDay);
-        GregorianCalendar end = projectPlanner.dateServer.createDate(endYear, endMonth, endDay);
+        CustomCalendar start = new CustomCalendar(startYear, startMonth, startDay);
+        CustomCalendar end = new CustomCalendar(endYear, endMonth, endDay);
         Leave leave = employee.getLeave(leaveTitle);
         try {
             leave.changeDates(start, end);
@@ -109,19 +110,20 @@ public class changeLeaveSteps {
 
         User employee = projectPlanner.getUser(employeeID);
         Leave leave = employee.getLeave(leaveTitle);
-        GregorianCalendar start = projectPlanner.dateServer.createDate(startYear, startMonth, startDay);
-        GregorianCalendar end = projectPlanner.dateServer.createDate(endYear, endMonth, endDay);
+        CustomCalendar start = new CustomCalendar(startYear, startMonth, startDay);
+        CustomCalendar end = new CustomCalendar(endYear, endMonth, endDay);
         assertTrue(leave.getStartTime().equals(start) && leave.getEndTime().equals(end));
     }
+    
 
     @Then("the leave titled {string} is changed to start date set to day {int}, month {int}, year {int}, and end date set to day {int}, month {int}, year {int} in the employee with id {string} list of activities")
     public void the_leave_titled_is_changed_to_start_date_set_to_day_month_year_and_end_date_set_to_day_month_year_in_the_employee_with_id_list_of_activities(
             String leaveTitle, Integer startDay, Integer startMonth, Integer startYear,
             Integer endDay, Integer endMonth, Integer endYear, String employeeID) throws Exception {
 
-        GregorianCalendar start = projectPlanner.dateServer.createDate(startYear, startMonth, startDay);
-        GregorianCalendar end = projectPlanner.dateServer.createDate(endYear, endMonth, endDay);
-            
+        CustomCalendar start = new CustomCalendar(startYear, startMonth, startDay);
+        CustomCalendar end = new CustomCalendar(endYear, endMonth, endDay);
+
         try {
             Leave leave = projectPlanner.getUser(employeeID).getLeave(leaveTitle);
             assertTrue(leave.getEndTime().equals(end) && leave.getStartTime().equals(start));
@@ -129,4 +131,5 @@ public class changeLeaveSteps {
             ErrorMessageHolder.setErrorMessage(e.getMessage());
         }
     }
+    
 }

@@ -16,7 +16,7 @@ public class Project {
     // Project variables
     private String title;
     private String id;
-    private GregorianCalendar startDate;
+    private CustomCalendar startDate;
     private User projectLeader;
 
     protected Project(String title, ProjectPlanner projectPlanner) {
@@ -86,7 +86,7 @@ public class Project {
         }
         maxIdInUse++;
 
-        return String.valueOf(projectPlanner.dateServer.getYear()) + "-" + String.valueOf(maxIdInUse);
+        return String.valueOf(projectPlanner.dateServer.getDate().getYear()) + "-" + String.valueOf(maxIdInUse);
 
     }
 
@@ -107,7 +107,7 @@ public class Project {
 
     protected void setStartDate(int year, int month, int day) throws Exception {
         if (isProjectLeaderLoggedIn()) {
-            startDate = projectPlanner.dateServer.createDate(year, month, day);
+            startDate = new CustomCalendar(year, month, day);
         } else {
             throw new Exception("Project leader login is required");
         }
@@ -131,7 +131,7 @@ public class Project {
         return title;
     }
 
-    protected GregorianCalendar getStartDate() {
+    protected CustomCalendar getStartDate() {
         return startDate;
     }
 

@@ -33,8 +33,8 @@ public class registerTime {
             Project project = projectPlanner.getProject(projectId);
             Activity activity = project.getActivity(activityTitle);
             user.registerWork(
-                    projectPlanner.dateServer.createTimestamp(yearStart, monthStart, dateStart, hourStart, minuteStart),
-                    projectPlanner.dateServer.createTimestamp(yearEnd, monthEnd, dateEnd, hourEnd, minuteEnd),
+                    new CustomCalendar(yearStart, monthStart, dateStart, hourStart, minuteStart),
+                    new CustomCalendar(yearEnd, monthEnd, dateEnd, hourEnd, minuteEnd),
                     activity);
         } catch (Exception e) {
             ErrorMessageHolder.setErrorMessage(e.getMessage());
@@ -87,10 +87,10 @@ public class registerTime {
         boolean found = false;
         for (Work work : user.getWorkRegistrations()) {
             if (work.getActivity().equals(activity)) {
-                GregorianCalendar startTimeCheck = new GregorianCalendar(yearStart, monthStart, dateStart, hourStart,
+                CustomCalendar startTimeCheck = new CustomCalendar(yearStart, monthStart, dateStart, hourStart,
                         minuteStart);
                 if (work.getStartTime().equals(startTimeCheck)) {
-                    GregorianCalendar endTimeCheck = new GregorianCalendar(yearEnd, monthEnd, dateEnd, hourEnd,
+                    CustomCalendar endTimeCheck = new CustomCalendar(yearEnd, monthEnd, dateEnd, hourEnd,
                             minuteEnd);
                     if (work.getEndTime().equals(endTimeCheck)) {
                         found = true;
@@ -105,3 +105,4 @@ public class registerTime {
     // Frederik End
 
 }
+

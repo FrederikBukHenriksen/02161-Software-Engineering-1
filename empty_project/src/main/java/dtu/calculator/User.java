@@ -23,7 +23,7 @@ public abstract class User {
         this.projectPlanner = projectPlanner;
     }
 
-    protected void registerWork(GregorianCalendar startTime, GregorianCalendar endTime, Activity activity)
+    protected void registerWork(CustomCalendar startTime, CustomCalendar endTime, Activity activity)
             throws Exception {
         if (this instanceof Administrator) {
             throw new Exception("Not allowed for administrator user");
@@ -128,7 +128,7 @@ public abstract class User {
         throw new Exception("Leave does not exist");
     }
 
-    public void createLeave(GregorianCalendar startDate, GregorianCalendar endDate, String leaveTitle) {
+    public void createLeave(CustomCalendar startDate, CustomCalendar endDate, String leaveTitle) {
         registrations.add(new Leave(startDate, endDate, projectPlanner,leaveTitle));
     }
 
