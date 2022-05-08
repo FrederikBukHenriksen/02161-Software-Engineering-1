@@ -24,7 +24,7 @@ public class deleteEmployeeSteps {
     public void the_employee_is_removed_from_the_list(String userInitials) {
         try {
             User user = projectPlanner.getUser(userInitials);
-            projectPlanner.removeEmployee(user);
+            projectPlanner.deleteEmployee(user);
         } catch (Exception e) {
             ErrorMessageHolder.setErrorMessage(e.getMessage());
         }

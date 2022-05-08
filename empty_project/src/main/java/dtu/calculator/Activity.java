@@ -6,26 +6,26 @@ import java.util.GregorianCalendar;
 public class Activity {
 
     // Contained
-    Project project;
+    protected Project project;
 
     // Containers
-    ArrayList<User> activityEmployees = new ArrayList<>();
+    private ArrayList<User> activityUsers = new ArrayList<>();
 
     // Class variables
     private String title;
-    int budgetedTime;
-    String startTime;
-    String endTime;
-    double activityEstimate;
+    private int budgetedTime;
+    private GregorianCalendar startTime;
+    private GregorianCalendar endTime;
+    private double activityEstimate;
 
-    public Activity(String title, Project project) {
+    protected Activity(String title, Project project) {
         this.title = title;
         this.project = project;
     }
 
     // Create or add functions
 
-    public void addUserToActivity(User user) throws Exception {
+    protected void addUserToActivity(User user) throws Exception {
         if (project.isProjectLeaderLoggedIn()) {
             if (user instanceof Administrator) {
                 throw new Exception("Not allowed for administrator user");
@@ -37,7 +37,7 @@ public class Activity {
             if (getEmployees().contains(user)) {
                 throw new Exception("User is already in the activity");
             }
-            activityEmployees.add(user);
+            activityUsers.add(user);
         } else {
             throw new Exception("Project leader login is required");
         }
@@ -45,61 +45,76 @@ public class Activity {
 
     // Remove or delete functions
 
-    public void removeEmployee(User user) throws Exception {
+    protected void removeEmployeeFromActivity(User user) throws Exception {
         if (!getEmployees().contains(user)) {
             throw new Exception("User is not in the activity");
         }
         if (!project.isProjectLeaderLoggedIn()) {
             throw new Exception("Project leader login is required");
         }
-        activityEmployees.remove(user);
+        activityUsers.remove(user);
     }
 
     // Check and help functions
 
     // Set functions
 
-    public void setStartDate(Integer Year, Integer Week) {
-        if (project.isProjectLeaderLoggedIn()) {
-            startTime = Year + "-" + Week;
-        } else {
-            ErrorMessageHolder.setErrorMessage("Project leader login is required");
-        }
-
+    protected void setTitle(String title) {
+        this.title = title;
     }
 
-    public void setActivityEstimate(double time) {
+    protected void setStartDate(int year, int week) throws Exception {
+        if (!project.isProjectLeaderLoggedIn()) {
+            throw new Exception("Project leader login is required");
+        }
+        GregorianCalendar calendar = new GregorianCalendar();
+        calendar.set(GregorianCalendar.WEEK_OF_YEAR, 18);
+        calendar.set(GregorianCalendar.YEAR, 2022);
+        startTime = calendar;
+    }
+
+    protected void setActivityEstimate(double time) {
         activityEstimate = time;
     }
 
-    public void setEndDate(Integer Year, Integer Week) { // TODO: Mangler code coverage.  
-        if (project.isProjectLeaderLoggedIn()) {
-            endTime = Year + "-" + Week;
-        } else {
-            ErrorMessageHolder.setErrorMessage("Project leader login is required");
+    public void setBudgetedTime(int budgetedTime) {
+        this.budgetedTime = budgetedTime;
+    }
+
+    protected void setEndDate(int Year, int Week) throws Exception {
+        if (!project.isProjectLeaderLoggedIn()) {
+            throw new Exception("Project leader login is required");
         }
+        GregorianCalendar calendar = new GregorianCalendar();
+        calendar.set(GregorianCalendar.WEEK_OF_YEAR, 18);
+        calendar.set(GregorianCalendar.YEAR, 2022);
+        endTime = calendar;
     }
 
     // Get functions
 
-    public String getTitle() {
+    protected String getTitle() {
         return title;
     }
 
-    public String getStartDate() {
+    protected GregorianCalendar getStartDate() {
         return startTime;
     }
 
-    public ArrayList<User> getEmployees() {
-        return activityEmployees;
+    protected GregorianCalendar getEndDate() {
+        return endTime;
     }
 
-    public double getActivityEstimate() {
+    protected ArrayList<User> getEmployees() {
+        return activityUsers;
+    }
+
+    protected double getActivityEstimate() {
         return activityEstimate;
     }
 
-    // JUNIT Helpfunctions
-    public void cucumberAddEmployeeToActivity(User employee) {
-        activityEmployees.add(employee);
+    protected int getBudgetedTime() {
+        return budgetedTime;
     }
+
 }

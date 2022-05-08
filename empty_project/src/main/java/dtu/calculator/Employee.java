@@ -29,7 +29,7 @@ public class Employee extends User {
             // TODO: lav tid evaluering.
             public int compare(Activity a1, Activity a2) {
 
-                return a1.startTime.compareTo(a2.startTime);
+                return a1.getStartDate().compareTo(a2.getStartDate());
                 // return a1.getTitle().compareTo(a2.getTitle());
             }
         });

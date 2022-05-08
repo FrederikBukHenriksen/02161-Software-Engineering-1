@@ -35,7 +35,7 @@ public class checkEmployeeActivity {
         User employee2 = projectPlanner.getUser(employeeID2);
         projectPlanner.cucumberCreateProject("project");
         Project project = projectPlanner.getProject("2022-1");
-        project.CucumberCreateActivity("lav en Activity");
+        project.createActivity("lav en Activity");
         Activity activity = project.getActivity("lav en Activity");
         activity.cucumberAddEmployeeToActivity(employee2);
         assertTrue(employee2.getActivities().stream().anyMatch(act -> act.getTitle().equals("lav en Activity")));

@@ -9,7 +9,7 @@ public class main {
         MainController controller = new MainController();
         try {
             controller.projectPlanner.logIn("HUBE", "PW1234");
-            controller.projectPlanner.addEmployee("FRED");
+            controller.projectPlanner.createEmployee("FRED");
             controller.projectPlanner.createProject("Programmeringsprojekt");
             Project project = controller.projectPlanner.getProject("2022-1");
 

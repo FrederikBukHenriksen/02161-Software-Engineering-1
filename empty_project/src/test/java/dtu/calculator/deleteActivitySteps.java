@@ -21,7 +21,7 @@ public class deleteActivitySteps {
         Project project = projectPlanner.getProject(projectId);
         try {
             Activity activity = project.getActivity(activityTitle);
-            project.removeActivity(activity);
+            project.deleteActivity(activity);
         } catch (Exception e) {
             ErrorMessageHolder.setErrorMessage(e.getMessage());
         }
@@ -30,7 +30,7 @@ public class deleteActivitySteps {
     @Given("JUNIT add activity {string} to the project {string}")
     public void junit_add_activity_to_the_project(String activityTitle, String projectId) throws Exception {
         Project project = projectPlanner.getProject(projectId);
-        project.CucumberCreateActivity(activityTitle);
+        project.createActivity(activityTitle);
 
     }
 

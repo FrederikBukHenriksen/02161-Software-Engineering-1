@@ -23,7 +23,7 @@ public class addEmployeeSteps {
     @Given("create employee {string}")
     public void create_employee(String userInitials) throws Exception {
         try {
-            projectPlanner.addEmployee(userInitials);
+            projectPlanner.createEmployee(userInitials);
         } catch (Exception e) {
             ErrorMessageHolder.setErrorMessage(e.getMessage());
         }

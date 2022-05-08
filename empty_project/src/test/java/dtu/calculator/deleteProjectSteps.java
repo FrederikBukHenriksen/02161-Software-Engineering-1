@@ -20,7 +20,7 @@ public class deleteProjectSteps {
     @When("delete project {string} from projectplanner")
     public void delete_the_project(String id) {
         try {
-            projectPlanner.removeProject(projectPlanner.getProject(id));
+            projectPlanner.deleteProject(projectPlanner.getProject(id));
         } catch (Exception e) {
             ErrorMessageHolder.setErrorMessage(e.getMessage());
         }

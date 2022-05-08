@@ -205,7 +205,7 @@ public class MainController {
         if (projectPlanner.isAdministratorLoggedIn()) {
             menu = new ArrayList<>(
                     Arrays.asList(createProject, selectProject, addEmployee, removeEmployee, logOut));
-        } else if (projectPlanner.employeeLoggedIn()) {
+        } else if (projectPlanner.isEmployeeLoggedIn()) {
             menu = new ArrayList<>(
                     Arrays.asList(selectProject, registerTime, activityCalendar, logOut));
 
@@ -244,7 +244,7 @@ public class MainController {
             int choice = Integer.parseInt(consoleInputWithBack());
 
             Project chosenProject = projectPlanner.getProjects().get(choice - 1);
-            projectPlanner.removeProject(chosenProject);
+            projectPlanner.deleteProject(chosenProject);
 
             menuStackPush(mainMenu);
         } catch (BackException e) {
@@ -256,7 +256,7 @@ public class MainController {
         view.menu(addEmployee, new ArrayList<>(Arrays.asList("Employee initials: ")));
         try {
             String input = consoleInputWithBack();
-            projectPlanner.addEmployee(input);
+            projectPlanner.createEmployee(input);
             menuStackPush(mainMenu);
         } catch (BackException e) {
         } catch (Exception e) {
@@ -275,7 +275,7 @@ public class MainController {
             int choice = Integer.parseInt(consoleInputWithBack());
 
             User chosenEmployee = projectPlanner.getEmployees().get(choice - 1);
-            projectPlanner.removeEmployee(chosenEmployee);
+            projectPlanner.deleteEmployee(chosenEmployee);
 
             menuStackPush(mainMenu);
         } catch (BackException e) {
@@ -342,7 +342,7 @@ public class MainController {
             int choice = Integer.parseInt(consoleInputWithBack());
 
             User chosenEmployee = selectedActivity.getEmployees().get(choice - 1);
-            selectedActivity.removeEmployee(chosenEmployee);
+            selectedActivity.removeEmployeeFromActivity(chosenEmployee);
             menuStackPush(selectActivity);
         } catch (BackException e) {
         } catch (Exception e) {
