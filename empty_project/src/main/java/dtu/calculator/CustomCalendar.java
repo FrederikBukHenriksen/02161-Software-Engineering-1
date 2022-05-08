@@ -78,4 +78,9 @@ public class CustomCalendar extends GregorianCalendar {
         return calendar.get(GregorianCalendar.WEEK_OF_YEAR);
     }
 
+    protected int getMinute() {
+        return calendar.get(GregorianCalendar.MINUTE);
+
+    }
+
 }

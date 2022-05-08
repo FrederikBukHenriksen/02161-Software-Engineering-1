@@ -4,8 +4,8 @@ import java.util.GregorianCalendar;
 
 public abstract class Registration {
 
-    CustomCalendar startTime;
-    CustomCalendar endTime;
+    private CustomCalendar startTime;
+    private CustomCalendar endTime;
 
     protected ProjectPlanner projectPlanner;
 
