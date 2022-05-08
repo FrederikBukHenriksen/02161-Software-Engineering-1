@@ -5,6 +5,7 @@ import java.util.GregorianCalendar;
 public class Leave extends Registration {
     String title;
 
+
     public Leave(CustomCalendar startTime, CustomCalendar endTime, ProjectPlanner projectPlanner, String title) throws Exception {
         super(startTime, endTime, projectPlanner);
         this.title = title;

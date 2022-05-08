@@ -10,6 +10,7 @@ public class CustomCalendar extends GregorianCalendar {
         setYear(year);
         setWeek(week);
         setTimeZero();
+
     }
 
     protected CustomCalendar(int year, int month, int date) {
@@ -17,6 +18,7 @@ public class CustomCalendar extends GregorianCalendar {
         setMonth(month);
         setDate(date);
         setTimeZero();
+
 
     }
 
@@ -57,6 +59,7 @@ public class CustomCalendar extends GregorianCalendar {
     protected void setMinute(int minute) {
         calendar.set(GregorianCalendar.MINUTE, minute);
     }
+
 
     protected void setTimeZero() {
         calendar.set(calendar.HOUR_OF_DAY, 0);

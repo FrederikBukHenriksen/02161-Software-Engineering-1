@@ -21,7 +21,9 @@ Feature: add/change vacation or course
         When the employee with id "ANDR" changes the leave with title "vacation" start date to day 2, month 1, year 2022 and the end date to day 2, month 2, year 2022
         Then the employee with id "ANDR" leave with title "vacation" is changed to start date set to day 2, month 1, year 2022 and end date set to day 2, month 2, year 2022
 
+
     Scenario: change leave to illegal date
         Given there is leave titled "vacation" with start date set to day 1, month 1, year 2022, and end date set to day 1, month 2, year 2022, in the employees with id "ANDR" list of activities
         When the employee with id "ANDR" changes the leave with title "vacation" start date to day 31, month 6, year 2022 and the end date to day 1, month 1, year 2022
         Then the error message "Start time must be before end time" is given
+
