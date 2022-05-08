@@ -43,6 +43,28 @@ public class ChangeActivityWeekSteps {
         assertEquals(week, activity.getStartDate().getWeek());
     }
 
+    @When("set end week in activity {string} in project {string} to {int} and year {int}")
+    public void set_end_week_in_activity_in_project_to_and_year(String activityTitle, String projectId, Integer week,
+            Integer year) {
+        try {
+            Project project = projectPlanner.getProject(projectId);
+            Activity activity = project.getActivity(activityTitle);
+            activity.setEndDate(year, week);
+        } catch (Exception e) {
+            ErrorMessageHolder.setErrorMessage(e.getMessage());
+        }
+    }
+
+    @Then("activity {string} in project {string} ends week {int} and in year {int}")
+    public void activity_in_project_ends_week_and_in_year(String activityTitle, String projectId, Integer week,
+            Integer year) throws Exception {
+        CustomCalendar cal = new CustomCalendar(year, week);
+        Project project = projectPlanner.getProject(projectId);
+        Activity activity = project.getActivity(activityTitle);
+        assertEquals(year, activity.getEndDate().getYear());
+        assertEquals(week, activity.getEndDate().getWeek());
+    }
+
     // Frederik End
 
     // @When("the project {string} activity's with title {string} start date is set

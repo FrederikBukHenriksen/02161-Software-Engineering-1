@@ -57,10 +57,10 @@ public class registerTime {
         boolean found = false;
         for (Work work : user.getWorkRegistrations()) {
             if (work.getActivity().equals(activity)) {
-                GregorianCalendar startTimeCheck = new GregorianCalendar(yearStart, monthStart, dateStart, hourStart,
+                CustomCalendar startTimeCheck = new CustomCalendar(yearStart, monthStart, dateStart, hourStart,
                         minuteStart);
                 if (work.getStartTime().equals(startTimeCheck)) {
-                    GregorianCalendar endTimeCheck = new GregorianCalendar(yearEnd, monthEnd, dateEnd, hourEnd,
+                    CustomCalendar endTimeCheck = new CustomCalendar(yearEnd, monthEnd, dateEnd, hourEnd,
                             minuteEnd);
                     if (work.getEndTime().equals(endTimeCheck)) {
                         found = true;

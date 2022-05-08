@@ -7,7 +7,7 @@ public class CustomCalendar extends GregorianCalendar {
     GregorianCalendar calendar = new GregorianCalendar();
 
     public CustomCalendar(int year, int week) throws Exception {
-        calendar.set(GregorianCalendar.YEAR, year);
+        setYear(year);
         setWeek(week);
     }
 
@@ -39,10 +39,10 @@ public class CustomCalendar extends GregorianCalendar {
         calendar.set(GregorianCalendar.WEEK_OF_YEAR, week);
     }
 
-    public void setMonth(int month) {
+    public void setMonth(int month) throws Exception {
         int maxWeekNumber = calendar.getActualMaximum(GregorianCalendar.MONTH) + 1;
         if (month > maxWeekNumber) {
-
+            throw new Exception("month not valid");
         }
 
     }
