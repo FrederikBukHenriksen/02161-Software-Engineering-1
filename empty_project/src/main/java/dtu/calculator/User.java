@@ -6,30 +6,26 @@ import java.util.GregorianCalendar;
 public abstract class User {
 
     // Contained
-    ProjectPlanner projectPlanner;
+    protected ProjectPlanner projectPlanner;
+
+    // Contains
+
+    protected ArrayList<Registration> registrations = new ArrayList<>();
 
     protected String initials;
     protected String password;
 
-    protected ArrayList<Registration> registrations = new ArrayList<>();
-    ArrayList<Activity> activities = new ArrayList<>();
-
-    public User(String initials, String password) {
-        this.initials = initials;
-        this.password = password;
-    }
-
-    public User(String initials, ProjectPlanner projectPlanner) {
+    protected User(String initials, ProjectPlanner projectPlanner) {
         this.initials = initials;
         this.password = generatePassword();
         this.projectPlanner = projectPlanner;
     }
 
-    public GregorianCalendar createTimestamp(int year, int month, int date, int hour, int minute) {
+    protected GregorianCalendar createTimestamp(int year, int month, int date, int hour, int minute) {
         return new GregorianCalendar(year, month, date, hour, minute);
     }
 
-    public void registerWork(GregorianCalendar startTime, GregorianCalendar endTime, Activity activity)
+    protected void registerWork(GregorianCalendar startTime, GregorianCalendar endTime, Activity activity)
             throws Exception {
         if (this instanceof Administrator) {
             throw new Exception("Not allowed for administrator user");
@@ -40,15 +36,16 @@ public abstract class User {
         registrations.add(new Work(startTime, endTime, activity));
     }
 
-    public void setPassword(String password) {
+    protected void setPassword(String password) {
         password = password;
     }
 
-    public String generatePassword() {
+    private String generatePassword() {
+        // TODO: Some kind of passwordgeneration algorithem is required.
         return "01234";
     }
 
-    public ArrayList<Work> getWorkRegistrations() {
+    protected ArrayList<Work> getWorkRegistrations() {
         ArrayList<Work> list = new ArrayList<>();
         for (Registration registration : getRegistrations()) {
             if (registration instanceof Work) {
@@ -58,15 +55,15 @@ public abstract class User {
         return list;
     }
 
-    public String getInitials() {
+    protected String getInitials() {
         return initials;
     }
 
-    public String getPassword() {
+    protected String getPassword() {
         return password;
     }
 
-    public ArrayList<Registration> getRegistrations() {
+    protected ArrayList<Registration> getRegistrations() {
         return registrations;
     }
 
