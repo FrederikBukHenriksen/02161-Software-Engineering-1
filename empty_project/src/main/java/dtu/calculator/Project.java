@@ -52,7 +52,6 @@ public class Project {
         } else {
             throw new Exception("Project leader login is required");
         }
-
     }
 
     // Remove or delete functions

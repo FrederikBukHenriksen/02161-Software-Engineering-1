@@ -32,8 +32,10 @@ public class registerTime {
             User user = projectPlanner.getUser(userInitials);
             Project project = projectPlanner.getProject(projectId);
             Activity activity = project.getActivity(activityTitle);
-            user.registerWork(user.createTimestamp(yearStart, monthStart, dateStart, hourStart, minuteStart),
-                    user.createTimestamp(yearEnd, monthEnd, dateEnd, hourEnd, minuteEnd), activity);
+            user.registerWork(
+                    projectPlanner.dateServer.createTimestamp(yearStart, monthStart, dateStart, hourStart, minuteStart),
+                    projectPlanner.dateServer.createTimestamp(yearEnd, monthEnd, dateEnd, hourEnd, minuteEnd),
+                    activity);
         } catch (Exception e) {
             ErrorMessageHolder.setErrorMessage(e.getMessage());
         }

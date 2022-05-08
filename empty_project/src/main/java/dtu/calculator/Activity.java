@@ -2,6 +2,7 @@ package dtu.calculator;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import dtu.calculator.CustomCalendar;
 
 public class Activity {
 
@@ -14,8 +15,8 @@ public class Activity {
     // Class variables
     private String title;
     private int budgetedTime;
-    private GregorianCalendar startTime;
-    private GregorianCalendar endTime;
+    private CustomCalendar startTime;
+    private CustomCalendar endTime;
     private double activityEstimate;
 
     protected Activity(String title, Project project) {
@@ -67,10 +68,7 @@ public class Activity {
         if (!project.isProjectLeaderLoggedIn()) {
             throw new Exception("Project leader login is required");
         }
-        GregorianCalendar calendar = new GregorianCalendar();
-        calendar.set(GregorianCalendar.WEEK_OF_YEAR, 18);
-        calendar.set(GregorianCalendar.YEAR, 2022);
-        startTime = calendar;
+        startTime = new CustomCalendar(year, week);
     }
 
     protected void setActivityEstimate(double time) {
@@ -81,14 +79,11 @@ public class Activity {
         this.budgetedTime = budgetedTime;
     }
 
-    protected void setEndDate(int Year, int Week) throws Exception {
+    protected void setEndDate(int year, int week) throws Exception {
         if (!project.isProjectLeaderLoggedIn()) {
             throw new Exception("Project leader login is required");
         }
-        GregorianCalendar calendar = new GregorianCalendar();
-        calendar.set(GregorianCalendar.WEEK_OF_YEAR, 18);
-        calendar.set(GregorianCalendar.YEAR, 2022);
-        endTime = calendar;
+        endTime = new CustomCalendar(year, week);
     }
 
     // Get functions
@@ -97,12 +92,16 @@ public class Activity {
         return title;
     }
 
-    protected GregorianCalendar getStartDate() {
+    protected CustomCalendar getStartDate() {
         return startTime;
     }
 
-    protected GregorianCalendar getEndDate() {
+    protected CustomCalendar getEndDate() {
         return endTime;
+    }
+
+    protected int getWeek(GregorianCalendar gregorianCalendar) {
+        return gregorianCalendar.get(gregorianCalendar.WEEK_OF_YEAR);
     }
 
     protected ArrayList<User> getEmployees() {

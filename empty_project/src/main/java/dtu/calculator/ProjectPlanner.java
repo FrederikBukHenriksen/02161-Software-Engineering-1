@@ -10,7 +10,7 @@ public class ProjectPlanner {
 
     // Class variables
     public User loggedIn;
-    public DateServer dateServer = new DateServer(2022, 1, 1);
+    public DateServer dateServer = new DateServer();
 
     public ProjectPlanner() {
         users.add(new Administrator("HUBE", "PW1234", this)); // Create the administrator profile.

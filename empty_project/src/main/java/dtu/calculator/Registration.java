@@ -1,32 +1,32 @@
 package dtu.calculator;
 
-import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-/**
- * Registration
- */
-
-public class Registration {
+public abstract class Registration {
 
     GregorianCalendar startTime;
     GregorianCalendar endTime;
 
-    public Registration(GregorianCalendar startTime, GregorianCalendar endTime) {
+    protected Registration(GregorianCalendar startTime, GregorianCalendar endTime) {
         this.startTime = startTime;
         this.endTime = endTime;
     }
 
-    // public long getHourDifference(GregorianCalendar startTime, GregorianCalendar
-    // endTime) {
-    // return endTime.getTimeInMillis() - startTime.getTimeInMillis();
-    // }
+    // Set functions
+    public void setEndTime(GregorianCalendar endTime) {
+        this.endTime = endTime;
+    }
 
-    public GregorianCalendar getStartTime() {
+    public void setStartTime(GregorianCalendar startTime) {
+        this.startTime = startTime;
+    }
+
+    // Get functions
+    protected GregorianCalendar getStartTime() {
         return startTime;
     }
 
-    public GregorianCalendar getEndTime() {
+    protected GregorianCalendar getEndTime() {
         return endTime;
     }
 
