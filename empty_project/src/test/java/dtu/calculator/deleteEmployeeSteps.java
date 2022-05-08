@@ -2,29 +2,33 @@ package dtu.calculator;
 
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-public class deleteProjectSteps {
+import java.util.Optional;
+
+import dtu.calculator.ProjectPlanner;
+
+public class deleteEmployeeSteps {
 
     final public CommonSteps commonSteps = new CommonSteps();
     final public ProjectPlanner projectPlanner;
 
-    public deleteProjectSteps(CommonSteps commonSteps) {
+    public deleteEmployeeSteps(CommonSteps commonSteps) {
         projectPlanner = commonSteps.projectPlanner;
     }
 
-    @When("delete project {string} from projectplanner")
-    public void delete_the_project(String id) {
+    @When("delete user {string} from the projectplanner")
+    public void the_employee_is_removed_from_the_list(String userInitials) {
         try {
-            projectPlanner.deleteProject(projectPlanner.getProject(id));
+            User user = projectPlanner.getUser(userInitials);
+            projectPlanner.deleteEmployee(user);
         } catch (Exception e) {
             ErrorMessageHolder.setErrorMessage(e.getMessage());
         }
-    }
 
+    }
 
 }

@@ -3,25 +3,19 @@ package dtu.calculator;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-import dtu.calculator.controller.MainController;
-
 public class main {
 
-    public static void main(String[] args) {
-        DateServer.setDate(2022, 1, 1);
-
+    private static void main(String[] args) {
         MainController controller = new MainController();
         try {
-            ProjectPlanner.logIn("HUBE", "PW1234");
-            controller.projectPlanner.addEmployee("FRED");
-            controller.projectPlanner.addEmployee("GUST");
-
+            controller.projectPlanner.logIn("HUBE", "PW1234");
+            controller.projectPlanner.createEmployee("FRED");
             controller.projectPlanner.createProject("Programmeringsprojekt");
-            Project project = controller.projectPlanner.getProject("Programmeringsprojekt");
+            Project project = controller.projectPlanner.getProject("2022-1");
 
-            project.setProjectLeader(ProjectPlanner.getUser("FRED"));
-            ProjectPlanner.logIn("FRED", "01234");
-            project.addEmployeeToProject(ProjectPlanner.getUser("FRED"));
+            project.setProjectLeader(controller.projectPlanner.getUser("FRED"));
+            controller.projectPlanner.logIn("FRED", "01234");
+            project.addUserToProject(controller.projectPlanner.getUser("FRED"));
 
             project.createActivity("activity_1");
             project.createActivity("activity_2");
@@ -32,10 +26,10 @@ public class main {
             project.getActivity("activity_2").setStartDate(2021, 1);
             project.getActivity("activity_2").setEndDate(2022, 8);
 
-            project.getActivity("activity_1")
-                    .addEmployeeToActivity(ProjectPlanner.getUser("FRED"));
-            project.getActivity("activity_2")
-                    .addEmployeeToActivity(ProjectPlanner.getUser("FRED"));
+            project.getActivity("Analyse")
+                    .addUserToActivity(controller.projectPlanner.getUser("FRED"));
+            project.getActivity("Rapport")
+                    .addUserToActivity(controller.projectPlanner.getUser("FRED"));
         } catch (Exception e) {
         }
         controller.show();

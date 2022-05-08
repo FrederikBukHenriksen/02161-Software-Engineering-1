@@ -1,57 +1,85 @@
-#Skrevet af Gustav Grøn Risager Clausen
-Feature: Change an activity' date
+Feature: Change an activity's date
     Description: Change the start/end date of an activty
     Actors: project leader
 
-    # Main Scenario:
+    Background: Change activity date
+        Given the date is year 2022 month 1 day 1
+        And login user "HUBE"
+        And create a project titled "Software Development"
+        And create employee "FRED"
+        And create employee "ANDR"
+        And create employee "GUST"
+        And create employee "NIKL"
+
+        And set user "FRED" as project leader for project "2022-1"
+        And login user "FRED"
+        And add user "ANDR" to project "2022-1"
+        And add user "GUST" to project "2022-1"
+        And create activity "Analysis" for project "2022-1"
+        And add user "ANDR" to activity "Analysis" in project "2022-1"
+
+
     Scenario: Set start date of an activity
-        Given that there exists a project titled "Software Development" with id "2022-1"
-        And that the project leader with id "fred" for the project "2022-1" is logged in
-        And the project with id "2022-1" contains an activity titled "Analysis"
-        When the project "2022-1" activity's with title "Analysis" start date is set to week 1 and year 2022
-        Then the project "2022-1" activity's with title "Analysis" date is set to week 1 and year 2022
+        Given login user "FRED"
+        When set start week in activity "Analysis" in project "2022-1" to 19 and year 2022
+        Then activity "Analysis" in project "2022-1" starts week 19 and in year 2022
 
-    # Scenario: Change start date of an activity
-    #     Given that the project leader is logged in
-    #     And there is a project titled "Software Development" with id "2022-1"
-    #     And the project contains an activity titled "Analysis"
-    #     And the start date of activity is set to week 1,  and year 2022
-    #     When the activity's new start date is set to week 2, and year 2022
-    #     Then the activity's start date is set to week 2, and year 2022
-
-    # Alternative use-case(s)
-    Scenario: Set start date of an activity when the project leader is not logged in
-        Given that there exists a project titled "Software Development" with id "2022-1"
-        And that the project leader for the project "2022-1" isn't logged in
-        And the project with id "2022-1" contains an activity titled "Analysis"
-        When the project "2022-1" activity's with title "Analysis" start date is set to week 1 and year 2022
+    Scenario: Set start date of an activity out of week number
+        Given login user "FRED"
+        When set start week in activity "Analysis" in project "2022-1" to 54 and year 2022
+        Then the error message "Week number not valid" is given
+    
+    Scenario: Set start date of an activity not possible as administrator
+        Given login user "HUBE"
+        When set start week in activity "Analysis" in project "2022-1" to 19 and year 2022
         Then the error message "Project leader login is required" is given
 
-# Scenario: Change start date of an activity when the project leader is not logged in
-#     Given that the project leader is not logged in
-#     And there is a project titled "Software Development" with id "2022-1"
-#     And the project contains an activity titled "Analysis"
-#     And the activity's start date is set to week 1, and year 2022
-#     When the activity's new start date is set to week 2, and year 2022
-#     Then the error message "activity leader login is required" is given
+    Scenario: Set start date of an activity not possible as activity user
+        Given login user "ANDR"
+        When set start week in activity "Analysis" in project "2022-1" to 19 and year 2022
+        Then the error message "Project leader login is required" is given
 
+    Scenario: Set start date of an activity not possible as project user
+        Given login user "GUST"
+        When set start week in activity "Analysis" in project "2022-1" to 19 and year 2022
+        Then the error message "Project leader login is required" is given
 
+    Scenario: Set start date of an activity not possible as project planner user
+        Given login user "NIKL"
+        When set start week in activity "Analysis" in project "2022-1" to 19 and year 2022
+        Then the error message "Project leader login is required" is given
 
+    Scenario: Set start date of an activity out of week number
+        Given login user "FRED"
+        When set start week in activity "Analysis" in project "2022-1" to 0 and year 2022
+        Then the error message "Week number not valid" is given
+  
+    Scenario: Set end date of an activity
+        Given login user "FRED"
+        When set end week in activity "Analysis" in project "2022-1" to 19 and year 2022
+        Then activity "Analysis" in project "2022-1" ends week 19 and in year 2022
 
+    Scenario: Set end date of an activity not possible as administrator
+        Given login user "HUBE"
+        When set end week in activity "Analysis" in project "2022-1" to 19 and year 2022
+        Then the error message "Project leader login is required" is given
 
+    Scenario: Set end date of an activity not possible as activity user
+        Given login user "ANDR"
+        When set end week in activity "Analysis" in project "2022-1" to 19 and year 2022
+        Then the error message "Project leader login is required" is given
 
-# Feature: Change activity start and/or end date
-#     Description: An administrator changes the start or end date of a activity
-#     Actors: administrator
+    Scenario: Set end date of an activity not possible as project user
+        Given login user "GUST"
+        When set end week in activity "Analysis" in project "2022-1" to 19 and year 2022
+        Then the error message "Project leader login is required" is given
 
-#     # Main Scenario:
-#     Scenario: Change start date
-#         Given An administrator has seleted <activity_name>
-#         When administrator press <change_start_date>
-#         Then the <activity_state_date> should be changed to the selected
+    Scenario: Set end date of an activity not possible as project user
+        Given login user "NIKL"
+        When set end week in activity "Analysis" in project "2022-1" to 19 and year 2022
+        Then the error message "Project leader login is required" is given
 
-#     # Alternative Scenario
-#     Scenario: Change end date
-#         Given An administrator has seleted <activity_name>
-#         When administrator press <change_end_date>
-#         Then the <activity_end_date> should be changed to the selected
+    Scenario: Set start date of an activity out of week number
+        Given login user "FRED"
+        When set end week in activity "Analysis" in project "2022-1" to 19 and year 2022
+        Then activity "Analysis" in project "2022-1" ends week 19 and in year 2022

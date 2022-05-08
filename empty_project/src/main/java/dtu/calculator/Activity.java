@@ -2,107 +2,122 @@ package dtu.calculator;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import dtu.calculator.CustomCalendar;
 
 public class Activity {
 
-    private String title;
-    int budgetedTime;
-    String startTime;
-    String endTime;
-    double activityEstimate;
-    private Project project;
-    ArrayList<User> activityEmployees = new ArrayList<>();
+    // Contained
+    protected Project project;
 
-    public Activity(String title, Project project) {
+    // Containers
+    private ArrayList<User> activityUsers = new ArrayList<>();
+
+    // Class variables
+    private String title;
+    private int budgetedTime;
+    private CustomCalendar startTime;
+    private CustomCalendar endTime;
+    private double activityEstimate;
+
+    protected Activity(String title, Project project) {
         this.title = title;
         this.project = project;
     }
 
-    public void addEmployeeToActivity(User employee) {
-        boolean found = false;
-        for (User user : activityEmployees) {
-            if (user.getInitials().equalsIgnoreCase(employee.getInitials())) {
-                found = true;
-                user.activities.add(this);
-                ErrorMessageHolder.setErrorMessage("The employee is already assigned to the activity");
+    // Create or add functions
+
+    protected void addUserToActivity(User user) throws Exception {
+        if (project.isProjectLeaderLoggedIn()) {
+            if (user instanceof Administrator) {
+                throw new Exception("Not allowed for administrator user");
             }
-        }
-        if (project.projectLeaderLoggedIn()) {
-            if (found == false) {
-                activityEmployees.add(employee);
+            // Check if user is already assigned to the activity
+            if (!project.getProjectEmployees().contains(user)) {
+                throw new Exception("User is not in the project");
             }
+            if (getEmployees().contains(user)) {
+                throw new Exception("User is already in the activity");
+            }
+            activityUsers.add(user);
         } else {
-            ErrorMessageHolder.setErrorMessage("Project leader login is required");
+            throw new Exception("Project leader login is required");
         }
     }
 
-    public void cucumberAddEmployeeToActivity(User employee) {
-        employee.activities.add(this);
-        activityEmployees.add(employee);
+    // Remove or delete functions
+
+    protected void removeEmployeeFromActivity(User user) throws Exception {
+        if (!getEmployees().contains(user)) {
+            throw new Exception("User is not in the activity");
+        }
+        if (!project.isProjectLeaderLoggedIn()) {
+            throw new Exception("Project leader login is required");
+        }
+        activityUsers.remove(user);
     }
 
-    public void removeEmployee(User employee) {
-        activityEmployees.remove(employee);
+    // Check and help functions
+
+    // Set functions
+
+    protected void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getTitle() {
+    protected void setStartDate(int year, int week) throws Exception {
+        if (!project.isProjectLeaderLoggedIn()) {
+            throw new Exception("Project leader login is required");
+        }
+        startTime = new CustomCalendar(year, week);
+    }
+
+    protected void setActivityEstimate(double time) {
+        if(getEmployees().contains(project.projectPlanner.getLoggedIn())) {
+            activityEstimate = time;
+        } else {
+            throw new IllegalArgumentException("The user is not assigned this Activity");
+        }
+    }
+
+    public void setBudgetedTime(int budgetedTime) {
+        this.budgetedTime = budgetedTime;
+    }
+
+    protected void setEndDate(int year, int week) throws Exception {
+        if (!project.isProjectLeaderLoggedIn()) {
+            throw new Exception("Project leader login is required");
+        }
+        endTime = new CustomCalendar(year, week);
+    }
+
+    // Get functions
+
+    protected String getTitle() {
         return title;
     }
 
-    public void setStartDate(Integer Year, Integer Week) {
-        if (project.projectLeaderLoggedIn()) {
-            startTime = Year + "-" + Week;
-        } else {
-            ErrorMessageHolder.setErrorMessage("Project leader login is required");
-        }
-
-    }
-
-    public void setEndDate(Integer Year, Integer Week) { // TODO: Mangler code coverage.
-        if (project.projectLeaderLoggedIn()) {
-            endTime = Year + "-" + Week;
-        } else {
-            ErrorMessageHolder.setErrorMessage("Project leader login is required");
-        }
-    }
-
-    // public void setEndDate(Integer Year, Integer Week) {
-    // if(Week <54){
-    // if (project.projectLeaderLoggedIn()) {
-    // if(Integer.valueOf(startTime.substring(0, 4))<=Year &&
-    // Integer.valueOf(startTime.substring(startTime.length()-2,
-    // startTime.length()))<=Week){
-    // endTime = Year + "-" + Week;
-    // } else{
-    // ErrorMessageHolder.setErrorMessage("The end date is before the start date");
-    // }
-    // } else {
-    // ErrorMessageHolder.setErrorMessage("Project leader login is required");
-    // }
-    // } else{
-    // ErrorMessageHolder.setErrorMessage("Week number is out of range");
-    // }
-    // }
-
-    public String getStartDate() {
+    protected CustomCalendar getStartDate() {
         return startTime;
-
     }
 
-    public String getEndDate() {
+    protected CustomCalendar getEndDate() {
         return endTime;
     }
 
-    public ArrayList<User> getEmployees() {
-        return activityEmployees;
+    protected int getWeek(GregorianCalendar gregorianCalendar) {
+        return gregorianCalendar.get(gregorianCalendar.WEEK_OF_YEAR);
     }
 
-    public void setActivityEstimate(double time) {
-        activityEstimate = time;
+    protected ArrayList<User> getEmployees() {
+        return activityUsers;
     }
 
-    public double getActivityEstimate() {
+    protected double getActivityEstimate() {
         return activityEstimate;
+    }
+
+    protected int getBudgetedTime() {
+        return budgetedTime;
     }
 
 }

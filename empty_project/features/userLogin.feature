@@ -1,23 +1,21 @@
-#Skrevet af Andreas Brunn
-Feature: Employee login
-    Description: The user can login and logout from the site
-    Actor: Employee
+Feature: User login
+    Description: User login
+    Actor: Administrator and employee
 
+    Background: Background user login
+        Given the date is year 2022 month 1 day 1
+        And login user "HUBE"
+        And create employee "ANDR"
 
-    #Main use-case(s)
-    Scenario: Employee login
-        Given the employee with id "andr"
-        And the employee is not logged in
-        And the employee's password is "01234"
-        When the employee with id "andr" uses password "01234"
-        Then the employee with id "andr" is logged in
+    Scenario: User login
+        When login user "andr" with password "01234"
+        Then user "andr" is logged in
 
-
-    #Alternative use-case(s)
-    Scenario: Employee has the wrong password
-        Given the employee with id "andr"
-        And the employee is not logged in
-        And the employee's password is "01234"
-        When the employee with id "andr" uses password "54321Bruun"
+    Scenario: User login wrong password
+        When login user "andr" with password "kodeord"
         Then the error message "Wrong id or password" is given
-        And the employee with id "andr" is not logged in
+        Then user "andr" is not logged in
+
+    Scenario: User login initials for a user which does not exist
+        When login user "fred" with password "01234"
+        Then the error message "Wrong id or password" is given
