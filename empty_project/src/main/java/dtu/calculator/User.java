@@ -70,7 +70,10 @@ public abstract class User {
         return registrations;
     }
 
-    public ArrayList<Activity> getActivities() {
+    public ArrayList<Activity> getActivities() throws Exception {
+        if(activities.isEmpty()){
+            throw new Exception("No activities assigned");
+        }
         return activities;
     }
 
@@ -78,6 +81,9 @@ public abstract class User {
         ArrayList<String> activitiesTitle = new ArrayList<>();
         for (Activity activity : projectPlanner.getUser(otherUserInitials).getActivities()) {
             activitiesTitle.add(activity.getTitle());
+        }
+        if (activitiesTitle.isEmpty()) {
+            throw new Exception("No activities assigned");
         }
         return activitiesTitle;
     }

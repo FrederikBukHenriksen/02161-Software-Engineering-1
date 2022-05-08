@@ -3,6 +3,13 @@ Feature: add/change vacation or course
     Description: allow an employee to add or change planned vacation or course
     Actors: employee
 
+
+    Background:
+        Given the date is year 2022 month 1 day 1
+        And login user "HUBE"
+        And create employee "ANDR"
+        And login user "ANDR"
+
     # Main use-case(s)
     Scenario: add vacation/course
         Given that an employee with id "andr" is logged in

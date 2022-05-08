@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 
-public class CommonSteps {
+public class CommonSteps{
 
     final public ProjectPlanner projectPlanner = new ProjectPlanner();
 
