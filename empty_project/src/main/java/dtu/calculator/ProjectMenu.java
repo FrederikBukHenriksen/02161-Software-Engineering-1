@@ -176,4 +176,30 @@ public class ProjectMenu {
 
     }
 
+    public void getProjectInfo() {
+        ArrayList<String> UIProjectInfo = new ArrayList<>();
+
+        UIProjectInfo.add("Project title: " + mainController.selectedProject.getTitle());
+        UIProjectInfo.add("Project start date: " + mainController.selectedProject.getStartDate());
+        // UIProjectInfo.add("Project end date: " + project.getEndDate());
+        UIProjectInfo.add("Project leader: " + mainController.selectedProject.getProjectleader().getInitials());
+        UIProjectInfo.add("Project employees: ");
+        for (User employee : mainController.selectedProject.getProjectEmployees()) {
+            UIProjectInfo.add(employee.getInitials());
+        }
+        UIProjectInfo.add("Project activities: ");
+        for (Activity activity : mainController.selectedProject.getActivities()) {
+            UIProjectInfo.add(activity.getTitle());
+        }
+        mainController.view.menu(mainController.getProjectInfo, UIProjectInfo);
+
+        try {
+            int choice = Integer.parseInt(mainController.consoleInputWithBack());
+            mainController.menuStackPush(selectProject);
+        } catch (BackException e) {
+        } catch (Exception e) {
+            mainController.view.error(e);
+        }
+    }
+
 }

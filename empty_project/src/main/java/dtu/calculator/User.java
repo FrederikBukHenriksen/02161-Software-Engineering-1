@@ -75,18 +75,17 @@ public abstract class User {
                     }
                 }
             }
-
         }
-        // Comparator in order to sort by startTime.
-        Collections.sort(employeeActivities, new Comparator<Activity>() {
-            @Override
-            // TODO: lav tid evaluering.
-            public int compare(Activity a1, Activity a2) {
+        // // Comparator in order to sort by startTime.
+        // Collections.sort(employeeActivities, new Comparator<Activity>() {
+        // @Override
+        // // TODO: lav tid evaluering.
+        // public int compare(Activity a1, Activity a2) {
 
-                return a1.getStartDate().compareTo(a2.getStartDate());
-                // return a1.getTitle().compareTo(a2.getTitle());
-            }
-        });
+        // return a1.getStartDate().compareTo(a2.getStartDate());
+        // // return a1.getTitle().compareTo(a2.getTitle());
+        // }
+        // });
         return employeeActivities;
     }
 

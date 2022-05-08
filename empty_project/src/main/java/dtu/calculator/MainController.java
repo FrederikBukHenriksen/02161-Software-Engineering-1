@@ -448,7 +448,6 @@ public class MainController {
             switch (choice) {
                 case 1:
                     listOfActivities = ((Employee) projectPlanner.getLoggedIn()).getEmployeeActivities();
-
                     break;
                 case 2:
                     for (Project project : projectPlanner.getProjects()) {
