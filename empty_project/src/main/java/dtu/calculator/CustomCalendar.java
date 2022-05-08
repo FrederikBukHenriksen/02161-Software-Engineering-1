@@ -70,6 +70,11 @@ public class CustomCalendar extends GregorianCalendar {
         return calendar;
     }
 
+    protected String getDateString(){
+        return "year: "+getYear() + " WEEK: " + getWeek();
+    }
+
+
     protected int getYear() {
         return calendar.get(GregorianCalendar.YEAR);
     }

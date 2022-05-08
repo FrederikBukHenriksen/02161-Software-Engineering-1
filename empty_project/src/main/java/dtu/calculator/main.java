@@ -11,6 +11,8 @@ public class main {
             controller.projectPlanner.logIn("HUBE", "PW1234");
             controller.projectPlanner.createEmployee("FRED");
             controller.projectPlanner.createEmployee("GUST");
+            controller.projectPlanner.createEmployee("PAUL");
+
 
             controller.projectPlanner.createProject("Programmeringsprojekt");
             Project project = controller.projectPlanner.getProject("2022-1");

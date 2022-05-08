@@ -91,6 +91,7 @@ public class MainController {
                 break;
             case addEmployeeToActivity:
                 addEmployeeToActivity();
+                break;
             case changeActivityStart:
                 changeActivityStart();
                 break;
@@ -359,7 +360,6 @@ public class MainController {
         try {
             view.menuEnumerate(removeEmployeeFromActivity, UIListOfActivityEmployees);
             int choice = Integer.parseInt(consoleInputWithBack());
-
             User chosenEmployee = selectedActivity.getEmployees().get(choice - 1);
             selectedActivity.removeEmployeeFromActivity(chosenEmployee);
             menuStackPush(selectActivity);
@@ -383,12 +383,12 @@ public class MainController {
     }
 
     public  void changeActivityStart() {
-        view.menu(changeActivityStart, new ArrayList<>(Arrays.asList("Type acitivity start week: ")));
+        view.menu(changeActivityStart, new ArrayList<>(Arrays.asList("Type acitivity start year: ")));
         try {
-            int choice_week = Integer.parseInt(consoleInputWithBack());
-            view.menu(changeActivityStart,
-                    new ArrayList<>(Arrays.asList("Type acitivity start Year: ", "type activity start week: ")));
             int choice_year = Integer.parseInt(consoleInputWithBack());
+            view.menu(changeActivityStart,
+                    new ArrayList<>(Arrays.asList("Type acitivity start year: " + String.valueOf(choice_year), "type activity start week: ")));
+            int choice_week = Integer.parseInt(consoleInputWithBack());
             selectedActivity.setStartDate(choice_year, choice_week);
             menuStackPush(selectActivity);
         } catch (BackException e) {
@@ -398,11 +398,11 @@ public class MainController {
     }
 
     public  void changeActivityEnd() {
-        view.menu(changeActivityStart, new ArrayList<>(Arrays.asList("Type acitivity end week: ")));
+        view.menu(changeActivityStart, new ArrayList<>(Arrays.asList("Type acitivity end year: ")));
         try {
             int choice_year = Integer.parseInt(consoleInputWithBack());
             view.menu(changeActivityStart,
-                    new ArrayList<>(Arrays.asList("Type acitivity start Year: ", "type activity start week: ")));
+                    new ArrayList<>(Arrays.asList("Type acitivity end year: " +  String.valueOf(choice_year), "type activity end week: ")));
             int choice_week = Integer.parseInt(consoleInputWithBack());
             selectedActivity.setEndDate(choice_year, choice_week);
             menuStackPush(selectActivity);
@@ -418,22 +418,28 @@ public class MainController {
         ArrayList<Activity> employeeActivities = ((Employee) projectPlanner.getLoggedIn()).getEmployeeActivities();
             ArrayList<String> UIlistOfActivities = new ArrayList<>();
             for (Activity activity : employeeActivities) {
-                UIlistOfActivities.add(activity.getTitle());
+                String endDate = "N/A";
+                try {
+                    endDate = activity.getEndDate().getDateString();
+                } catch (Exception e){
+                    endDate = "N/A";
+                }
+
+                String startDate = "N/A";
+                try {
+                    startDate = activity.getStartDate().getDateString();
+                } catch (Exception e){
+                    startDate = "N/A";
+                }
+
+                UIlistOfActivities.add(
+                    activity.getTitle() + ", Start: " + startDate + ", end: " + endDate + ", estimate: " + String.valueOf(activity.getActivityEstimate()));
             }
             view.menuEnumerate(activityCalendar, UIlistOfActivities);
             String input = consoleInput();
             menuStackPush(mainMenu);
 
-        // ArrayList<String> UIlistOfActivities = new ArrayList<>();
-        // for (Activity activity : employeeActivities) {
-        //     UIlistOfActivities.add(
-        //             activity.getTitle() + ", Start: " + activity.getStartDate() + ", end: " + activity.getEndDate());
-        // }
-
-        // view.menuEnumerate(activityCalendar, UIlistOfActivities);
-        // String input = consoleInput();
-        // menuStackPush(mainMenu);
-    }
+         }
     
 
     public void registerTime() {
