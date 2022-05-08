@@ -25,7 +25,7 @@ Feature: Check an employees activities
     Scenario: Check the activities assigned to another employee who has no activities
         Given login user "NIKA"
         And user "ANDR" is not assigned any activity
-        Then the error message "No activities assigned" is given
+        Then the number of activities for user "ANDR" is 0
     
     Scenario: Check the activities assigned to another employee who does not exist
         Given login user "NIKA"

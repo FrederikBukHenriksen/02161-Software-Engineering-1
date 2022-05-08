@@ -23,7 +23,7 @@ public class CommonSteps{
 
     @Given("that there exists a project titled {string} with id {string}")
     public void that_there_exists_a_project_titled_with_id(String title, String id) throws Exception {
-        projectPlanner.cucumberCreateProject(title);
+        projectPlanner.createProject(title);
         assertTrue(
                 projectPlanner.getProjects().stream()
                         .anyMatch(project -> project.getTitle().equalsIgnoreCase(title) && project

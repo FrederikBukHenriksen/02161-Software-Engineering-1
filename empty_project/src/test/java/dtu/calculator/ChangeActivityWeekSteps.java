@@ -11,23 +11,23 @@ public class ChangeActivityWeekSteps {
     ProjectPlanner projectPlanner;
 
 
-    @When("the project {string} activity's with title {string} start date is set to week {int} and year {int}")
-    public void the_project_activity_s_with_title_start_date_is_set_to_week_and_year(String Project_id,
-            String Activity_id,
-            Integer year, Integer week) throws Exception {
+    // @When("the project {string} activity's with title {string} start date is set to week {int} and year {int}")
+    // public void the_project_activity_s_with_title_start_date_is_set_to_week_and_year(String Project_id,
+    //         String Activity_id,
+    //         Integer year, Integer week) throws Exception {
 
-        projectPlanner.getProject(Project_id).getActivity(Activity_id).setStartDate(year,
-                week);
-    }
+    //     projectPlanner.getProject(Project_id).getActivity(Activity_id).setStartDate(year,
+    //             week);
+    // }
 
-    @Then("the project {string} activity's with title {string} date is set to week {int} and year {int}")
-    public void the_project_activity_s_with_title_date_is_set_to_week_and_year(String Project_id,
-            String Activity_id,
-            Integer year, Integer week) throws Exception {
-        assertTrue(projectPlanner.getProject(Project_id).getActivity(Activity_id).getStartDate()
-                .equalsIgnoreCase("" + year + "-" + week));
+    // @Then("the project {string} activity's with title {string} date is set to week {int} and year {int}")
+    // public void the_project_activity_s_with_title_date_is_set_to_week_and_year(String Project_id,
+    //         String Activity_id,
+    //         Integer year, Integer week) throws Exception {
+    //     assertTrue(projectPlanner.getProject(Project_id).getActivity(Activity_id).getStartDate()
+    //             .equalsIgnoreCase("" + year + "-" + week));
 
-    }
+    // }
 }
 
 // public ChangeActivityWeekSteps(projectPlanner projectplanner) {

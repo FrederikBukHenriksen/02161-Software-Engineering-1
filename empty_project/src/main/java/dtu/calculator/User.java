@@ -1,6 +1,8 @@
 package dtu.calculator;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.GregorianCalendar;
 
 public abstract class User {
@@ -37,7 +39,7 @@ public abstract class User {
     }
 
     protected void setPassword(String password) {
-        password = password;
+        this.password = password;
     }
 
     private String generatePassword() {
@@ -67,22 +69,76 @@ public abstract class User {
         return registrations;
     }
 
-    public ArrayList<Activity> getActivities() throws Exception {
-        if(activities.isEmpty()){
-            throw new Exception("No activities assigned");
+
+    public ArrayList<Activity> getEmployeeActivities() {
+        ArrayList<Activity> employeeActivities = new ArrayList<>();
+        for (Project project : projectPlanner.getProjects()) {
+            for (Activity activity : project.getActivities()) {
+                for (User employee : activity.getEmployees()) {
+                    if (this.equals(employee)) {
+                        employeeActivities.add(activity);
+                    }
+                }
+            }
+
         }
-        return activities;
+        // Comparator in order to sort by startTime.
+        Collections.sort(employeeActivities, new Comparator<Activity>() {
+            @Override
+            // TODO: lav tid evaluering.
+            public int compare(Activity a1, Activity a2) {
+
+                return a1.getStartDate().compareTo(a2.getStartDate());
+                // return a1.getTitle().compareTo(a2.getTitle());
+            }
+        });
+        return employeeActivities;
+    }
+    
+        public ArrayList<String> getLeaveTitles() throws Exception {
+        ArrayList<String> leaveTitles = new ArrayList<>();
+
+        for (Registration registration : registrations) {
+            if (registration instanceof Leave) {
+                leaveTitles.add(((Leave) registration).getLeaveTitle());
+            }
+        }
+        if(leaveTitles.isEmpty()) {
+            throw new Exception("No leaves");
+        }
+        return leaveTitles;
     }
 
-    public ArrayList<String> getActivitiesFromOtherEmployee(String otherUserInitials) throws Exception {
-        ArrayList<String> activitiesTitle = new ArrayList<>();
-        for (Activity activity : projectPlanner.getUser(otherUserInitials).getActivities()) {
-            activitiesTitle.add(activity.getTitle());
+
+        public ArrayList<Leave> getLeaveAll() throws Exception {
+        ArrayList<Leave> leave = new ArrayList<>();
+        for (Registration registration : registrations) {
+            if (registration instanceof Leave) {
+                leave.add(((Leave) registration));
+            }
         }
-        if (activitiesTitle.isEmpty()) {
-            throw new Exception("No activities assigned");
+        if(leave.isEmpty()) {
+            throw new Exception("No leaves");
         }
-        return activitiesTitle;
+        return leave;
     }
 
+    public Leave getLeave(String leaveTitle) throws Exception {
+        for (Registration registration : registrations) {
+            if (registration instanceof Leave) {
+                if (((Leave) registration).getLeaveTitle().equals(leaveTitle)) {
+                    return (Leave) registration;
+                }
+            }
+        }
+        throw new Exception("Leave does not exist");
+    }
+
+
+    public void createLeave(GregorianCalendar startDate, GregorianCalendar endDate, String leaveTitle) {
+        registrations.add(new Leave(startDate, endDate, leaveTitle));
+    }
+
+
+    
 }
