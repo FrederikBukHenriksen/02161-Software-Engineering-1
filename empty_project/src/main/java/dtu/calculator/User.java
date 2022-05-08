@@ -128,7 +128,7 @@ public abstract class User {
         throw new Exception("Leave does not exist");
     }
 
-    public void createLeave(CustomCalendar startDate, CustomCalendar endDate, String leaveTitle) {
+    public void createLeave(CustomCalendar startDate, CustomCalendar endDate, String leaveTitle) throws Exception {
         registrations.add(new Leave(startDate, endDate, projectPlanner,leaveTitle));
     }
 
