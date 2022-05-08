@@ -487,12 +487,12 @@ public class MainController {
             User user = (User) projectPlanner.getLoggedIn();
 
             ArrayList<Integer> startCal = setDateWithTime(registerTime + " start time");
-            CustomCalendar startTime = new CustomCalendar(startCal.get(0), startCal.get(1), startCal.get(2),
-                    startCal.get(3), startCal.get(4));
+            CustomCalendar startTime = new CustomCalendar(startCal.get(4), startCal.get(3), startCal.get(2),
+                    startCal.get(1), startCal.get(0));
 
             ArrayList<Integer> endCal = setDateWithTime(registerTime + " end time");
-            CustomCalendar endTime = new CustomCalendar(endCal.get(0), endCal.get(1), endCal.get(2), endCal.get(3),
-                    endCal.get(4));
+            CustomCalendar endTime = new CustomCalendar(endCal.get(4), endCal.get(3), endCal.get(2), endCal.get(1),
+                    endCal.get(0));
             user.registerWork(startTime, endTime, chosenActivity);
 
             ((Employee) projectPlanner.getLoggedIn()).registerWork(startTime, endTime, chosenActivity);
