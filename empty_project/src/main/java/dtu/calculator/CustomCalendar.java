@@ -39,6 +39,10 @@ public class CustomCalendar extends GregorianCalendar {
         calendar.set(GregorianCalendar.WEEK_OF_YEAR, week);
     }
 
+    protected GregorianCalendar getDate() {
+		return calendar;
+	}
+
     public void setMonth(int month) {
         int maxWeekNumber = calendar.getActualMaximum(GregorianCalendar.MONTH) + 1;
         if (month > maxWeekNumber) {

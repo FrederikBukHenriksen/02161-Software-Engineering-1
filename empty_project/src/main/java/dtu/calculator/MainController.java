@@ -444,18 +444,16 @@ public class MainController {
             choice = Integer.parseInt(consoleInputWithBack());
             Activity chosenActivity = listOfActivities.get(choice - 1);
 
+            User user = (User) projectPlanner.getLoggedIn();
+
             ArrayList<Integer> startCal = setDateWithTime(registerTime + " start time");
-            GregorianCalendar startTime = Work.calendarWork(startCal.get(4),
-                    startCal.get(
-                            3),
-                    startCal.get(2), startCal.get(1), startCal.get(0));
-                    
+            CustomCalendar startTime = new CustomCalendar(startCal.get(0), startCal.get(1), startCal.get(2),
+                    startCal.get(3), startCal.get(4));
+
             ArrayList<Integer> endCal = setDateWithTime(registerTime + " end time");
-            GregorianCalendar endTime = Work
-                    .calendarWork(startCal.get(4),
-                            startCal.get(
-                                    3),
-                            startCal.get(2), startCal.get(1), startCal.get(0));
+            CustomCalendar endTime = new CustomCalendar(endCal.get(0), endCal.get(1), endCal.get(2), endCal.get(3),
+                    endCal.get(4));
+            user.registerWork(startTime, endTime, chosenActivity);
 
             ((Employee) projectPlanner.getLoggedIn()).registerWork(startTime, endTime, chosenActivity);
         } catch (BackException e) {
@@ -464,6 +462,7 @@ public class MainController {
         }
 
     }
+    
 
     public void logOut() {
         projectPlanner.logOut();
