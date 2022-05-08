@@ -51,29 +51,7 @@ public class changeLeaveSteps {
                 }
     }
 
-    @Given("the employee with id {string} has a leave titled {string} with start date set to day {int}, month {int}, year {int}, and end date set to day {int}, month {int}, year {int} in their list of activities")
-    public void the_employee_with_id_has_a_leave_titled_with_start_date_set_to_day_month_year_and_end_date_set_to_day_month_year_in_their_list_of_activities(
-            String employeeID, String leaveTitle, Integer startDay, Integer startMonth, Integer startYear,
-            Integer endDay, Integer endMonth, Integer endYear){
-
-        CustomCalendar start = new CustomCalendar(startYear, startMonth, startDay);
-        CustomCalendar end = new CustomCalendar(endYear, endMonth, endDay);
-        try {
-            assertTrue(projectPlanner.getUser(employeeID).getLeaveAll().stream().anyMatch(leave -> leave.getEndTime().equals(end) && leave.getStartTime().equals(start) && leave.getLeaveTitle().equals(leaveTitle)));
-        } catch (Exception e) {
-            ErrorMessageHolder.setErrorMessage(e.getMessage());
-        }
-        
-            
-    }
-
-    @When("the employee with id {string} changes the leave titled {string} start date to day {int}, month {int}, year {int}, and end date to day {int}, month {int}, year {int}")
-    public void the_employee_with_id_changes_the_leave_titled_start_date_to_day_month_year_and_end_date_to_day_month_year(
-            String employeeID, String leaveTitle, Integer startDay, Integer startMonth, Integer startYear,
-            Integer endDay, Integer endMonth, Integer endYear) throws Exception {
-
-        assertTrue(projectPlanner.getUser(employeeID).getLeaveTitles().stream().anyMatch(act -> act.equals(leaveTitle)));
-    }
+    
 
     @Given("there is leave titled {string} with start date set to day {int}, month {int}, year {int}, and end date set to day {int}, month {int}, year {int}, in the employees with id {string} list of activities")
     public void there_is_leave_titled_with_start_date_set_to_day_month_year_and_end_date_set_to_day_month_year_in_the_employees_list_of_activities( String leaveTitle, Integer startDay, Integer startMonth, Integer startYear, Integer endDay,
@@ -114,20 +92,6 @@ public class changeLeaveSteps {
     }
     
 
-    @Then("the leave titled {string} is changed to start date set to day {int}, month {int}, year {int}, and end date set to day {int}, month {int}, year {int} in the employee with id {string} list of activities")
-    public void the_leave_titled_is_changed_to_start_date_set_to_day_month_year_and_end_date_set_to_day_month_year_in_the_employee_with_id_list_of_activities(
-            String leaveTitle, Integer startDay, Integer startMonth, Integer startYear,
-            Integer endDay, Integer endMonth, Integer endYear, String employeeID) throws Exception {
-
-        CustomCalendar start = new CustomCalendar(startYear, startMonth, startDay);
-        CustomCalendar end = new CustomCalendar(endYear, endMonth, endDay);
-
-        try {
-            Leave leave = projectPlanner.getUser(employeeID).getLeave(leaveTitle);
-            assertTrue(leave.getEndTime().equals(end) && leave.getStartTime().equals(start));
-        } catch (Exception e) {
-            ErrorMessageHolder.setErrorMessage(e.getMessage());
-        }
-    }
+    
     
 }
