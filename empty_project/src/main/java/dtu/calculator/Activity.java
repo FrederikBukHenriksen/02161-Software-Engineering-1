@@ -72,7 +72,11 @@ public class Activity {
     }
 
     protected void setActivityEstimate(double time) {
-        activityEstimate = time;
+        if(getEmployees().contains(project.projectPlanner.getLoggedIn())) {
+            activityEstimate = time;
+        } else {
+            throw new IllegalArgumentException("The user is not assigned this Activity");
+        }
     }
 
     public void setBudgetedTime(int budgetedTime) {
