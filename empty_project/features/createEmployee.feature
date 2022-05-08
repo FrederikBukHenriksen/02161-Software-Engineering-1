@@ -20,13 +20,12 @@ Feature: Create employee
 
     Scenario: Create employee with more than four initials
         When create employee "ANDREAS"
-        Then the error message "Initials must be four letters" is given
+        Then the error message "Initials must be four letters or less" is given
         And user "ANDREAS" is not in the projectplanner
 
     Scenario: Create employee with less than four initials
         When create employee "AND"
-        Then the error message "Initials must be four letters" is given
-        And user "AND" is not in the projectplanner
+        Then user "AND" is in the projectplanner
 
     Scenario: Create employee when the administrator is not logged in
         Given login user "FRED"

@@ -107,7 +107,7 @@ public class Project {
 
     protected void setStartDate(int year, int month, int day) throws Exception {
         if (isProjectLeaderLoggedIn()) {
-            startDate = new GregorianCalendar(year, month, day);
+            startDate = projectPlanner.dateServer.createDate(year, month, day);
         } else {
             throw new Exception("Project leader login is required");
         }

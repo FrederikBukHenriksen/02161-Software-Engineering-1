@@ -28,14 +28,14 @@ public class ProjectPlanner {
 
     protected void createEmployee(String initials) throws Exception {
         if (isAdministratorLoggedIn()) {
-            if (initials.length() == 4) {
+            if (initials.length() <= 4) {
                 if (uniqueUserInitials(initials)) {
                     users.add(new Employee(initials.toUpperCase(), this));
                 } else {
                     throw new Exception("Initals are already in use");
                 }
             } else {
-                throw new Exception("Initials must be four letters");
+                throw new Exception("Initials must be four letters or less");
             }
         } else {
             throw new Exception("Administrator login is required");

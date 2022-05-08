@@ -449,6 +449,7 @@ public class MainController {
                     startCal.get(
                             3),
                     startCal.get(2), startCal.get(1), startCal.get(0));
+                    
             ArrayList<Integer> endCal = setDateWithTime(registerTime + " end time");
             GregorianCalendar endTime = Work
                     .calendarWork(startCal.get(4),

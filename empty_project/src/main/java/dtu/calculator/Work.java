@@ -7,17 +7,17 @@ public class Work extends Registration {
 
     Activity activity;
 
-    public Work(GregorianCalendar startTime, GregorianCalendar endTime, Activity activity) {
-        super(startTime, endTime);
+    public Work(GregorianCalendar startTime, GregorianCalendar endTime, ProjectPlanner projectPlanner, Activity activity) {
+        super(startTime, endTime, projectPlanner);
         this.activity = activity;
     }
 
-    public static GregorianCalendar calendarWork(int year, int month, int dayOfMonth, int hourOfDay, int minute)
+    public GregorianCalendar calendarWork(int year, int month, int dayOfMonth, int hourOfDay, int minute)
             throws Exception {
         if (minute % 30 != 0) {
             throw new Exception("Only half-hour resolution allowed for work registration");
         }
-        GregorianCalendar calendar = new GregorianCalendar(year, month, dayOfMonth, hourOfDay, minute);
+        GregorianCalendar calendar = projectPlanner.dateServer.createTimestamp(year, month, dayOfMonth, hourOfDay, minute);
         return calendar;
     }
 

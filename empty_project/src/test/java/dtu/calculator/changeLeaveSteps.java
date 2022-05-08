@@ -25,7 +25,7 @@ public class changeLeaveSteps {
             Integer endMonth, Integer endYear) {
         GregorianCalendar start = projectPlanner.dateServer.createDate(startYear, startMonth, startDay);
         GregorianCalendar end = projectPlanner.dateServer.createDate(endYear, endMonth, endDay);
-        Leave leave = new Leave(start, end, leaveTitle);
+        Leave leave = new Leave(start, end, projectPlanner,leaveTitle);
         assertTrue(leave.title.equals(leaveTitle));
         assertTrue(leave.getLeaveTitle().equals(leaveTitle) && leave.getEndTime().equals(end) && leave.getStartTime().equals(start));
     }

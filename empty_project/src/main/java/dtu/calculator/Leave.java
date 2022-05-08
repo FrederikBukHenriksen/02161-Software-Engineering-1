@@ -5,8 +5,8 @@ import java.util.GregorianCalendar;
 public class Leave extends Registration {
     String title;
 
-    public Leave(GregorianCalendar startTime, GregorianCalendar endTime, String title) {
-        super(startTime, endTime);
+    public Leave(GregorianCalendar startTime, GregorianCalendar endTime, ProjectPlanner projectPlanner, String title) {
+        super(startTime, endTime, projectPlanner);
         this.title = title;
     }
 
@@ -19,13 +19,6 @@ public class Leave extends Registration {
         this.endTime = endTime;
     }
 
-    public GregorianCalendar getStartTime() {
-        return startTime;
-    }
-
-    public GregorianCalendar getEndTime() {
-        return endTime;
-    }
 
     public String getLeaveTitle(){
         return title;

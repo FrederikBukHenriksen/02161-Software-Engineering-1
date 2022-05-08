@@ -7,9 +7,16 @@ public abstract class Registration {
     GregorianCalendar startTime;
     GregorianCalendar endTime;
 
+<<<<<<< Updated upstream
     protected Registration(GregorianCalendar startTime, GregorianCalendar endTime) {
+=======
+    protected ProjectPlanner projectPlanner;
+
+    public Registration(GregorianCalendar startTime, GregorianCalendar endTime, ProjectPlanner projectPlanner) {
+>>>>>>> Stashed changes
         this.startTime = startTime;
         this.endTime = endTime;
+        this.projectPlanner = projectPlanner;
     }
 
     // Set functions

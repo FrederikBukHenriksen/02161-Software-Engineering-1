@@ -31,7 +31,7 @@ public abstract class User {
         if (!this.equals(projectPlanner.getLoggedIn()) && !activity.project.isProjectLeaderLoggedIn()) {
             throw new Exception("Cannot register work for other users");
         }
-        registrations.add(new Work(startTime, endTime, activity));
+        registrations.add(new Work(startTime, endTime, projectPlanner,activity));
     }
 
     protected void setPassword(String password) {
@@ -129,7 +129,7 @@ public abstract class User {
     }
 
     public void createLeave(GregorianCalendar startDate, GregorianCalendar endDate, String leaveTitle) {
-        registrations.add(new Leave(startDate, endDate, leaveTitle));
+        registrations.add(new Leave(startDate, endDate, projectPlanner,leaveTitle));
     }
 
 }
