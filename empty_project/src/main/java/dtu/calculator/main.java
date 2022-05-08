@@ -5,7 +5,7 @@ import java.util.GregorianCalendar;
 
 public class main {
 
-    private static void main(String[] args) {
+    public static void main(String[] args) {
         MainController controller = new MainController();
         try {
             controller.projectPlanner.logIn("HUBE", "PW1234");

@@ -498,11 +498,18 @@ public class MainController {
     }
     
 
-    public void removeActivity() throws Exception {
+    public void removeActivity() {
         ArrayList<String> UIListOfActivities = new ArrayList<>();
+        try{
         for (Activity activity : projectPlanner.getProject(selectProject).getActivities()) {
             UIListOfActivities.add(activity.getTitle());
         }
+        } catch (Exception e) {
+            view.error(e);
+        }
+
+
+
 
         view.menuEnumerate(deleteProject, UIListOfActivities);
 
