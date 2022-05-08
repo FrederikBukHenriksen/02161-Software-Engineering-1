@@ -16,8 +16,8 @@ public class Leave extends Registration {
         if(startTime.getDate().compareTo(endTime.getDate()) > 0) {
             throw new Exception("Start time must be before end time");
         }
-        this.startTime = startTime;
-        this.endTime = endTime;
+        setStartTime(startTime);
+        setEndTime(endTime);
     }
 
 

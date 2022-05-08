@@ -331,7 +331,7 @@ public class MainController {
 
     }
 
-    public static void addEmployeeToActivity() {
+    public  void addEmployeeToActivity() {
         ArrayList<String> UIListOfProjectEmployees = new ArrayList<>();
         for (User employee : selectedProject.getProjectEmployees()) {
             UIListOfProjectEmployees.add(employee.getInitials());
@@ -351,7 +351,7 @@ public class MainController {
 
     }
 
-    public static void removeEmployeeFromActivity() {
+    public  void removeEmployeeFromActivity() {
         ArrayList<String> UIListOfActivityEmployees = new ArrayList<>();
         for (User employee : selectedActivity.getEmployees()) {
             UIListOfActivityEmployees.add(employee.getInitials());
@@ -382,7 +382,7 @@ public class MainController {
         }
     }
 
-    public static void changeActivityStart() {
+    public  void changeActivityStart() {
         view.menu(changeActivityStart, new ArrayList<>(Arrays.asList("Type acitivity start week: ")));
         try {
             int choice_week = Integer.parseInt(consoleInputWithBack());
@@ -397,7 +397,7 @@ public class MainController {
         }
     }
 
-    public static void changeActivityEnd() {
+    public  void changeActivityEnd() {
         view.menu(changeActivityStart, new ArrayList<>(Arrays.asList("Type acitivity end week: ")));
         try {
             int choice_year = Integer.parseInt(consoleInputWithBack());
@@ -499,26 +499,26 @@ public class MainController {
     }
     
 
-    public static void removeActivity() {
-        // ArrayList<String> UIListOfActivities = new ArrayList<>();
-        // for (Activity activity :
-        // ProjectPlanner.getProject(selectProject).getActivities()) {
-        // UIListOfActivities.add(activity.getTitle());
-        // }
+    public void removeActivity() throws Exception {
+        ArrayList<String> UIListOfActivities = new ArrayList<>();
+        for (Activity activity : projectPlanner.getProject(selectProject).getActivities()) {
+            UIListOfActivities.add(activity.getTitle());
+        }
 
-        // view.menuEnumerate(deleteProject, UIListOfActivities);
+        view.menuEnumerate(deleteProject, UIListOfActivities);
 
         try {
-            MainController.selectedProject.removeActivity(MainController.selectedActivity);
-            MainController.menuStackPush(selectProject);
+            selectedProject.deleteActivity(selectedActivity);
+            menuStackPush(selectProject);
         } catch (Exception e) {
-            MainController.view.error(e);
+            view.error(e);
         }
 
     }
+    
 
-    public static void logOut() {
-        ProjectPlanner.logOut();
+    public  void logOut() {
+        projectPlanner.logOut();
         menuStackClear();
         menuStackPush(logIn);
     }

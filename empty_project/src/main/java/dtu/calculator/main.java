@@ -8,9 +8,9 @@ public class main {
     private static void main(String[] args) {
         MainController controller = new MainController();
         try {
-            ProjectPlanner.logIn("HUBE", "PW1234");
-            controller.projectPlanner.addEmployee("FRED");
-            controller.projectPlanner.addEmployee("GUST");
+            controller.projectPlanner.logIn("HUBE", "PW1234");
+            controller.projectPlanner.createEmployee("FRED");
+            controller.projectPlanner.createEmployee("GUST");
 
             controller.projectPlanner.createProject("Programmeringsprojekt");
             Project project = controller.projectPlanner.getProject("2022-1");
@@ -29,9 +29,9 @@ public class main {
             project.getActivity("activity_2").setEndDate(2022, 8);
 
             project.getActivity("activity_1")
-                    .addEmployeeToActivity(ProjectPlanner.getUser("FRED"));
+                    .addUserToActivity(controller.projectPlanner.getUser("FRED"));
             project.getActivity("activity_2")
-                    .addEmployeeToActivity(ProjectPlanner.getUser("FRED"));
+                    .addUserToActivity(controller.projectPlanner.getUser("FRED"));
         } catch (Exception e) {
         }
         controller.show();

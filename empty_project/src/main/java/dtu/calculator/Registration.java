@@ -10,8 +10,9 @@ public abstract class Registration {
     protected ProjectPlanner projectPlanner;
 
 
-    public Registration(CustomCalendar startTime, CustomCalendar endTime, ProjectPlanner projectPlanner) throws Exception {
-        if(startTime.compareTo(endTime) > 0) {
+    public Registration(CustomCalendar startTime, CustomCalendar endTime, ProjectPlanner projectPlanner)
+            throws Exception {
+        if (startTime.compareTo(endTime) > 0) {
             throw new Exception("Start time must be before end time");
         }
         this.startTime = startTime;
@@ -19,6 +20,13 @@ public abstract class Registration {
         this.projectPlanner = projectPlanner;
     }
 
+    protected void setStartTime(CustomCalendar startTime) {
+        this.startTime = startTime;
+    }
+
+    protected void setEndTime(CustomCalendar endTime) {
+        this.endTime = endTime;
+    }
 
     // Get functions
     protected CustomCalendar getStartTime() {
