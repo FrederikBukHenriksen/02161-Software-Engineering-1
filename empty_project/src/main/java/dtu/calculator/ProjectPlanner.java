@@ -75,15 +75,6 @@ public class ProjectPlanner {
         return true;
     }
 
-    private boolean uniqueProjectTitleAndId(String title, String id) {
-        for (Project project : projects) {
-            if (!project.getTitle().equalsIgnoreCase(title) && project.getId().equals(id)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     protected boolean isAdministratorLoggedIn() {
         return (loggedIn instanceof Administrator);
     }

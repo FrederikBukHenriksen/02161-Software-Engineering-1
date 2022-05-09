@@ -34,10 +34,6 @@ public abstract class User {
         registrations.add(new Work(startTime, endTime, projectPlanner,activity));
     }
 
-    protected void setPassword(String password) {
-        this.password = password;
-    }
-
     private String generatePassword() {
         // TODO: Some kind of passwordgeneration algorithem is required.
         return "01234";

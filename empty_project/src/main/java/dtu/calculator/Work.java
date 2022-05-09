@@ -16,13 +16,6 @@ public class Work extends Registration {
         this.activity = activity;
     }
 
-    public CustomCalendar calendarWork(int year, int month, int dayOfMonth, int hourOfDay, int minute)
-            throws Exception {
-
-        CustomCalendar calendar = new CustomCalendar(year, month, dayOfMonth, hourOfDay, minute);
-        return calendar;
-    }
-
     public Activity getActivity() {
         return activity;
     }
