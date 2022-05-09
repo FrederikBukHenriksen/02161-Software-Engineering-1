@@ -1,8 +1,5 @@
 package dtu.calculator;
 
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
-
 public class main {
 
     public static void main(String[] args) {

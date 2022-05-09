@@ -1,14 +1,10 @@
 package dtu.calculator;
 
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.GregorianCalendar;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 
 public class registerTime {
     final public CommonSteps commonSteps = new CommonSteps();

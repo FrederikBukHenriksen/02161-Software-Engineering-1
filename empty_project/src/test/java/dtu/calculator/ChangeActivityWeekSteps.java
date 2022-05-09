@@ -1,12 +1,7 @@
 package dtu.calculator;
 
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.GregorianCalendar;
-import dtu.calculator.CustomCalendar;
-
-import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
@@ -36,7 +31,7 @@ public class ChangeActivityWeekSteps {
     @Then("activity {string} in project {string} starts week {int} and in year {int}")
     public void activity_in_project_start_week_and_in_year(String activityTitle, String projectId, Integer week,
             Integer year) throws Exception {
-        CustomCalendar cal = new CustomCalendar(year, week);
+
         Project project = projectPlanner.getProject(projectId);
         Activity activity = project.getActivity(activityTitle);
         assertEquals(year, activity.getStartDate().getYear());
@@ -58,7 +53,7 @@ public class ChangeActivityWeekSteps {
     @Then("activity {string} in project {string} ends week {int} and in year {int}")
     public void activity_in_project_ends_week_and_in_year(String activityTitle, String projectId, Integer week,
             Integer year) throws Exception {
-        CustomCalendar cal = new CustomCalendar(year, week);
+
         Project project = projectPlanner.getProject(projectId);
         Activity activity = project.getActivity(activityTitle);
         assertEquals(year, activity.getEndDate().getYear());

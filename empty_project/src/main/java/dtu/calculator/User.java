@@ -1,9 +1,6 @@
 package dtu.calculator;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.GregorianCalendar;
 
 public abstract class User {
 

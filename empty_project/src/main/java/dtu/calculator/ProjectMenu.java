@@ -1,27 +1,7 @@
 package dtu.calculator;
 
 import java.util.ArrayList;
-
-import dtu.calculator.Project;
-import dtu.calculator.ProjectPlanner;
-
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.GregorianCalendar;
-import java.util.Scanner;
-import java.util.Stack;
-
-import dtu.calculator.Activity;
-import dtu.calculator.BackException;
-import dtu.calculator.Employee;
-import dtu.calculator.MainController;
-import dtu.calculator.MainController;
-import dtu.calculator.Project;
-import dtu.calculator.ProjectPlanner;
-import dtu.calculator.User;
-import dtu.calculator.View;
 
 public class ProjectMenu {
 

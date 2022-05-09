@@ -1,7 +1,5 @@
 package dtu.calculator;
 
-import java.util.GregorianCalendar;
-
 public abstract class Registration {
 
     private CustomCalendar startTime;

@@ -1,14 +1,11 @@
 package dtu.calculator;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
-
-import dtu.calculator.CommonSteps;
-
-import java.util.ArrayList;
 
 
 public class addEmployeeSteps {

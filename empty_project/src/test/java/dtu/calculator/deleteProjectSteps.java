@@ -1,11 +1,5 @@
 package dtu.calculator;
 
-import static org.junit.jupiter.api.Assertions.*;
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
-
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 public class deleteProjectSteps {

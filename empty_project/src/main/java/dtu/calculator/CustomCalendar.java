@@ -1,6 +1,5 @@
 package dtu.calculator;
 
-import java.time.Year;
 import java.util.GregorianCalendar;
 
 public class CustomCalendar extends GregorianCalendar {

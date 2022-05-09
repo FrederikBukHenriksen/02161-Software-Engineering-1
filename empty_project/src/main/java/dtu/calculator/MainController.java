@@ -2,13 +2,8 @@ package dtu.calculator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.GregorianCalendar;
 import java.util.Scanner;
 import java.util.Stack;
-
-import org.xml.sax.ErrorHandler;
 
 public class MainController {
 

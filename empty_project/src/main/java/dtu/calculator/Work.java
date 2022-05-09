@@ -1,8 +1,5 @@
 package dtu.calculator;
 
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
-
 public class Work extends Registration {
 
     Activity activity;

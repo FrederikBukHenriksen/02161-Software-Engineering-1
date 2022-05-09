@@ -1,7 +1,5 @@
 package dtu.calculator;
 
-import java.util.GregorianCalendar;
-
 public class DateServer {
 
 	// DATO FASTSÆTTES P.T. ARBITRÆT, MEN BØR HENTES FRA EN SERVER.

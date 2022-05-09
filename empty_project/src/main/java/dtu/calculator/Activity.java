@@ -2,7 +2,6 @@ package dtu.calculator;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
-import dtu.calculator.CustomCalendar;
 
 public class Activity {
 
