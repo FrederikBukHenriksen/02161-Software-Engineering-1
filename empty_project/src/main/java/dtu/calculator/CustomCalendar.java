@@ -49,7 +49,7 @@ public class CustomCalendar extends GregorianCalendar {
 
     protected void setMonth(int month) throws Exception {
         int max = calendar.getActualMaximum(GregorianCalendar.MONTH);
-        if ( month< 1 || month > max) {
+        if ( month< 1 || month > 12) {
             throw new Exception("Input not valid");
         }
         calendar.set(GregorianCalendar.MONTH, month + 1);
@@ -57,7 +57,7 @@ public class CustomCalendar extends GregorianCalendar {
 
     protected void setDate(int date) throws Exception {
         int max = calendar.getActualMaximum(GregorianCalendar.DAY_OF_MONTH);
-        if ( date< 1 || date > max) {
+        if ( date< 1 || date > 31) {
             throw new Exception("Input not valid");
         }
         calendar.set(GregorianCalendar.DAY_OF_MONTH, date);

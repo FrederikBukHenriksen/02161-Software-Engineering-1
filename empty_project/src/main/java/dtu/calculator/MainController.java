@@ -611,12 +611,12 @@ public class MainController {
             int choice_year_start = Integer.parseInt(consoleInputWithBack());
             view.menu(registerLeave,
                     new ArrayList<>(Arrays.asList("Type leave start year: " + String.valueOf(choice_year_start),
-                            "type activity start Month: ")));
+                            "Type activity start Month: ")));
             int choice_month_start = Integer.parseInt(consoleInputWithBack());
 
             view.menu(registerLeave,
                     new ArrayList<>(Arrays.asList("Type leave start year: " + String.valueOf(choice_year_start),
-                            "type leave start Month: " + String.valueOf(choice_month_start), "type leave start day")));
+                            "Type leave start Month: " + String.valueOf(choice_month_start), "Type leave start day: ")));
             int choice_day_start = Integer.parseInt(consoleInputWithBack());
             
 
@@ -624,12 +624,12 @@ public class MainController {
             int choice_year_end = Integer.parseInt(consoleInputWithBack());
             view.menu(registerLeave,
                     new ArrayList<>(Arrays.asList("Type leave end year: " + String.valueOf(choice_year_end),
-                            "type activity start Month: ")));
+                            "Type leave end Month: ")));
             int choice_month_end = Integer.parseInt(consoleInputWithBack());
 
             view.menu(registerLeave,
                     new ArrayList<>(Arrays.asList("Type leave end year: " + String.valueOf(choice_year_end),
-                            "type leave start Month: " + String.valueOf(choice_month_end), "type leave end day")));
+                            "Type leave end Month: " + String.valueOf(choice_month_end), "Type leave end day: ")));
             int choice_day_end = Integer.parseInt(consoleInputWithBack());
 
 
