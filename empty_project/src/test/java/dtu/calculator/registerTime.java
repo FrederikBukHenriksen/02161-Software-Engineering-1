@@ -59,10 +59,10 @@ public class registerTime {
             if (work.getActivity().equals(activity)) {
                 CustomCalendar startTimeCheck = new CustomCalendar(yearStart, monthStart, dateStart, hourStart,
                         minuteStart);
-                if (work.getStartTime().equals(startTimeCheck)) {
+                if (work.getStartTime().getDate().equals(startTimeCheck.getDate())) {
                     CustomCalendar endTimeCheck = new CustomCalendar(yearEnd, monthEnd, dateEnd, hourEnd,
                             minuteEnd);
-                    if (work.getEndTime().equals(endTimeCheck)) {
+                    if (work.getEndTime().getDate().equals(endTimeCheck.getDate())) {
                         found = true;
                     }
                 }
