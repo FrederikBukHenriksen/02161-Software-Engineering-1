@@ -25,7 +25,7 @@ public class changeLeaveSteps {
             Integer endMonth, Integer endYear) throws Exception {
         CustomCalendar start = new CustomCalendar(startYear, startMonth, startDay);
         CustomCalendar end = new CustomCalendar(endYear, endMonth, endDay);
-        Leave leave = new Leave(start, end, projectPlanner,leaveTitle);
+        Leave leave = new Leave(start, end, projectPlanner,leaveTitle, null);
         assertTrue(leave.title.equals(leaveTitle));
         assertTrue(leave.getLeaveTitle().equals(leaveTitle) && leave.getEndTime().equals(end) && leave.getStartTime().equals(start));
     }

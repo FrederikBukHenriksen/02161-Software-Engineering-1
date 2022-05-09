@@ -125,7 +125,7 @@ public abstract class User {
 
 
     public void createLeave(CustomCalendar startDate, CustomCalendar endDate, String leaveTitle) throws Exception {
-        registrations.add(new Leave(startDate, endDate, projectPlanner,leaveTitle));
+        registrations.add(new Leave(startDate, endDate, projectPlanner,leaveTitle, (User) this));
     }
 
 }

@@ -62,6 +62,7 @@ public class MainController {
     final String changeActivityStart = "Change activity start";
     final String changeActivityEnd = "Change activity end";
     final String getProjectInfo = "Get project info";
+    final String registerLeave = "Register leave";
 
     public MainController() {
         menuStackPush(logIn);
@@ -150,6 +151,9 @@ public class MainController {
             case getProjectInfo:
                 projectMenu.getProjectInfo();
                 break;
+            case registerLeave:
+                registerLeave();
+                break;
             default:
                 break;
         }
@@ -227,10 +231,10 @@ public class MainController {
         ArrayList<String> menu = new ArrayList<>();
         if (projectPlanner.isAdministratorLoggedIn()) {
             menu = new ArrayList<>(
-                    Arrays.asList(createProject, selectProject, addEmployee, removeEmployee, logOut));
+                    Arrays.asList(createProject, selectProject, addEmployee, removeEmployee, registerLeave, logOut));
         } else if (projectPlanner.isEmployeeLoggedIn()) {
             menu = new ArrayList<>(
-                    Arrays.asList(selectProject, registerTime, activityCalendar, logOut));
+                    Arrays.asList(selectProject, registerTime, activityCalendar, registerLeave, logOut));
 
         }
 
@@ -428,6 +432,7 @@ public class MainController {
 
     public void activityCalendar() {
         ArrayList<Activity> employeeActivities = ((Employee) projectPlanner.getLoggedIn()).getEmployeeActivities();
+
         ArrayList<String> UIlistOfActivities = new ArrayList<>();
         for (Activity activity : employeeActivities) {
             String endDate = "N/A";
@@ -448,11 +453,36 @@ public class MainController {
                     activity.getTitle() + ", Start: " + startDate + ", end: " + endDate + ", estimate: "
                             + String.valueOf(activity.getActivityEstimate()));
         }
+
+        try {
+            ArrayList<Leave> employeeLeave = ((Employee) projectPlanner.getLoggedIn()).getLeaveAll();
+            for (Leave leave : employeeLeave) {
+                String endDate = "N/A";
+                try {
+                    endDate = leave.getEndTime().getDateString();
+                } catch (Exception e) {
+                    endDate = "N/A";
+                }
+
+                String startDate = "N/A";
+                try {
+                    startDate = leave.getStartTime().getDateString();
+                } catch (Exception e) {
+                    startDate = "N/A";
+                }
+
+                UIlistOfActivities.add(
+                        leave.getLeaveTitle() + ", Start: " + startDate + ", end: " + endDate);
+            }
+        } catch (Exception e) {
+            //TODO: handle exception
+        }
+
         view.menuEnumerate(activityCalendar, UIlistOfActivities);
         String input = consoleInput();
         menuStackPop();
-
     }
+    
 
     public void registerTime() {
         ArrayList menu = new ArrayList<>(
@@ -573,6 +603,47 @@ public class MainController {
             handleException(e);
         }
         return null;
+    }
+
+    public void registerLeave() {
+        view.menu(registerLeave, new ArrayList<>(Arrays.asList("Type leave start year: ")));
+        try {
+            int choice_year_start = Integer.parseInt(consoleInputWithBack());
+            view.menu(registerLeave,
+                    new ArrayList<>(Arrays.asList("Type leave start year: " + String.valueOf(choice_year_start),
+                            "type activity start Month: ")));
+            int choice_month_start = Integer.parseInt(consoleInputWithBack());
+
+            view.menu(registerLeave,
+                    new ArrayList<>(Arrays.asList("Type leave start year: " + String.valueOf(choice_year_start),
+                            "type leave start Month: " + String.valueOf(choice_month_start), "type leave start day")));
+            int choice_day_start = Integer.parseInt(consoleInputWithBack());
+            
+
+            view.menu(registerLeave, new ArrayList<>(Arrays.asList("Type leave end year: ")));
+            int choice_year_end = Integer.parseInt(consoleInputWithBack());
+            view.menu(registerLeave,
+                    new ArrayList<>(Arrays.asList("Type leave end year: " + String.valueOf(choice_year_end),
+                            "type activity start Month: ")));
+            int choice_month_end = Integer.parseInt(consoleInputWithBack());
+
+            view.menu(registerLeave,
+                    new ArrayList<>(Arrays.asList("Type leave end year: " + String.valueOf(choice_year_end),
+                            "type leave start Month: " + String.valueOf(choice_month_end), "type leave end day")));
+            int choice_day_end = Integer.parseInt(consoleInputWithBack());
+
+
+            view.menu(registerLeave, new ArrayList<>(Arrays.asList("Type leave title: ")));
+            String titleString = consoleInputWithBack();
+            
+            projectPlanner.getLoggedIn().createLeave(new CustomCalendar(choice_year_start, choice_month_start, choice_day_start), new CustomCalendar(choice_year_end, choice_month_end, choice_day_end),titleString);
+            
+            menuStackPop();
+        } catch (BackException e) {
+        } catch (Exception e) {
+            handleException(e);
+        }
+
     }
     
 
