@@ -61,6 +61,7 @@ public class MainController {
     final String setActivityEstimate = "Set activity estimate";
     final String changeActivityStart = "Change activity start";
     final String changeActivityEnd = "Change activity end";
+    final String getProjectInfo = "Get project info";
 
     public MainController() {
         menuStackPush(logIn);
@@ -87,6 +88,18 @@ public class MainController {
                 break;
             case mainMenu:
                 mainMenu();
+                break;
+            case addEmployeeToActivity:
+                addEmployeeToActivity();
+                break;
+            case changeActivityStart:
+                changeActivityStart();
+                break;
+            case changeActivityEnd:
+                changeActivityEnd();
+                break;
+            case removeEmployeeFromActivity:
+                removeEmployeeFromActivity();
                 break;
             case createProject:
                 createProject();
@@ -116,11 +129,15 @@ public class MainController {
             case removeEmployeeFromProject:
                 projectMenu.removeEmployeeFromProject();
                 break;
+            case removeActivity:
+                removeActivity();
+                break;
             case selectActivity:
                 selectActivity();
                 break;
             case setActivityEstimate:
                 setActivityEstimate();
+                break;
             case setProjectLeader:
                 projectMenu.setProjectLeader();
                 break;
@@ -129,6 +146,9 @@ public class MainController {
                 break;
             case registerTime:
                 registerTime();
+                break;
+            case getProjectInfo:
+                projectMenu.getProjectInfo();
                 break;
             default:
                 break;
@@ -202,10 +222,10 @@ public class MainController {
 
         view.clearScreen();
         ArrayList<String> menu = new ArrayList<>();
-        if (projectPlanner.administratorLoggedIn()) {
+        if (projectPlanner.isAdministratorLoggedIn()) {
             menu = new ArrayList<>(
                     Arrays.asList(createProject, selectProject, addEmployee, removeEmployee, logOut));
-        } else if (projectPlanner.employeeLoggedIn()) {
+        } else if (projectPlanner.isEmployeeLoggedIn()) {
             menu = new ArrayList<>(
                     Arrays.asList(selectProject, registerTime, activityCalendar, logOut));
 
@@ -244,7 +264,7 @@ public class MainController {
             int choice = Integer.parseInt(consoleInputWithBack());
 
             Project chosenProject = projectPlanner.getProjects().get(choice - 1);
-            projectPlanner.removeProject(chosenProject);
+            projectPlanner.deleteProject(chosenProject);
 
             menuStackPush(mainMenu);
         } catch (BackException e) {
@@ -256,7 +276,7 @@ public class MainController {
         view.menu(addEmployee, new ArrayList<>(Arrays.asList("Employee initials: ")));
         try {
             String input = consoleInputWithBack();
-            projectPlanner.addEmployee(input);
+            projectPlanner.createEmployee(input);
             menuStackPush(mainMenu);
         } catch (BackException e) {
         } catch (Exception e) {
@@ -275,7 +295,7 @@ public class MainController {
             int choice = Integer.parseInt(consoleInputWithBack());
 
             User chosenEmployee = projectPlanner.getEmployees().get(choice - 1);
-            projectPlanner.removeEmployee(chosenEmployee);
+            projectPlanner.deleteEmployee(chosenEmployee);
 
             menuStackPush(mainMenu);
         } catch (BackException e) {
@@ -312,7 +332,7 @@ public class MainController {
 
     }
 
-    public void addEmployeeToActivity() {
+    public  void addEmployeeToActivity() {
         ArrayList<String> UIListOfProjectEmployees = new ArrayList<>();
         for (User employee : selectedProject.getProjectEmployees()) {
             UIListOfProjectEmployees.add(employee.getInitials());
@@ -332,7 +352,7 @@ public class MainController {
 
     }
 
-    public void removeEmployeeFromActivity() {
+    public  void removeEmployeeFromActivity() {
         ArrayList<String> UIListOfActivityEmployees = new ArrayList<>();
         for (User employee : selectedActivity.getEmployees()) {
             UIListOfActivityEmployees.add(employee.getInitials());
@@ -340,9 +360,8 @@ public class MainController {
         try {
             view.menuEnumerate(removeEmployeeFromActivity, UIListOfActivityEmployees);
             int choice = Integer.parseInt(consoleInputWithBack());
-
             User chosenEmployee = selectedActivity.getEmployees().get(choice - 1);
-            selectedActivity.removeEmployee(chosenEmployee);
+            selectedActivity.removeEmployeeFromActivity(chosenEmployee);
             menuStackPush(selectActivity);
         } catch (BackException e) {
         } catch (Exception e) {
@@ -353,20 +372,24 @@ public class MainController {
     public void setActivityEstimate() {
         view.menu(setActivityEstimate, new ArrayList<>(Arrays.asList("Type estimate: ")));
         try {
-            int estimate = Integer.parseInt(consoleInputWithBack());
+            double estimate = Double.parseDouble(consoleInputWithBack());
             selectedActivity.setActivityEstimate(estimate);
             menuStackPush(selectActivity);
         } catch (BackException e) {
         } catch (Exception e) {
             handleException(e);
+
         }
     }
 
-    public void changeActivityStart() {
-        view.menu(changeActivityStart, new ArrayList<>(Arrays.asList("Type acitivity start week: ")));
+    public  void changeActivityStart() {
+        view.menu(changeActivityStart, new ArrayList<>(Arrays.asList("Type acitivity start year: ")));
         try {
-            int choice = Integer.parseInt(consoleInputWithBack());
-            // TODO: Sæt start tiden
+            int choice_year = Integer.parseInt(consoleInputWithBack());
+            view.menu(changeActivityStart,
+                    new ArrayList<>(Arrays.asList("Type acitivity start year: " + String.valueOf(choice_year), "type activity start week: ")));
+            int choice_week = Integer.parseInt(consoleInputWithBack());
+            selectedActivity.setStartDate(choice_year, choice_week);
             menuStackPush(selectActivity);
         } catch (BackException e) {
         } catch (Exception e) {
@@ -374,11 +397,14 @@ public class MainController {
         }
     }
 
-    public void changeActivityEnd() {
-        view.menu(changeActivityStart, new ArrayList<>(Arrays.asList("Type acitivity end week: ")));
+    public  void changeActivityEnd() {
+        view.menu(changeActivityStart, new ArrayList<>(Arrays.asList("Type acitivity end year: ")));
         try {
-            int choice = Integer.parseInt(consoleInputWithBack());
-            // TODO: Sæt slut tiden
+            int choice_year = Integer.parseInt(consoleInputWithBack());
+            view.menu(changeActivityStart,
+                    new ArrayList<>(Arrays.asList("Type acitivity end year: " +  String.valueOf(choice_year), "type activity end week: ")));
+            int choice_week = Integer.parseInt(consoleInputWithBack());
+            selectedActivity.setEndDate(choice_year, choice_week);
             menuStackPush(selectActivity);
         } catch (BackException e) {
         } catch (Exception e) {
@@ -390,16 +416,31 @@ public class MainController {
 
     public void activityCalendar() {
         ArrayList<Activity> employeeActivities = ((Employee) projectPlanner.getLoggedIn()).getEmployeeActivities();
+            ArrayList<String> UIlistOfActivities = new ArrayList<>();
+            for (Activity activity : employeeActivities) {
+                String endDate = "N/A";
+                try {
+                    endDate = activity.getEndDate().getDateString();
+                } catch (Exception e){
+                    endDate = "N/A";
+                }
 
-        ArrayList<String> UIlistOfActivities = new ArrayList<>();
-        for (Activity activity : employeeActivities) {
-            UIlistOfActivities.add(activity.getTitle());
-        }
+                String startDate = "N/A";
+                try {
+                    startDate = activity.getStartDate().getDateString();
+                } catch (Exception e){
+                    startDate = "N/A";
+                }
 
-        view.menuEnumerate(activityCalendar, UIlistOfActivities);
-        String input = consoleInput();
-        menuStackPush(mainMenu);
-    }
+                UIlistOfActivities.add(
+                    activity.getTitle() + ", Start: " + startDate + ", end: " + endDate + ", estimate: " + String.valueOf(activity.getActivityEstimate()));
+            }
+            view.menuEnumerate(activityCalendar, UIlistOfActivities);
+            String input = consoleInput();
+            menuStackPush(mainMenu);
+
+         }
+    
 
     public void registerTime() {
         ArrayList menu = new ArrayList<>(
@@ -413,7 +454,6 @@ public class MainController {
             switch (choice) {
                 case 1:
                     listOfActivities = ((Employee) projectPlanner.getLoggedIn()).getEmployeeActivities();
-
                     break;
                 case 2:
                     for (Project project : projectPlanner.getProjects()) {
@@ -444,17 +484,16 @@ public class MainController {
             choice = Integer.parseInt(consoleInputWithBack());
             Activity chosenActivity = listOfActivities.get(choice - 1);
 
+            User user = (User) projectPlanner.getLoggedIn();
+
             ArrayList<Integer> startCal = setDateWithTime(registerTime + " start time");
-            GregorianCalendar startTime = Work.calendarWork(startCal.get(4),
-                    startCal.get(
-                            3),
-                    startCal.get(2), startCal.get(1), startCal.get(0));
+            CustomCalendar startTime = new CustomCalendar(startCal.get(4), startCal.get(3), startCal.get(2),
+                    startCal.get(1), startCal.get(0));
+
             ArrayList<Integer> endCal = setDateWithTime(registerTime + " end time");
-            GregorianCalendar endTime = Work
-                    .calendarWork(startCal.get(4),
-                            startCal.get(
-                                    3),
-                            startCal.get(2), startCal.get(1), startCal.get(0));
+            CustomCalendar endTime = new CustomCalendar(endCal.get(4), endCal.get(3), endCal.get(2), endCal.get(1),
+                    endCal.get(0));
+            user.registerWork(startTime, endTime, chosenActivity);
 
             ((Employee) projectPlanner.getLoggedIn()).registerWork(startTime, endTime, chosenActivity);
         } catch (BackException e) {
@@ -463,8 +502,34 @@ public class MainController {
         }
 
     }
+    
 
-    public void logOut() {
+    public void removeActivity() {
+        ArrayList<String> UIListOfActivities = new ArrayList<>();
+        try{
+        for (Activity activity : projectPlanner.getProject(selectProject).getActivities()) {
+            UIListOfActivities.add(activity.getTitle());
+        }
+        } catch (Exception e) {
+            view.error(e);
+        }
+
+
+
+
+        view.menuEnumerate(deleteProject, UIListOfActivities);
+
+        try {
+            selectedProject.deleteActivity(selectedActivity);
+            menuStackPush(selectProject);
+        } catch (Exception e) {
+            view.error(e);
+        }
+
+    }
+    
+
+    public  void logOut() {
         projectPlanner.logOut();
         menuStackClear();
         menuStackPush(logIn);

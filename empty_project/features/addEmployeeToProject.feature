@@ -32,7 +32,7 @@ Actors: Project leader
     When add user "ANDR" to project "2022-2"
     Then the error message "Project does not exist" is given
 
-  Scenario: Add employee to a project which is already added
+  Scenario: Add employee to a project which is already added not possible
     Given login user "FRED"
     And add user "ANDR" to project "2022-1"
     And the user "ANDR" is in the project "2022-1"
@@ -40,14 +40,20 @@ Actors: Project leader
     Then the error message "User is already in the project" is given
     And the user "ANDR" is only once in the project "2022-1"
 
-  Scenario: Add employee not possible when administrator is logged in
+  Scenario: Add employee to project not possible when administrator is logged in
     Given login user "HUBE"
     When add user "ANDR" to project "2022-1"
     Then the error message "Project leader login is required" is given
     And the user "ANDR" is not in the project "2022-1"
 
-  Scenario: Add employee not possible when project user is logged in
+  Scenario: Add employee to project not possible when project user is logged in
     Given login user "ANDR"
     When add user "GUST" to project "2022-1"
     Then the error message "Project leader login is required" is given
     And the user "GUST" is not in the project "2022-1"
+
+  Scenario: Add administrator to project not possible
+    Given login user "FRED"
+    When add user "HUBE" to project "2022-1"
+    Then the error message "Not allowed for administrator user" is given
+    And the user "HUBE" is not in the project "2022-1"

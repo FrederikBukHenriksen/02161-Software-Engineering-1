@@ -66,6 +66,7 @@ public class ProjectMenu {
     final String setActivityEstimate = "Set activity estimate";
     final String changeActivityStart = "Change activity start";
     final String changeActivityEnd = "Change activity end";
+    final String getProjectInfo = "Get project info";
 
     public ProjectMenu(ProjectPlanner projectPlanner, MainController mainController) {
         this.projectPlanner = projectPlanner;
@@ -84,15 +85,39 @@ public class ProjectMenu {
 
             mainController.selectedProject = projectPlanner.getProjects().get(choice - 1);
 
-            ArrayList<String> menu = new ArrayList<>(
-                    Arrays.asList( // changeProjectDate, createActivity, selectActivity,
-                            addEmployeeToProject,
-                            removeEmployeeFromProject, setProjectLeader, deleteProject));
-            mainController.view.menuEnumerate(selectProject, menu);
-            choice = Integer.parseInt(mainController.consoleInputWithBack());
-            mainController.menuStackPush(menu.get(choice - 1));
+            if (projectPlanner.isAdministratorLoggedIn()) {
 
-        } catch (BackException e) {
+                ArrayList<String> menu = new ArrayList<>(
+                        Arrays.asList(getProjectInfo, setProjectLeader, deleteProject));
+                mainController.view.menuEnumerate(selectProject, menu);
+                choice = Integer.parseInt(mainController.consoleInputWithBack());
+                mainController.menuStackPush(menu.get(choice - 1));
+
+            } else if (mainController.selectedProject.isProjectLeaderLoggedIn()) {
+
+                ArrayList<String> menu = new ArrayList<>(
+                        Arrays.asList(getProjectInfo, changeProjectDate, addEmployeeToProject, createActivity,
+                                selectActivity,
+                                removeEmployeeFromProject));
+                mainController.view.menuEnumerate(selectProject, menu);
+                choice = Integer.parseInt(mainController.consoleInputWithBack());
+                mainController.menuStackPush(menu.get(choice - 1));
+
+            } else if (projectPlanner.isEmployeeLoggedIn()) {
+
+                ArrayList<String> menu = new ArrayList<>(
+                        Arrays.asList(getProjectInfo));
+                mainController.view.menuEnumerate(selectProject, menu);
+                choice = Integer.parseInt(mainController.consoleInputWithBack());
+                mainController.menuStackPush(menu.get(choice - 1));
+
+            } else {
+                mainController.menuStackPush(selectProject);
+            }
+
+        } catch (
+
+        BackException e) {
         } catch (Exception e) {
             mainController.view.error(e);
         }
@@ -141,7 +166,7 @@ public class ProjectMenu {
         try {
             String title = mainController.consoleInputWithBack();
             // this.selectedProject.createActivity(title);
-            mainController.selectedProject.CucumberCreateActivity(title);
+            mainController.selectedProject.createActivity(title);
             mainController.menuStackPush(selectProject); // Go to the project menu.
         } catch (BackException e) {
         } catch (Exception e) {
@@ -161,8 +186,8 @@ public class ProjectMenu {
         mainController.view.menuEnumerate(addEmployeeToProject, UIListOfEmployees);
         try {
             int choice = Integer.parseInt(mainController.consoleInputWithBack());
-            User employee = projectPlanner.getEmployees().get(choice - 1);
-            mainController.selectedProject.addUserToProject(employee); // Muhammed retter dette.
+            User employee = projectPlanner.getUser(UIListOfEmployees.get(choice-1));
+            mainController.selectedProject.addUserToProject(employee);
             mainController.menuStackPush(selectProject);
         } catch (BackException e) {
         } catch (Exception e) {
@@ -171,9 +196,48 @@ public class ProjectMenu {
     }
 
     public void removeEmployeeFromProject() {
-        // TODO:Mangler implementering
-        mainController.menuStackPush(selectProject);
+        ArrayList<String> UIListOfEmployees = new ArrayList<>();
+        for (User user : mainController.selectedProject.getProjectEmployees()) { // Get all employees in the project.
+            UIListOfEmployees.add(user.getInitials());
+        }
 
+        mainController.view.menuEnumerate(removeEmployeeFromProject, UIListOfEmployees);
+        try {
+            int choice = Integer.parseInt(mainController.consoleInputWithBack());
+            User employee = projectPlanner.getUser(UIListOfEmployees.get(choice-1)); // ok ctPlanner.getEmployees().get(choice - 1);
+            mainController.selectedProject.removeUserFromProject(employee);
+            mainController.menuStackPush(selectProject);
+        } catch (BackException e) {
+        } catch (Exception e) {
+            mainController.view.error(e);
+        }
+    }
+
+    public void getProjectInfo() {
+        ArrayList<String> UIProjectInfo = new ArrayList<>();
+
+        UIProjectInfo.add("Project title: " + mainController.selectedProject.getTitle());
+        UIProjectInfo.add("Project start date: " + mainController.selectedProject.getStartDate());
+        // UIProjectInfo.add("Project end date: " + project.getEndDate());
+        UIProjectInfo.add("Project leader: " + mainController.selectedProject.getProjectleader().getInitials());
+        UIProjectInfo.add("Project employees: ");
+        for (User employee : mainController.selectedProject.getProjectEmployees()) {
+            UIProjectInfo.add(employee.getInitials());
+        }
+        UIProjectInfo.add("Project activities: ");
+        for (Activity activity : mainController.selectedProject.getActivities()) {
+            UIProjectInfo.add(activity.getTitle());
+        }
+        mainController.view.menu(mainController.getProjectInfo, UIProjectInfo);
+
+        try {
+            mainController.view.subSectionln(" ");
+            int choice = Integer.parseInt(mainController.consoleInputWithBack());
+            mainController.menuStackPush(selectProject);
+        } catch (BackException e) {
+        } catch (Exception e) {
+            mainController.view.error(e);
+        }
     }
 
 }

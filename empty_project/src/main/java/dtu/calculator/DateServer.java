@@ -1,27 +1,45 @@
 package dtu.calculator;
 
-import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class DateServer {
 
-	public GregorianCalendar calendar;
+	// DATO FASTSÆTTES P.T. ARBITRÆT, MEN BØR HENTES FRA EN SERVER.
+	private CustomCalendar calendar = new CustomCalendar(2022, 5, 9, 23, 59);
 
-	public DateServer(int year, int month, int day) {
-		this.calendar = new GregorianCalendar(year, month, day);
-	}
+	// protected CustomCalendar createTimestamp(int year, int month, int date, int hour, int minute) {
+	// 	return new CustomCalendar(year, month - 1, date, hour, minute);
+	// }
 
-	public GregorianCalendar getDate() {
+	// protected CustomCalendar createDate(int year, int month, int date) {
+	// 	return new CustomCalendar(year, month - 1, date);
+	// }
+
+	// protected CustomCalendar createDateFromWeek(int year, int week) {
+	// 	CustomCalendar cal = new CustomCalendar();
+	// 	cal.set(CustomCalendar.WEEK_OF_YEAR, 18);
+	// 	cal.set(CustomCalendar.YEAR, 2022);
+	// 	return cal;
+	// }
+
+	protected CustomCalendar getDate() {
 		return calendar;
 	}
 
-	public int getYear() {
-		return calendar.get(1);
-	}
+	// protected int getYear() {
+	// 	return calendar.get(CustomCalendar.YEAR);
+	// }
 
-	// BRUGES KUN TIL CUCUMBER TESTS
-	public void setDate(int year, int month, int date) {
-		calendar = new GregorianCalendar(year, month, date);
+	// protected int getYear(CustomCalendar gregorianCalendar) {
+	// 	return calendar.get(CustomCalendar.YEAR);
+	// }
 
+	// protected int getWeek(CustomCalendar gregorianCalendar) {
+	// 	return calendar.get(CustomCalendar.WEEK_OF_YEAR);
+	// }
+
+	// BRUGES KUN OPSTILLING AF CUCUMBER TESTS.
+	protected void setDate(int year, int month, int date) {
+		calendar = new CustomCalendar(year, month, date);
 	}
 }

@@ -24,7 +24,7 @@ public class removeUserFromActivity {
             Project project = projectPlanner.getProject(projectId);
             User user = projectPlanner.getUser(userId);
             Activity activity = project.getActivity(activityTitle);
-            activity.removeEmployee(user);
+            activity.removeEmployeeFromActivity(user);
         } catch (Exception e) {
             ErrorMessageHolder.setErrorMessage(e.getMessage());
         }

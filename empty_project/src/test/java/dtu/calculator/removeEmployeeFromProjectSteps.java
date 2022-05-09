@@ -28,18 +28,6 @@ public class removeEmployeeFromProjectSteps {
 
      }
 
-     @When("the project leader for the project {string} removes the employee with id {string} to the project")
-     public void the_project_leader_for_the_project_removes_the_employee_with_id_to_the_project(String projectID,
-             String employeeID) throws Exception {
-         Project project = projectPlanner.getProject(projectID);
-         project.removeUserFromProject(projectPlanner.getUser(employeeID));
-     }
-    @Then("the employee with id {string} is removed from the project with id {string}")
-    public void the_employee_with_id_is_removed_from_the_project_with_id(String employeeID, String projectID) throws Exception {
-        Project project = projectPlanner.getProject(projectID);
-        User employee = projectPlanner.getUser(employeeID);
-        assertFalse(project.getProjectEmployees().contains(employee));
-    }
 
 
 }

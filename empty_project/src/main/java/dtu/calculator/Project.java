@@ -6,20 +6,20 @@ import java.util.GregorianCalendar;
 public class Project {
 
     // Contained
-    ProjectPlanner projectPlanner;
-    DateServer dateServer;
+    protected ProjectPlanner projectPlanner;
+    protected DateServer dateServer;
 
     // Containers
     private ArrayList<Activity> projectActivities = new ArrayList<>();
     private ArrayList<User> projectUsers = new ArrayList<>();
 
     // Project variables
-    String title;
-    String id;
-    GregorianCalendar startDate;
-    User projectLeader;
+    private String title;
+    private String id;
+    private CustomCalendar startDate;
+    private User projectLeader;
 
-    public Project(String title, ProjectPlanner projectPlanner) {
+    protected Project(String title, ProjectPlanner projectPlanner) {
         this.title = title;
         this.projectPlanner = projectPlanner;
         id = genNextId();
@@ -27,7 +27,7 @@ public class Project {
 
     // Create or add functions
 
-    public void createActivity(String title) throws Exception {
+    protected void createActivity(String title) throws Exception {
         if (isProjectLeaderLoggedIn()) {
             if (isActivityTitleUnique(title)) {
                 projectActivities.add(new Activity(title, this));
@@ -39,8 +39,11 @@ public class Project {
         }
     }
 
-    public void addUserToProject(User user) throws Exception {
+    protected void addUserToProject(User user) throws Exception {
         if (isProjectLeaderLoggedIn()) {
+            if (user instanceof Administrator) {
+                throw new Exception("Not allowed for administrator user");
+            }
             if (!projectUsers.contains(user)) {
                 projectUsers.add(user);
             } else {
@@ -49,12 +52,11 @@ public class Project {
         } else {
             throw new Exception("Project leader login is required");
         }
-
     }
 
     // Remove or delete functions
 
-    public void removeUserFromProject(User user) throws Exception {
+    protected void removeUserFromProject(User user) throws Exception {
         if (isProjectLeaderLoggedIn()) {
             if (!projectUsers.remove(user)) // Returns boolean wether remove was possible
                 throw new Exception("User is not in the project");
@@ -63,7 +65,7 @@ public class Project {
         }
     }
 
-    public void removeActivity(Activity activity) throws Exception {
+    protected void deleteActivity(Activity activity) throws Exception {
         if (isProjectLeaderLoggedIn()) {
             projectActivities.remove(activity);
         } else {
@@ -84,7 +86,7 @@ public class Project {
         }
         maxIdInUse++;
 
-        return String.valueOf(projectPlanner.dateServer.getYear()) + "-" + String.valueOf(maxIdInUse);
+        return String.valueOf(projectPlanner.dateServer.getDate().getYear()) + "-" + String.valueOf(maxIdInUse);
 
     }
 
@@ -97,22 +99,22 @@ public class Project {
         return true;
     }
 
-    public boolean isProjectLeaderLoggedIn() {
+    protected boolean isProjectLeaderLoggedIn() {
         return projectLeader == projectPlanner.getLoggedIn() && projectLeader != null;
     }
 
     // Set functions
 
-    public void setStartDate(int day, int month, int year) throws Exception {
+    protected void setStartDate(int year, int month, int day) throws Exception {
         if (isProjectLeaderLoggedIn()) {
-            startDate = new GregorianCalendar(year, month, day);
+            startDate = new CustomCalendar(year, month, day);
         } else {
             throw new Exception("Project leader login is required");
         }
     }
 
-    public void setProjectLeader(User user) throws Exception {
-        if (projectPlanner.administratorLoggedIn()) {
+    protected void setProjectLeader(User user) throws Exception {
+        if (projectPlanner.isAdministratorLoggedIn()) {
             projectLeader = user;
         } else {
             throw new Exception("Administrator login is required");
@@ -121,32 +123,32 @@ public class Project {
 
     // Get functions
 
-    public String getId() {
+    protected String getId() {
         return id;
     }
 
-    public String getTitle() {
+    protected String getTitle() {
         return title;
     }
 
-    public GregorianCalendar getStartDate() {
+    protected CustomCalendar getStartDate() {
         return startDate;
     }
 
-    public ArrayList<User> getProjectEmployees() {
+    protected ArrayList<User> getProjectEmployees() {
         return projectUsers;
     }
 
 
-    public User getProjectleader() {
+    protected User getProjectleader() {
         return projectLeader;
     }
 
-    public ArrayList<Activity> getActivities() {
+    protected ArrayList<Activity> getActivities() {
         return projectActivities;
     }
 
-    public Activity getActivity(String title) throws Exception {
+    protected Activity getActivity(String title) throws Exception {
         for (Activity activity : getActivities()) {
             if (activity.getTitle().equalsIgnoreCase(title)) {
                 return activity;
@@ -157,15 +159,15 @@ public class Project {
 
     // JUNIT Helpfunctions
 
-    public void cucumberAddUserToProject(User user) throws Exception {
-        projectUsers.add(user);
-    }
+    // public void cucumberAddUserToProject(User user) throws Exception {
+    // projectUsers.add(user);
+    // }
 
-    public void cucumberSetProjectLeader(User user) {
-        projectLeader = user;
-    }
+    // public void cucumberSetProjectLeader(User user) {
+    // projectLeader = user;
+    // }
 
-    public void CucumberCreateActivity(String title) {
-        projectActivities.add(new Activity(title, this));
-    }
+    // public void CucumberCreateActivity(String title) {
+    // projectActivities.add(new Activity(title, this));
+    // }
 }

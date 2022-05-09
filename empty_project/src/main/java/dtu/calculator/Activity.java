@@ -2,37 +2,35 @@ package dtu.calculator;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import dtu.calculator.CustomCalendar;
 
 public class Activity {
 
     // Contained
-    Project project;
+    protected Project project;
 
     // Containers
-    ArrayList<User> activityEmployees = new ArrayList<>();
+    private ArrayList<User> activityUsers = new ArrayList<>();
 
     // Class variables
-
     private String title;
-    int budgetedTime;
-    String startTime;
-    String endTime;
-    double activityEstimate;
+    private int budgetedTime;
+    private CustomCalendar startTime;
+    private CustomCalendar endTime;
+    private double activityEstimate;
 
-    // TODO: Constructor med Project bruges kun til cucumber.
-    public Activity(String title, Project project) {
+    protected Activity(String title, Project project) {
         this.title = title;
         this.project = project;
     }
 
-    // public Activity(String title) {
-    // this.title = title;
-    // }
-
     // Create or add functions
 
-    public void addUserToActivity(User user) throws Exception {
+    protected void addUserToActivity(User user) throws Exception {
         if (project.isProjectLeaderLoggedIn()) {
+            if (user instanceof Administrator) {
+                throw new Exception("Not allowed for administrator user");
+            }
             // Check if user is already assigned to the activity
             if (!project.getProjectEmployees().contains(user)) {
                 throw new Exception("User is not in the project");
@@ -40,7 +38,7 @@ public class Activity {
             if (getEmployees().contains(user)) {
                 throw new Exception("User is already in the activity");
             }
-            activityEmployees.add(user);
+            activityUsers.add(user);
         } else {
             throw new Exception("Project leader login is required");
         }
@@ -48,58 +46,78 @@ public class Activity {
 
     // Remove or delete functions
 
-    public void removeEmployee(User user) throws Exception {
+    protected void removeEmployeeFromActivity(User user) throws Exception {
         if (!getEmployees().contains(user)) {
             throw new Exception("User is not in the activity");
         }
-        activityEmployees.remove(user);
+        if (!project.isProjectLeaderLoggedIn()) {
+            throw new Exception("Project leader login is required");
+        }
+        activityUsers.remove(user);
     }
 
     // Check and help functions
 
     // Set functions
 
-    public void setStartDate(Integer Year, Integer Week) {
-        if (project.isProjectLeaderLoggedIn()) {
-            startTime = Year + "-" + Week;
-        } else {
-            ErrorMessageHolder.setErrorMessage("Project leader login is required");
-        }
-
+    protected void setTitle(String title) {
+        this.title = title;
     }
 
-    public void setActivityEstimate(double time) {
-        activityEstimate = time;
+    protected void setStartDate(int year, int week) throws Exception {
+        if (!project.isProjectLeaderLoggedIn()) {
+            throw new Exception("Project leader login is required");
+        }
+        startTime = new CustomCalendar(year, week);
     }
 
-    public void setEndDate(Integer Year, Integer Week) { // TODO: Mangler code coverage.  
-        if (project.isProjectLeaderLoggedIn()) {
-            endTime = Year + "-" + Week;
+    protected void setActivityEstimate(double time) {
+        if(getEmployees().contains(project.projectPlanner.getLoggedIn())) {
+            activityEstimate = time;
         } else {
-            ErrorMessageHolder.setErrorMessage("Project leader login is required");
+            throw new IllegalArgumentException("The user is not assigned this Activity");
         }
+    }
+
+    public void setBudgetedTime(int budgetedTime) {
+        this.budgetedTime = budgetedTime;
+    }
+
+    protected void setEndDate(int year, int week) throws Exception {
+        if (!project.isProjectLeaderLoggedIn()) {
+            throw new Exception("Project leader login is required");
+        }
+        endTime = new CustomCalendar(year, week);
     }
 
     // Get functions
 
-    public String getTitle() {
+    protected String getTitle() {
         return title;
     }
 
-    public String getStartDate() {
+    protected CustomCalendar getStartDate() {
         return startTime;
     }
 
-    public ArrayList<User> getEmployees() {
-        return activityEmployees;
+    protected CustomCalendar getEndDate() {
+        return endTime;
     }
 
-    public double getActivityEstimate() {
+    protected int getWeek(GregorianCalendar gregorianCalendar) {
+        return gregorianCalendar.get(gregorianCalendar.WEEK_OF_YEAR);
+    }
+
+    protected ArrayList<User> getEmployees() {
+        return activityUsers;
+    }
+
+    protected double getActivityEstimate() {
         return activityEstimate;
     }
 
-    // JUNIT Helpfunctions
-    public void cucumberAddEmployeeToActivity(User employee) {
-        activityEmployees.add(employee);
+    protected int getBudgetedTime() {
+        return budgetedTime;
     }
+
 }

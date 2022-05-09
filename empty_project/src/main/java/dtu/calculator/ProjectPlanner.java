@@ -9,9 +9,8 @@ public class ProjectPlanner {
     public ArrayList<User> users = new ArrayList<>();
 
     // Class variables
-    GregorianCalendar startTime;
     public User loggedIn;
-    public DateServer dateServer = new DateServer(2022, 1, 1);
+    public DateServer dateServer = new DateServer();
 
     public ProjectPlanner() {
         users.add(new Administrator("HUBE", "PW1234", this)); // Create the administrator profile.
@@ -19,24 +18,24 @@ public class ProjectPlanner {
 
     // Create or add functions
 
-    public void createProject(String title) throws Exception {
-        if (administratorLoggedIn()) {
+    protected void createProject(String title) throws Exception {
+        if (isAdministratorLoggedIn()) {
             projects.add(new Project(title, this));
         } else {
             throw new Exception("Administrator login is required");
         }
     }
 
-    public void addEmployee(String initials) throws Exception {
-        if (administratorLoggedIn()) {
-            if (initials.length() == 4) {
+    protected void createEmployee(String initials) throws Exception {
+        if (isAdministratorLoggedIn()) {
+            if (initials.length() <= 4) {
                 if (uniqueUserInitials(initials)) {
                     users.add(new Employee(initials.toUpperCase(), this));
                 } else {
                     throw new Exception("Initals are already in use");
                 }
             } else {
-                throw new Exception("Initials must be four letters");
+                throw new Exception("Initials must be four letters or less");
             }
         } else {
             throw new Exception("Administrator login is required");
@@ -45,16 +44,16 @@ public class ProjectPlanner {
 
     // Remove or delete functions
 
-    public void removeProject(Project project) throws Exception {
-        if (administratorLoggedIn()) {
+    protected void deleteProject(Project project) throws Exception {
+        if (isAdministratorLoggedIn()) {
             projects.remove(project);
         } else {
             throw new Exception("Administrator login is required");
         }
     }
 
-    public void removeEmployee(User user) throws Exception {
-        if (administratorLoggedIn()) {
+    protected void deleteEmployee(User user) throws Exception {
+        if (isAdministratorLoggedIn()) {
             if (!(user instanceof Administrator)) {
             getUsers().remove(user);
         } else {
@@ -67,7 +66,7 @@ public class ProjectPlanner {
 
     // Check and help functions
 
-    public boolean uniqueUserInitials(String initials) {
+    private boolean uniqueUserInitials(String initials) {
         for (User user : users) {
             if (user.getInitials().equalsIgnoreCase(initials)) {
                 return false;
@@ -76,7 +75,7 @@ public class ProjectPlanner {
         return true;
     }
 
-    public boolean uniqueProjectTitleAndId(String title, String id) {
+    private boolean uniqueProjectTitleAndId(String title, String id) {
         for (Project project : projects) {
             if (!project.getTitle().equalsIgnoreCase(title) && project.getId().equals(id)) {
                 return false;
@@ -85,19 +84,19 @@ public class ProjectPlanner {
         return true;
     }
 
-    public boolean administratorLoggedIn() {
+    protected boolean isAdministratorLoggedIn() {
         return (loggedIn instanceof Administrator);
     }
 
-    public boolean employeeLoggedIn() {
+    protected boolean isEmployeeLoggedIn() {
         return (loggedIn instanceof Employee);
     }
 
-    public void logIn(String initals, String password) throws Exception {
+    public void logIn(String initials, String password) throws Exception {
         // Flag instead of check for null for safety reason
         boolean logInSuccesful = false;
         for (User user : getUsers()) {
-            if (user.getInitials().equalsIgnoreCase(initals) && user.getPassword().equals(password)) {
+            if (user.getInitials().equalsIgnoreCase(initials) && user.getPassword().equals(password)) {
                 setLoggedIn(user);
                 logInSuccesful = true;
                 return;
@@ -118,17 +117,13 @@ public class ProjectPlanner {
         loggedIn = user;
     }
 
-    public void setStartTime(GregorianCalendar calendar) {
-        startTime = calendar;
-    }
-
     // Get functions
 
-    public User getLoggedIn() {
+    protected User getLoggedIn() {
         return loggedIn;
     }
 
-    public ArrayList<User> getEmployees() {
+    protected ArrayList<User> getEmployees() {
         ArrayList<User> list = new ArrayList<>();
         for (User user : getUsers()) {
             if (user instanceof Employee) {
@@ -138,11 +133,11 @@ public class ProjectPlanner {
         return list;
     }
 
-    public ArrayList<User> getUsers() {
+    protected ArrayList<User> getUsers() {
         return users;
     }
 
-    public Project getProject(String search) throws Exception {
+    protected Project getProject(String search) throws Exception {
         for (Project project : getProjects()) {
             if (project.getId().equalsIgnoreCase(search)) {
                 return project;
@@ -160,21 +155,16 @@ public class ProjectPlanner {
         throw new Exception("User does not exist");
     }
 
-    public ArrayList<Project> getProjects() {
+    protected ArrayList<Project> getProjects() {
         return projects;
     }
 
-    // JUNIT Helpfunctions
-    public void cucumberAddEmployee(String initials) {
-        users.add(new Employee(initials, this));
-    }
-
-    public void cucumberCreateProject(String title) {
-        projects.add(new Project(title, this));
-    }
-
-    public void cucumberCreateAdministrator(String initials) {
-        users.add(new Administrator("HUBE", "PW1234", this));
+    protected ArrayList<String> getActivitiesFromOtherEmployee(User user) {
+        ArrayList<String> activitiesTitle = new ArrayList<>();
+        for (Activity activity : user.getEmployeeActivities()) {
+            activitiesTitle.add(activity.getTitle());
+        }
+        return activitiesTitle;
     }
 
 }

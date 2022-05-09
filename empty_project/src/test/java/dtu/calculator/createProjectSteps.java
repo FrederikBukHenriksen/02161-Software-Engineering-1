@@ -40,7 +40,7 @@ public class createProjectSteps {
     @Then("the project {string} with id {string} is not in the projectplanner")
     public void the_project_titled_with_id_is_not_added_to_the_list_of_projects(String title, String id) {
         assertFalse(projectPlanner.getProjects().stream()
-                .anyMatch(project -> project.title.equalsIgnoreCase(title) && project.getId() == id));
+                .anyMatch(project -> project.getTitle().equalsIgnoreCase(title) && project.getId() == id));
     }
 
 }

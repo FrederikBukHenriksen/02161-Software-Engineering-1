@@ -5,26 +5,21 @@ import java.util.GregorianCalendar;
 public class Leave extends Registration {
     String title;
 
-    public Leave(GregorianCalendar startTime, GregorianCalendar endTime, String title) {
-        super(startTime, endTime);
+
+    public Leave(CustomCalendar startTime, CustomCalendar endTime, ProjectPlanner projectPlanner, String title) throws Exception {
+        super(startTime, endTime, projectPlanner);
         this.title = title;
     }
 
-    public void changeStartDate(GregorianCalendar startTime) {
-        this.startTime = startTime;
+    
+    public void changeDates(CustomCalendar startTime, CustomCalendar endTime) throws Exception {
+        if(startTime.getDate().compareTo(endTime.getDate()) > 0) {
+            throw new Exception("Start time must be before end time");
+        }
+        setStartTime(startTime);
+        setEndTime(endTime);
     }
 
-    public void changeEndDate(GregorianCalendar endTime) {
-        this.endTime = endTime;
-    }
-
-    public GregorianCalendar getStartTime() {
-        return startTime;
-    }
-
-    public GregorianCalendar getEndTime() {
-        return endTime;
-    }
 
     public String getLeaveTitle(){
         return title;
