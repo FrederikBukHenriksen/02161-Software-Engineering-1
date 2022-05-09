@@ -56,6 +56,7 @@ public class registerTime {
         Activity activity = project.getActivity(activityTitle);
         boolean found = false;
         for (Work work : user.getWorkRegistrations()) {
+            
             if (work.getActivity().equals(activity)) {
                 CustomCalendar startTimeCheck = new CustomCalendar(yearStart, monthStart, dateStart, hourStart,
                         minuteStart);

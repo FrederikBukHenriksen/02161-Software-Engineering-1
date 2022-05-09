@@ -6,6 +6,7 @@ public abstract class Registration {
 
     private CustomCalendar startTime;
     private CustomCalendar endTime;
+    private Boolean startDayIsSet;
 
     protected ProjectPlanner projectPlanner;
 
@@ -21,10 +22,16 @@ public abstract class Registration {
     }
 
     protected void setStartTime(CustomCalendar startTime) {
+        startDayIsSet = true;
         this.startTime = startTime;
     }
 
-    protected void setEndTime(CustomCalendar endTime) {
+    protected void setEndTime(CustomCalendar endTime) throws Exception {
+        if(startDayIsSet){
+            if(startTime.getDate().compareTo(endTime.getDate()) > 0){
+                throw new Exception("End date cannot be before start date");
+            }
+        }
         this.endTime = endTime;
     }
 

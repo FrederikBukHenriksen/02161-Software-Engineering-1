@@ -1,5 +1,6 @@
 package dtu.calculator;
 
+import java.time.Year;
 import java.util.GregorianCalendar;
 
 public class CustomCalendar extends GregorianCalendar {
@@ -12,7 +13,7 @@ public class CustomCalendar extends GregorianCalendar {
         setWeek(week);
     }
 
-    protected CustomCalendar(int year, int month, int date) {
+    protected CustomCalendar(int year, int month, int date) throws Exception {
         setTimeZero();
         setYear(year);
         setMonth(month);
@@ -20,7 +21,7 @@ public class CustomCalendar extends GregorianCalendar {
         setTimeZero();
     }
 
-    protected CustomCalendar(int year, int month, int date, int hour, int minute) {
+    protected CustomCalendar(int year, int month, int date, int hour, int minute) throws Exception {
         setTimeZero();
         setYear(year);
         setMonth(month);
@@ -29,32 +30,52 @@ public class CustomCalendar extends GregorianCalendar {
         setMinute(minute);
     }
 
+    protected CustomCalendar() {
+        
+    }
+
     // Set functions
     protected void setYear(int year) {
         calendar.set(GregorianCalendar.YEAR, year);
     }
 
     protected void setWeek(int week) throws Exception {
-        int maxWeekNumber = calendar.getActualMaximum(GregorianCalendar.WEEK_OF_YEAR);
-        if (week < 1 || week > maxWeekNumber) {
+        int max = calendar.getActualMaximum(GregorianCalendar.WEEK_OF_YEAR);
+        if (week < 1 || week > max) {
             throw new Exception("Week number not valid");
         }
         calendar.set(GregorianCalendar.WEEK_OF_YEAR, week);
     }
 
-    protected void setMonth(int month) {
+    protected void setMonth(int month) throws Exception {
+        int max = calendar.getActualMaximum(GregorianCalendar.MONTH);
+        if ( month< 1 || month > max) {
+            throw new Exception("Input not valid");
+        }
         calendar.set(GregorianCalendar.MONTH, month + 1);
     }
 
-    protected void setDate(int date) {
+    protected void setDate(int date) throws Exception {
+        int max = calendar.getActualMaximum(GregorianCalendar.DAY_OF_MONTH);
+        if ( date< 1 || date > max) {
+            throw new Exception("Input not valid");
+        }
         calendar.set(GregorianCalendar.DAY_OF_MONTH, date);
     }
 
-    protected void setHour(int hour) {
+    protected void setHour(int hour) throws Exception {
+        int max = calendar.getActualMaximum(GregorianCalendar.HOUR_OF_DAY);
+        if ( hour< 0 || hour > max) {
+            throw new Exception("Input not valid");
+        }
         calendar.set(GregorianCalendar.HOUR_OF_DAY, hour);
     }
 
-    protected void setMinute(int minute) {
+    protected void setMinute(int minute) throws Exception {
+        int max = calendar.getActualMaximum(GregorianCalendar.MINUTE);
+        if ( minute < 0 || minute >= max) {
+            throw new Exception("Input not valid");
+        }
         calendar.set(GregorianCalendar.MINUTE, minute);
     }
 
