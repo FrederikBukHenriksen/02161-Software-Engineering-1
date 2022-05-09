@@ -87,7 +87,13 @@ public class Activity {
         if (!project.isProjectLeaderLoggedIn()) {
             throw new Exception("Project leader login is required");
         }
+        CustomCalendar temp = new CustomCalendar(year, week);
+        if(startTime.getDate().compareTo(temp.getDate()) > 0){
+            throw new Exception("End date cannot be before start date");
+        }
+
         endTime = new CustomCalendar(year, week);
+        
     }
 
     // Get functions

@@ -12,7 +12,7 @@ public abstract class Registration {
 
     public Registration(CustomCalendar startTime, CustomCalendar endTime, ProjectPlanner projectPlanner)
             throws Exception {
-        if (startTime.compareTo(endTime) > 0) {
+        if (startTime.getDate().compareTo(endTime.getDate()) > 0) {
             throw new Exception("Start time must be before end time");
         }
         this.startTime = startTime;
