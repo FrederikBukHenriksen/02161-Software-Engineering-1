@@ -235,9 +235,16 @@ public class MainController {
         }
 
         view.menuEnumerate(mainMenu, menu);
-        String choice = consoleInput();
+        
+
+        try {
+            String choice = consoleInput();
         String menuSelect = menu.get(Integer.parseInt(choice) - 1);
         menuStackPush(menuSelect);
+        } catch (Exception e) {
+            e = new Exception("Your input is not Valid");
+            handleException(e);
+        }
 
     }
 
@@ -537,28 +544,36 @@ public class MainController {
 
     // Help-functions
     public ArrayList<Integer> setDateWithTime(String title) {
-        ArrayList<Integer> list = new ArrayList<>();
+            ArrayList<Integer> list = new ArrayList<>();
 
-        view.menu(title, new ArrayList<>(Arrays.asList("Time (half hour resolution): ")));
-        String hour = consoleInput();
-        String[] timeSplit = hour.split(":");
-        list.add(Integer.valueOf(timeSplit[1]));
-        list.add(Integer.valueOf(timeSplit[0]));
-        view.menu(title, new ArrayList<>(Arrays.asList("Time: " + hour, "Type day: ")));
-        list.add(Integer.parseInt(consoleInput()));
+            view.menu(title, new ArrayList<>(Arrays.asList("Time (half hour resolution(hour:00 or hour:30)): ")));
+        try {
+            
+            String hour = consoleInput();
+            String[] timeSplit = hour.split(":");
+            list.add(Integer.valueOf(timeSplit[1]));
+            list.add(Integer.valueOf(timeSplit[0]));
+            view.menu(title, new ArrayList<>(Arrays.asList("Time: " + hour, "Type day: ")));
+            list.add(Integer.parseInt(consoleInput()));
 
-        view.menu(
-                title,
-                new ArrayList<>(Arrays.asList("Time day: " + hour, "Type day: " + list.get(2), "Type month: ")));
-        list.add(Integer.parseInt(consoleInput()));
+            view.menu(
+                    title,
+                    new ArrayList<>(Arrays.asList("Time day: " + hour, "Type day: " + list.get(2), "Type month: ")));
+            list.add(Integer.parseInt(consoleInput()));
 
-        view.menu(
-                title,
-                new ArrayList<>(
-                        Arrays.asList("Time day: " + hour, "Type day: " + list.get(2), "Type month: " + list.get(3),
-                                "Type year: ")));
-        list.add(Integer.parseInt(consoleInput()));
-        return list;
+            view.menu(
+                    title,
+                    new ArrayList<>(
+                            Arrays.asList("Time day: " + hour, "Type day: " + list.get(2), "Type month: " + list.get(3),
+                                    "Type year: ")));
+            list.add(Integer.parseInt(consoleInput()));
+            return list;
+        } catch (Exception e) {
+            e = new Exception("your input is invalid");
+            handleException(e);
+        }
+        return null;
     }
+    
 
 }

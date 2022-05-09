@@ -18,6 +18,7 @@ public class Activity {
     private CustomCalendar startTime;
     private CustomCalendar endTime;
     private double activityEstimate;
+    private boolean startDayIsSet;
 
     protected Activity(String title, Project project) {
         this.title = title;
@@ -68,6 +69,7 @@ public class Activity {
         if (!project.isProjectLeaderLoggedIn()) {
             throw new Exception("Project leader login is required");
         }
+        startDayIsSet = true;
         startTime = new CustomCalendar(year, week);
     }
 
@@ -87,11 +89,12 @@ public class Activity {
         if (!project.isProjectLeaderLoggedIn()) {
             throw new Exception("Project leader login is required");
         }
-        CustomCalendar temp = new CustomCalendar(year, week);
-        if(startTime.getDate().compareTo(temp.getDate()) > 0){
-            throw new Exception("End date cannot be before start date");
+        if(startDayIsSet){
+            CustomCalendar temp = new CustomCalendar(year, week);
+            if(startTime.getDate().compareTo(temp.getDate()) > 0){
+                throw new Exception("End date cannot be before start date");
+            }
         }
-
         endTime = new CustomCalendar(year, week);
         
     }

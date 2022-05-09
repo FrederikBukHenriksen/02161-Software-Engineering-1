@@ -10,7 +10,7 @@ public class CommonSteps{
     final public ProjectPlanner projectPlanner = new ProjectPlanner();
 
     @Given("the date is year {int} month {int} day {int}")
-    public void the_date_is_year_month_day(Integer year, Integer month, Integer date) {
+    public void the_date_is_year_month_day(Integer year, Integer month, Integer date) throws Exception {
         projectPlanner.dateServer.setDate(year, month, date);
     }
 
