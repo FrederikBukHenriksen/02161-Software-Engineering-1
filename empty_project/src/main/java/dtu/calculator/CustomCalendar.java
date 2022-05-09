@@ -91,8 +91,12 @@ public class CustomCalendar extends GregorianCalendar {
         return calendar;
     }
 
-    protected String getDateString(){
-        return "year: "+getYear() + " WEEK: " + getWeek();
+    protected String getDateString() {
+        return "year: " + getYear() + " WEEK: " + getWeek();
+    }
+    
+    protected String getDateStringFull() {
+        return "year:" + getYear() + " Month: " + getMonth() + " Day: " + getDay();
     }
 
 
@@ -108,5 +112,12 @@ public class CustomCalendar extends GregorianCalendar {
         return calendar.get(GregorianCalendar.MINUTE);
 
     }
+    protected int getMonth() {
+        return calendar.get(GregorianCalendar.MONTH);
+    }
+    protected int getDay() {
+        return calendar.get(GregorianCalendar.DAY_OF_MONTH);
+    }
+
 
 }
