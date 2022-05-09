@@ -134,7 +134,7 @@ public class ProjectMenu {
             int choice = Integer.parseInt(mainController.consoleInputWithBack());
             User chosenEmployee = mainController.selectedProject.getProjectEmployees().get(choice - 1);
             mainController.selectedProject.setProjectLeader(chosenEmployee);
-            mainController.menuStackPush(selectProject);
+            mainController.menuStackPop();
 
         } catch (BackException e) {
         } catch (Exception e) {
@@ -154,7 +154,7 @@ public class ProjectMenu {
                     new ArrayList<>(Arrays.asList("Type day: " + day, "Type month: " + month, "Type year: ")));
             int year = Integer.parseInt(mainController.consoleInputWithBack());
             mainController.selectedProject.setStartDate(day, month, year);
-            mainController.menuStackPush(mainMenu);
+            mainController.menuStackPop();
         } catch (BackException e) {
         } catch (Exception e) {
             mainController.view.error(e);
@@ -167,7 +167,8 @@ public class ProjectMenu {
             String title = mainController.consoleInputWithBack();
             // this.selectedProject.createActivity(title);
             mainController.selectedProject.createActivity(title);
-            mainController.menuStackPush(selectProject); // Go to the project menu.
+            mainController.menuStackPop();
+            // Go to the project menu.
         } catch (BackException e) {
         } catch (Exception e) {
             mainController.view.error(e);
@@ -186,9 +187,9 @@ public class ProjectMenu {
         mainController.view.menuEnumerate(addEmployeeToProject, UIListOfEmployees);
         try {
             int choice = Integer.parseInt(mainController.consoleInputWithBack());
-            User employee = projectPlanner.getUser(UIListOfEmployees.get(choice-1));
+            User employee = projectPlanner.getUser(UIListOfEmployees.get(choice - 1));
             mainController.selectedProject.addUserToProject(employee);
-            mainController.menuStackPush(selectProject);
+            mainController.menuStackPop();
         } catch (BackException e) {
         } catch (Exception e) {
             mainController.view.error(e);
@@ -204,9 +205,11 @@ public class ProjectMenu {
         mainController.view.menuEnumerate(removeEmployeeFromProject, UIListOfEmployees);
         try {
             int choice = Integer.parseInt(mainController.consoleInputWithBack());
-            User employee = projectPlanner.getUser(UIListOfEmployees.get(choice-1)); // ok ctPlanner.getEmployees().get(choice - 1);
+            User employee = projectPlanner.getUser(UIListOfEmployees.get(choice - 1)); // ok
+                                                                                       // ctPlanner.getEmployees().get(choice
+                                                                                       // - 1);
             mainController.selectedProject.removeUserFromProject(employee);
-            mainController.menuStackPush(selectProject);
+            mainController.menuStackPop();
         } catch (BackException e) {
         } catch (Exception e) {
             mainController.view.error(e);
@@ -233,7 +236,7 @@ public class ProjectMenu {
         try {
             mainController.view.subSectionln(" ");
             int choice = Integer.parseInt(mainController.consoleInputWithBack());
-            mainController.menuStackPush(selectProject);
+            mainController.menuStackPop();
         } catch (BackException e) {
         } catch (Exception e) {
             mainController.view.error(e);

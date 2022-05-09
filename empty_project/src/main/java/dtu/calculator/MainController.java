@@ -164,7 +164,7 @@ public class MainController {
     public String consoleInputWithBack() throws BackException {
         String input = "";
         input = scanner.next();
-        if (input.equals("back")) {
+        if (input.equalsIgnoreCase("back")) {
             menuStackPop();
             menuStackDecode(menuStackPeek());
             throw new BackException();
@@ -189,6 +189,9 @@ public class MainController {
     }
 
     public void menuStackPush(String menu) {
+        // if (!menuStack.empty()) {
+        // menuStack.pop();
+        // }
         menuStack.push(menu);
     }
 
@@ -244,7 +247,7 @@ public class MainController {
             String input = consoleInputWithBack();
 
             projectPlanner.createProject(input);
-            menuStackPush(mainMenu);
+            menuStackPop();
         } catch (BackException e) {
 
         } catch (Exception e) {
@@ -266,7 +269,7 @@ public class MainController {
             Project chosenProject = projectPlanner.getProjects().get(choice - 1);
             projectPlanner.deleteProject(chosenProject);
 
-            menuStackPush(mainMenu);
+            menuStackPop();
         } catch (BackException e) {
         } catch (Exception e) {
         }
@@ -277,7 +280,7 @@ public class MainController {
         try {
             String input = consoleInputWithBack();
             projectPlanner.createEmployee(input);
-            menuStackPush(mainMenu);
+            menuStackPop();
         } catch (BackException e) {
         } catch (Exception e) {
             handleException(e);
@@ -297,7 +300,7 @@ public class MainController {
             User chosenEmployee = projectPlanner.getEmployees().get(choice - 1);
             projectPlanner.deleteEmployee(chosenEmployee);
 
-            menuStackPush(mainMenu);
+            menuStackPop();
         } catch (BackException e) {
         } catch (Exception e) {
             handleException(e);
@@ -332,7 +335,7 @@ public class MainController {
 
     }
 
-    public  void addEmployeeToActivity() {
+    public void addEmployeeToActivity() {
         ArrayList<String> UIListOfProjectEmployees = new ArrayList<>();
         for (User employee : selectedProject.getProjectEmployees()) {
             UIListOfProjectEmployees.add(employee.getInitials());
@@ -343,7 +346,7 @@ public class MainController {
             int choice = Integer.parseInt(consoleInputWithBack());
             User chosenEmployee = selectedProject.getProjectEmployees().get(choice - 1);
             selectedActivity.addUserToActivity(chosenEmployee);
-            menuStackPush(selectActivity);
+            menuStackPop();
 
         } catch (BackException e) {
         } catch (Exception e) {
@@ -352,7 +355,7 @@ public class MainController {
 
     }
 
-    public  void removeEmployeeFromActivity() {
+    public void removeEmployeeFromActivity() {
         ArrayList<String> UIListOfActivityEmployees = new ArrayList<>();
         for (User employee : selectedActivity.getEmployees()) {
             UIListOfActivityEmployees.add(employee.getInitials());
@@ -362,7 +365,7 @@ public class MainController {
             int choice = Integer.parseInt(consoleInputWithBack());
             User chosenEmployee = selectedActivity.getEmployees().get(choice - 1);
             selectedActivity.removeEmployeeFromActivity(chosenEmployee);
-            menuStackPush(selectActivity);
+            menuStackPop();
         } catch (BackException e) {
         } catch (Exception e) {
             handleException(e);
@@ -374,7 +377,7 @@ public class MainController {
         try {
             double estimate = Double.parseDouble(consoleInputWithBack());
             selectedActivity.setActivityEstimate(estimate);
-            menuStackPush(selectActivity);
+            menuStackPop();
         } catch (BackException e) {
         } catch (Exception e) {
             handleException(e);
@@ -382,30 +385,32 @@ public class MainController {
         }
     }
 
-    public  void changeActivityStart() {
+    public void changeActivityStart() {
         view.menu(changeActivityStart, new ArrayList<>(Arrays.asList("Type acitivity start year: ")));
         try {
             int choice_year = Integer.parseInt(consoleInputWithBack());
             view.menu(changeActivityStart,
-                    new ArrayList<>(Arrays.asList("Type acitivity start year: " + String.valueOf(choice_year), "type activity start week: ")));
+                    new ArrayList<>(Arrays.asList("Type acitivity start year: " + String.valueOf(choice_year),
+                            "type activity start week: ")));
             int choice_week = Integer.parseInt(consoleInputWithBack());
             selectedActivity.setStartDate(choice_year, choice_week);
-            menuStackPush(selectActivity);
+            menuStackPop();
         } catch (BackException e) {
         } catch (Exception e) {
             handleException(e);
         }
     }
 
-    public  void changeActivityEnd() {
+    public void changeActivityEnd() {
         view.menu(changeActivityStart, new ArrayList<>(Arrays.asList("Type acitivity end year: ")));
         try {
             int choice_year = Integer.parseInt(consoleInputWithBack());
             view.menu(changeActivityStart,
-                    new ArrayList<>(Arrays.asList("Type acitivity end year: " +  String.valueOf(choice_year), "type activity end week: ")));
+                    new ArrayList<>(Arrays.asList("Type acitivity end year: " + String.valueOf(choice_year),
+                            "type activity end week: ")));
             int choice_week = Integer.parseInt(consoleInputWithBack());
             selectedActivity.setEndDate(choice_year, choice_week);
-            menuStackPush(selectActivity);
+            menuStackPop();
         } catch (BackException e) {
         } catch (Exception e) {
             handleException(e);
@@ -416,31 +421,31 @@ public class MainController {
 
     public void activityCalendar() {
         ArrayList<Activity> employeeActivities = ((Employee) projectPlanner.getLoggedIn()).getEmployeeActivities();
-            ArrayList<String> UIlistOfActivities = new ArrayList<>();
-            for (Activity activity : employeeActivities) {
-                String endDate = "N/A";
-                try {
-                    endDate = activity.getEndDate().getDateString();
-                } catch (Exception e){
-                    endDate = "N/A";
-                }
-
-                String startDate = "N/A";
-                try {
-                    startDate = activity.getStartDate().getDateString();
-                } catch (Exception e){
-                    startDate = "N/A";
-                }
-
-                UIlistOfActivities.add(
-                    activity.getTitle() + ", Start: " + startDate + ", end: " + endDate + ", estimate: " + String.valueOf(activity.getActivityEstimate()));
+        ArrayList<String> UIlistOfActivities = new ArrayList<>();
+        for (Activity activity : employeeActivities) {
+            String endDate = "N/A";
+            try {
+                endDate = activity.getEndDate().getDateString();
+            } catch (Exception e) {
+                endDate = "N/A";
             }
-            view.menuEnumerate(activityCalendar, UIlistOfActivities);
-            String input = consoleInput();
-            menuStackPush(mainMenu);
 
-         }
-    
+            String startDate = "N/A";
+            try {
+                startDate = activity.getStartDate().getDateString();
+            } catch (Exception e) {
+                startDate = "N/A";
+            }
+
+            UIlistOfActivities.add(
+                    activity.getTitle() + ", Start: " + startDate + ", end: " + endDate + ", estimate: "
+                            + String.valueOf(activity.getActivityEstimate()));
+        }
+        view.menuEnumerate(activityCalendar, UIlistOfActivities);
+        String input = consoleInput();
+        menuStackPop();
+
+    }
 
     public void registerTime() {
         ArrayList menu = new ArrayList<>(
@@ -502,34 +507,29 @@ public class MainController {
         }
 
     }
-    
 
     public void removeActivity() {
         ArrayList<String> UIListOfActivities = new ArrayList<>();
-        try{
-        for (Activity activity : projectPlanner.getProject(selectProject).getActivities()) {
-            UIListOfActivities.add(activity.getTitle());
-        }
+        try {
+            for (Activity activity : projectPlanner.getProject(selectProject).getActivities()) {
+                UIListOfActivities.add(activity.getTitle());
+            }
         } catch (Exception e) {
             view.error(e);
         }
-
-
-
 
         view.menuEnumerate(deleteProject, UIListOfActivities);
 
         try {
             selectedProject.deleteActivity(selectedActivity);
-            menuStackPush(selectProject);
+            menuStackPop();
         } catch (Exception e) {
             view.error(e);
         }
 
     }
-    
 
-    public  void logOut() {
+    public void logOut() {
         projectPlanner.logOut();
         menuStackClear();
         menuStackPush(logIn);
